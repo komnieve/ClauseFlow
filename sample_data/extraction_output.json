@@ -1,0 +1,608 @@
+{
+  "document": "sample_po_acme_aerospace.txt",
+  "total_lines": 1070,
+  "total_clauses": 75,
+  "warnings": [],
+  "clauses": [
+    {
+      "start_line": 1,
+      "end_line": 3,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "boilerplate",
+      "text": "================================================================================\n                            PURCHASE ORDER\n================================================================================"
+    },
+    {
+      "start_line": 4,
+      "end_line": 99,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "administrative",
+      "text": "\nACME AEROSPACE CORPORATION\n1200 Aviation Boulevard\nWichita, KS 67277\n\n--------------------------------------------------------------------------------\n                         PURCHASE ORDER DETAILS\n--------------------------------------------------------------------------------\n\nPO Number:          AA-2025-00847\nPO Date:            January 15, 2025\nRevision:           0\nContract Type:      Fixed Price\nPrime Contract:     FA8615-23-C-0042 (U.S. Air Force)\n\nSUPPLIER:\n  Precision Wire Systems, Inc.\n  4500 Industrial Parkway\n  Phoenix, AZ 85034\n  CAGE Code: 5K2M7\n  DUNS: 07-842-1956\n\nBUYER:\n  Jennifer Morrison\n  Senior Procurement Specialist\n  jennifer.morrison@acmeaero.com\n  (316) 555-2847\n\nPROGRAM:\n  KC-46A Tanker Aircraft\n  Aerial Refueling System\n\n--------------------------------------------------------------------------------\n                              LINE ITEMS\n--------------------------------------------------------------------------------\n\nLine 001:\n  Part Number:        AWH-7842-001\n  Description:        Main Fuel Transfer Wire Harness Assembly\n  Quantity:           24 EA\n  Unit Price:         $4,872.00\n  Extended Price:     $116,928.00\n  Delivery:           30 units by March 15, 2025\n                      Remaining by April 30, 2025\n  Quality Level:      Flight Critical\n\nLine 002:\n  Part Number:        AWH-7842-002\n  Description:        Auxiliary Power Distribution Harness\n  Quantity:           48 EA\n  Unit Price:         $2,156.00\n  Extended Price:     $103,488.00\n  Delivery:           All units by April 15, 2025\n  Quality Level:      Mission Essential\n\nLine 003:\n  Part Number:        AWH-7842-003\n  Description:        Boom Operator Station Wiring Assembly\n  Quantity:           12 EA\n  Unit Price:         $6,445.00\n  Extended Price:     $77,340.00\n  Delivery:           All units by May 1, 2025\n  Quality Level:      Flight Critical\n\nLine 004:\n  Part Number:        AWH-7842-004\n  Description:        Engine Nacelle Sensor Harness (Left)\n  Quantity:           24 EA\n  Unit Price:         $3,287.00\n  Extended Price:     $78,888.00\n  Delivery:           All units by April 30, 2025\n  Quality Level:      Flight Critical\n\nLine 005:\n  Part Number:        AWH-7842-005\n  Description:        Engine Nacelle Sensor Harness (Right)\n  Quantity:           24 EA\n  Unit Price:         $3,287.00\n  Extended Price:     $78,888.00\n  Delivery:           All units by April 30, 2025\n  Quality Level:      Flight Critical\n\nLine 006:\n  Part Number:        CCA-9921-007\n  Description:        Refueling Boom Control Cable Assembly\n  Quantity:           36 EA\n  Unit Price:         $1,842.00\n  Extended Price:     $66,312.00\n  Delivery:           All units by March 30, 2025\n  Quality Level:      Mission Essential\n\n--------------------------------------------------------------------------------\n                      TOTAL PO VALUE: $522,844.00\n--------------------------------------------------------------------------------\n\n"
+    },
+    {
+      "start_line": 100,
+      "end_line": 102,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 1: GENERAL PROVISIONS\n================================================================================"
+    },
+    {
+      "start_line": 104,
+      "end_line": 116,
+      "clause_number": "1.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.1 ORDER OF PRECEDENCE\n\nIn the event of any inconsistency between the provisions of this Purchase\nOrder, the inconsistency shall be resolved by giving precedence in the\nfollowing order:\n\n    (a) The Schedule (Line Items and Delivery Requirements)\n    (b) Special Contract Requirements (Section 4)\n    (c) FAR/DFARS Clauses incorporated by reference\n    (d) General Provisions (this Section 1)\n    (e) Technical Data Package and Specifications\n    (f) Supplier's quotation dated November 12, 2024\n"
+    },
+    {
+      "start_line": 117,
+      "end_line": 133,
+      "clause_number": "1.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.2 DEFINITIONS\n\nAs used throughout this Purchase Order:\n\n    (a) \"Buyer\" means Acme Aerospace Corporation\n    (b) \"Supplier\" means Precision Wire Systems, Inc.\n    (c) \"Government\" means the United States Government\n    (d) \"Prime Contract\" means Contract FA8615-23-C-0042\n    (e) \"Goods\" means the items described in the Line Items section\n    (f) \"Services\" means any services to be performed under this Order\n    (g) \"Contracting Officer\" means the U.S. Government official with\n        authority to enter into, administer, and terminate the Prime Contract\n    (h) \"Flight Critical\" means items whose failure would result in loss of\n        aircraft or loss of life\n    (i) \"Work\" means all labor, materials, equipment, and services required\n        to fulfill this Purchase Order\n"
+    },
+    {
+      "start_line": 134,
+      "end_line": 142,
+      "clause_number": "1.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.3 ACCEPTANCE OF ORDER\n\nThis Purchase Order constitutes an offer by Buyer to Supplier. Supplier's\nacceptance of this offer is expressly limited to the terms and conditions\ncontained herein. Commencement of performance or shipment of Goods shall\nconstitute acceptance of all terms and conditions. Any additional or different\nterms proposed by Supplier are hereby rejected unless expressly agreed to in\nwriting by Buyer's authorized procurement representative.\n"
+    },
+    {
+      "start_line": 143,
+      "end_line": 162,
+      "clause_number": "1.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.4 CHANGES\n\nBuyer may at any time, by written notice, make changes within the general\nscope of this Purchase Order in any one or more of the following:\n\n    (a) Drawings, designs, or specifications\n    (b) Method of shipment or packing\n    (c) Place of delivery\n    (d) Delivery schedule\n    (e) Quantity (increases or decreases of up to 10%)\n\nIf any such change causes an increase or decrease in the cost of, or the\ntime required for, performance of any part of the Work, Buyer shall make\nan equitable adjustment in the Purchase Order price or delivery schedule,\nor both. Any claim by Supplier for adjustment under this clause must be\nasserted within thirty (30) days from the date of receipt of the written\nchange notice. Failure to agree on any adjustment shall be a dispute under\nthe Disputes clause. Nothing in this clause shall excuse Supplier from\nproceeding with the Purchase Order as changed.\n"
+    },
+    {
+      "start_line": 163,
+      "end_line": 177,
+      "clause_number": "1.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.5 STOP WORK ORDER\n\nBuyer may, at any time, by written order to Supplier, require Supplier to\nstop all, or any part of, the Work called for by this Purchase Order for a\nperiod of ninety (90) days after the order is delivered to Supplier, and\nfor any further period to which the parties may agree. Upon receipt of the\nStop Work Order, Supplier shall immediately comply with its terms and take\nall reasonable steps to minimize the incurrence of costs allocable to the\nWork covered by the order during the period of work stoppage. Within the\nperiod specified, Buyer shall either:\n\n    (a) Cancel the Stop Work Order; or\n    (b) Terminate the Work covered by the order as provided in the\n        Termination clause.\n"
+    },
+    {
+      "start_line": 178,
+      "end_line": 187,
+      "clause_number": "1.6",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.6 TERMINATION FOR CONVENIENCE\n\nBuyer may terminate this Purchase Order, in whole or in part, at any time\nby written notice to Supplier when it is in Buyer's best interest. Upon\nreceipt of a termination notice, Supplier shall immediately stop Work as\ndirected in the notice and notify its suppliers and subcontractors of the\ntermination. Supplier shall be entitled to an equitable adjustment for Work\nperformed prior to termination, including a reasonable profit, but in no\nevent shall Supplier's total recovery exceed the Purchase Order price.\n"
+    },
+    {
+      "start_line": 188,
+      "end_line": 204,
+      "clause_number": "1.7",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "1.7 TERMINATION FOR DEFAULT\n\nBuyer may, by written notice of default to Supplier, terminate this Purchase\nOrder in whole or in part if Supplier:\n\n    (a) Fails to deliver the Goods within the time specified;\n    (b) Fails to make progress so as to endanger performance; or\n    (c) Fails to perform any other provision of this Purchase Order.\n\nBefore terminating for default, Buyer shall provide Supplier written notice\nspecifying the failure and allowing ten (10) days to cure such failure. If\nthis Purchase Order is terminated for default, Buyer may require Supplier\nto transfer title and deliver to Buyer any completed Goods, work in process,\nand materials. Supplier shall be liable for any excess costs incurred by\nBuyer in procuring substitute Goods.\n\n"
+    },
+    {
+      "start_line": 205,
+      "end_line": 207,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 2: QUALITY REQUIREMENTS\n================================================================================"
+    },
+    {
+      "start_line": 209,
+      "end_line": 216,
+      "clause_number": "2.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.1 QUALITY MANAGEMENT SYSTEM\n\nSupplier shall maintain a Quality Management System certified to AS9100\nRev D (or later revision) by an accredited registrar. Supplier shall\nprovide evidence of current certification upon request. Supplier shall\nnotify Buyer within five (5) business days of any suspension, withdrawal,\nor limitation of its AS9100 certification.\n"
+    },
+    {
+      "start_line": 217,
+      "end_line": 239,
+      "clause_number": "2.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.2 FIRST ARTICLE INSPECTION\n\nFirst Article Inspection (FAI) in accordance with AS9102 Rev B is required\nfor all Line Items designated as \"Flight Critical\" in this Purchase Order.\nFirst Article Inspection is required for:\n\n    - Line 001: AWH-7842-001\n    - Line 003: AWH-7842-003\n    - Line 004: AWH-7842-004\n    - Line 005: AWH-7842-005\n\nThe First Article Inspection Report (FAIR) shall be submitted to Buyer\nfor approval a minimum of fifteen (15) business days prior to the first\nproduction shipment. Production shipments shall not commence until Buyer\nhas provided written approval of the FAIR. The FAIR shall include:\n\n    (a) Form 1 - Part Number Accountability\n    (b) Form 2 - Product Accountability (material, special processes,\n        functional testing)\n    (c) Form 3 - Characteristic Accountability (all drawing characteristics)\n    (d) Supporting objective evidence (inspection reports, test data,\n        material certifications)\n"
+    },
+    {
+      "start_line": 240,
+      "end_line": 257,
+      "clause_number": "2.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.3 SOURCE INSPECTION\n\nBuyer and/or the U.S. Government reserve the right to perform source\ninspection at Supplier's facility. Supplier shall provide Buyer's quality\nrepresentatives and Government inspectors access to its facility with\nforty-eight (48) hours advance notice. Source inspection does not relieve\nSupplier of its responsibility to provide conforming product.\n\nSource Inspection is mandatory for all Flight Critical items (Lines 001,\n003, 004, 005) prior to shipment. Supplier shall notify Buyer's Quality\nAssurance department a minimum of five (5) business days prior to the\nscheduled source inspection date.\n\nContact for Source Inspection scheduling:\n    Robert Chen, Quality Manager\n    robert.chen@acmeaero.com\n    (316) 555-2851\n"
+    },
+    {
+      "start_line": 258,
+      "end_line": 267,
+      "clause_number": "2.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.4 RECEIVING INSPECTION\n\nAll Goods are subject to inspection and testing by Buyer within a\nreasonable time after receipt. Payment for Goods does not constitute\nacceptance. Buyer may reject any Goods that do not conform to the\nrequirements of this Purchase Order. Rejected Goods may be returned to\nSupplier at Supplier's expense, or held for Supplier's disposition\ninstructions. Supplier shall bear all costs associated with the\ninspection, return, replacement, or correction of nonconforming Goods.\n"
+    },
+    {
+      "start_line": 268,
+      "end_line": 281,
+      "clause_number": "2.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.5 WIRE HARNESS SPECIFIC REQUIREMENTS\n\nAll wire harness assemblies shall be manufactured in accordance with:\n\n    (a) IPC/WHMA-A-620 Class 3 (Space and Military/High Performance\n        Electronic Equipment)\n    (b) SAE AS50881 (Wiring Aerospace Vehicle)\n    (c) Drawing requirements and specifications referenced on the\n        Technical Data Package\n\nSupplier shall maintain personnel certified to IPC/WHMA-A-620 for all\nproduction and inspection operations. Evidence of current personnel\ncertifications shall be maintained and provided upon request.\n"
+    },
+    {
+      "start_line": 282,
+      "end_line": 299,
+      "clause_number": "2.6",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.6 SPECIAL PROCESS REQUIREMENTS\n\nThe following special processes require approval by Buyer or the\nGovernment prior to use. Supplier shall not change approved special\nprocess sources without prior written authorization from Buyer.\n\n    (a) Crimping and Termination - Per NASA-STD-8739.4\n    (b) Soldering - Per IPC J-STD-001 Class 3 with Space Addendum\n    (c) Wire Marking - Per MIL-STD-202, Method 215\n    (d) Potting and Encapsulation - Per manufacturer specifications\n    (e) Environmental Sealing - Per AS81714 (connector) and\n        MS27488 (backshell)\n    (f) Shielding Termination - Per drawing requirements\n\nAll special processes shall be performed by Nadcap-accredited processors\nor by Supplier if Supplier maintains internal Nadcap accreditation for\nthe applicable process.\n"
+    },
+    {
+      "start_line": 300,
+      "end_line": 316,
+      "clause_number": "2.7",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.7 NONCONFORMING MATERIAL\n\nSupplier shall not ship nonconforming material without prior written\nauthorization from Buyer. Requests for deviation or waiver shall be\nsubmitted through Buyer's Supplier Quality Portal and shall include:\n\n    (a) Description of the nonconformance\n    (b) Root cause analysis\n    (c) Corrective action to prevent recurrence\n    (d) Proposed disposition (use-as-is, rework, repair, scrap)\n    (e) Technical justification for use-as-is or repair dispositions\n\nSupplier shall segregate and identify all nonconforming material pending\ndisposition instructions. Nonconforming material shipped without\nauthorization may be returned at Supplier's expense and may result in\ncorrective action or removal from Buyer's Approved Supplier List.\n"
+    },
+    {
+      "start_line": 317,
+      "end_line": 332,
+      "clause_number": "2.8",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "2.8 CORRECTIVE ACTION\n\nSupplier shall maintain a Corrective Action system conforming to AS9100\nrequirements. Upon notification of a quality escape, Supplier shall:\n\n    (a) Respond with containment actions within twenty-four (24) hours\n    (b) Submit root cause analysis within ten (10) business days\n    (c) Submit corrective action plan within fifteen (15) business days\n    (d) Implement corrective actions per the approved plan\n    (e) Provide objective evidence of effectiveness\n\nFailure to respond to corrective action requests in a timely manner may\nresult in assessment of liquidated damages, placement on Buyer's Supplier\nWatch List, or removal from the Approved Supplier List.\n\n"
+    },
+    {
+      "start_line": 333,
+      "end_line": 335,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 3: MATERIAL AND TRACEABILITY\n================================================================================"
+    },
+    {
+      "start_line": 337,
+      "end_line": 355,
+      "clause_number": "3.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "3.1 MATERIAL CERTIFICATION\n\nAll materials used in the manufacture of Goods shall be traceable to the\noriginal material manufacturer. Supplier shall obtain and maintain\nCertificates of Conformance (C of C) or Certified Test Reports (CTR) for\nall materials.\n\nThe following materials require full Certified Test Reports per the\napplicable material specification:\n\n    (a) Wire and cable per MIL-DTL-27500 or M22759\n    (b) Connectors per AS39029 series\n    (c) Contacts per MIL-DTL-39029\n    (d) Heat shrink tubing per MIL-DTL-23053\n    (e) Solder per J-STD-006\n\nMaterial certifications shall be retained for a minimum of ten (10) years\nfrom date of delivery and shall be provided to Buyer upon request.\n"
+    },
+    {
+      "start_line": 356,
+      "end_line": 373,
+      "clause_number": "3.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "3.2 COUNTERFEIT PARTS PREVENTION\n\nSupplier shall maintain a Counterfeit Parts Prevention Program in\naccordance with AS6174 and AS6496. Supplier shall:\n\n    (a) Procure parts only from Original Component Manufacturers (OCM),\n        Original Equipment Manufacturers (OEM), or authorized distributors\n    (b) Maintain approved supplier controls including verification of\n        authorized distributor status\n    (c) Perform incoming inspection and testing appropriate to detect\n        counterfeit parts\n    (d) Maintain traceability of parts to their source\n    (e) Report suspected counterfeit parts to Buyer and GIDEP within\n        sixty (60) days of discovery\n\nUse of independent distributors or brokers requires prior written\napproval from Buyer and additional testing per AS6171.\n"
+    },
+    {
+      "start_line": 374,
+      "end_line": 387,
+      "clause_number": "3.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "3.3 LOT TRACEABILITY\n\nSupplier shall maintain lot traceability for all materials used in Flight\nCritical assemblies. Each deliverable unit shall be traceable to:\n\n    (a) Raw material lot numbers and certifications\n    (b) Manufacturing date codes\n    (c) Personnel performing critical operations\n    (d) Inspection and test records\n    (e) Special process certifications\n\nLot traceability records shall be retained for the life of the aircraft\nprogram plus three (3) years.\n"
+    },
+    {
+      "start_line": 388,
+      "end_line": 403,
+      "clause_number": "3.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "3.4 SHELF LIFE AND AGE CONTROL\n\nSupplier shall implement controls to ensure that age-sensitive and\nshelf-life limited materials are used within their specified life limits.\nMaterials shall be stored per manufacturer recommendations. The following\nitems are subject to shelf life control:\n\n    (a) Solder paste and flux\n    (b) Adhesives and sealants\n    (c) Potting compounds\n    (d) Heat shrink materials with adhesive\n    (e) Wire insulation (per manufacturer)\n\nShelf life documentation shall be maintained and provided with shipment\nfor any materials incorporated with remaining shelf life requirements.\n"
+    },
+    {
+      "start_line": 404,
+      "end_line": 415,
+      "clause_number": "3.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "3.5 ROHS AND REACH COMPLIANCE\n\nUnless otherwise specified on the drawing, all materials shall be\ncompliant with:\n\n    (a) EU RoHS Directive 2011/65/EU and amendments\n    (b) EU REACH Regulation (EC) No. 1907/2006\n\nFor military and aerospace applications where RoHS exemptions apply,\nSupplier shall document the applicable exemption and provide material\ndeclarations upon request.\n"
+    },
+    {
+      "start_line": 417,
+      "end_line": 419,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n            SECTION 4: SPECIAL CONTRACT REQUIREMENTS\n================================================================================"
+    },
+    {
+      "start_line": 421,
+      "end_line": 436,
+      "clause_number": "4.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "4.1 CONTROLLED UNCLASSIFIED INFORMATION (CUI)\n\nThis Purchase Order involves Controlled Unclassified Information as\ndefined in 32 CFR Part 2002. Supplier shall:\n\n    (a) Handle, store, and transmit CUI in accordance with NIST SP 800-171\n    (b) Limit access to CUI to personnel with a need-to-know\n    (c) Not disclose CUI to any third party without written authorization\n    (d) Report any known or suspected CUI incidents to Buyer within\n        seventy-two (72) hours\n    (e) Return or destroy all CUI upon completion of the Purchase Order\n        or upon request\n\nCUI documents provided under this Purchase Order are marked \"CUI\" or\n\"CONTROLLED\" and include Technical Data Package drawings and specifications.\n"
+    },
+    {
+      "start_line": 437,
+      "end_line": 457,
+      "clause_number": "4.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "4.2 EXPORT CONTROL\n\nThe technical data and defense articles provided under this Purchase Order\nare controlled under the International Traffic in Arms Regulations (ITAR),\n22 CFR Parts 120-130, and/or the Export Administration Regulations (EAR),\n15 CFR Parts 730-774.\n\nSupplier shall:\n\n    (a) Not export, re-export, or transfer controlled items without proper\n        authorization from the U.S. Department of State or Commerce\n    (b) Ensure that all personnel with access to controlled items are\n        U.S. Persons as defined in 22 CFR 120.15\n    (c) Maintain export control procedures and training\n    (d) Include export control flow-down requirements in all subcontracts\n    (e) Notify Buyer immediately of any actual or potential export\n        control violations\n\nECCN: 9A610.x - Military Aircraft Parts and Components\nUSML Category: XI(a)(1) - Military Electronics\n"
+    },
+    {
+      "start_line": 458,
+      "end_line": 472,
+      "clause_number": "4.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "4.3 CYBERSECURITY REQUIREMENTS\n\nSupplier shall implement cybersecurity controls in accordance with\nDFARS 252.204-7012, Safeguarding Covered Defense Information and Cyber\nIncident Reporting. Supplier shall:\n\n    (a) Implement security requirements in NIST SP 800-171 Rev 2\n    (b) Report cyber incidents to Buyer and DoD within 72 hours\n    (c) Preserve images of affected systems for 90 days\n    (d) Flow down these requirements to subcontractors\n\nSupplier's NIST SP 800-171 score shall be entered in the Supplier\nPerformance Risk System (SPRS) and shall be made available to Buyer\nupon request.\n"
+    },
+    {
+      "start_line": 473,
+      "end_line": 478,
+      "clause_number": "4.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "4.4 GOVERNMENT PROPERTY\n\nNo Government property is provided under this Purchase Order. If\nGovernment property is provided in the future through modification,\nSupplier shall comply with FAR 52.245-1, Government Property.\n"
+    },
+    {
+      "start_line": 479,
+      "end_line": 487,
+      "clause_number": "4.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "4.5 DISCLOSURE OF INFORMATION\n\nSupplier shall not release any information regarding this Purchase Order,\nthe Prime Contract, or Buyer's business to any third party, including\npress releases, marketing materials, or social media, without prior\nwritten approval from Buyer. This restriction does not apply to routine\nbusiness communications with Supplier's own suppliers and subcontractors\nto the extent necessary for performance.\n"
+    },
+    {
+      "start_line": 489,
+      "end_line": 491,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 5: DELIVERY REQUIREMENTS\n================================================================================"
+    },
+    {
+      "start_line": 493,
+      "end_line": 505,
+      "clause_number": "5.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "5.1 DELIVERY TERMS\n\nAll deliveries shall be FOB Origin (Supplier's Dock), freight prepaid\nand charged back to Buyer. Title and risk of loss transfer to Buyer\nupon delivery to the carrier at Supplier's facility.\n\nShip To Address:\n    Acme Aerospace Corporation\n    Receiving Dock 7\n    1200 Aviation Boulevard\n    Wichita, KS 67277\n    Attn: Receiving - PO# AA-2025-00847\n"
+    },
+    {
+      "start_line": 506,
+      "end_line": 526,
+      "clause_number": "5.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "5.2 PACKAGING AND MARKING\n\nAll Goods shall be packaged in accordance with ASTM D3951 (Standard\nPractice for Commercial Packaging) and MIL-STD-2073-1 (Standard Practice\nfor Military Packaging) Level A. Wire harness assemblies shall be\npackaged to prevent damage from handling, shipping, and environmental\nexposure.\n\nEach package shall be marked with:\n\n    (a) Buyer's Purchase Order number\n    (b) Buyer's Part Number\n    (c) Supplier's Part Number (if different)\n    (d) Quantity\n    (e) Lot/Serial number\n    (f) Manufacturing date\n    (g) Country of Origin\n\nESD-sensitive items shall be packaged in ESD-protective packaging per\nANSI/ESD S20.20 and marked with appropriate ESD warning labels.\n"
+    },
+    {
+      "start_line": 527,
+      "end_line": 540,
+      "clause_number": "5.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "5.3 SHIPPING DOCUMENTATION\n\nEach shipment shall include:\n\n    (a) Packing slip with Purchase Order number, line item, part number,\n        quantity, and lot/serial numbers\n    (b) Certificate of Conformance certifying Goods conform to all\n        Purchase Order requirements\n    (c) First Article Inspection Report (for initial shipments of FAI-\n        required items, if not previously submitted)\n    (d) Material certifications as specified in Section 3.1\n    (e) Test data as required by the Technical Data Package\n    (f) Country of Origin documentation\n"
+    },
+    {
+      "start_line": 541,
+      "end_line": 556,
+      "clause_number": "5.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "5.4 DELIVERY SCHEDULE\n\nTime is of the essence. Supplier shall notify Buyer immediately upon\nbecoming aware of any actual or potential delay in meeting the delivery\nschedule. Notification shall include:\n\n    (a) Cause of delay\n    (b) Affected line items and quantities\n    (c) Expected recovery date\n    (d) Corrective actions being taken\n\nBuyer reserves the right to assess liquidated damages of one percent\n(1%) of the value of delayed items per week, up to a maximum of ten\npercent (10%), for late deliveries not excused under the Excusable\nDelays clause.\n"
+    },
+    {
+      "start_line": 557,
+      "end_line": 564,
+      "clause_number": "5.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "5.5 EXCUSABLE DELAYS\n\nSupplier shall not be liable for delays caused by acts of God, acts of\nthe Government in its sovereign capacity, fires, floods, epidemics,\nquarantine restrictions, strikes, or freight embargoes, provided that\nSupplier notifies Buyer in writing within ten (10) days of the event\nand uses its best efforts to mitigate the delay.\n"
+    },
+    {
+      "start_line": 566,
+      "end_line": 568,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 6: FAR/DFARS FLOW-DOWN CLAUSES\n================================================================================"
+    },
+    {
+      "start_line": 570,
+      "end_line": 576,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "The following Federal Acquisition Regulation (FAR) and Defense Federal\nAcquisition Regulation Supplement (DFARS) clauses are incorporated by\nreference and apply to this Purchase Order to the extent required by the\nPrime Contract and applicable regulations. \"Contractor\" means Supplier,\nand \"Contract\" means this Purchase Order, except where context requires\notherwise.\n"
+    },
+    {
+      "start_line": 577,
+      "end_line": 623,
+      "clause_number": "6.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "6.1 REQUIRED FAR CLAUSES\n\nFAR 52.203-13   Contractor Code of Business Ethics and Conduct\n                (NOV 2021)\n\nFAR 52.203-17   Contractor Employee Whistleblower Rights and\n                Requirement to Inform Employees of Whistleblower\n                Rights (JUN 2020)\n\nFAR 52.204-21   Basic Safeguarding of Covered Contractor Information\n                Systems (NOV 2021)\n\nFAR 52.204-23   Prohibition on Contracting for Hardware, Software, and\n                Services Developed or Provided by Kaspersky Lab and\n                Other Covered Entities (NOV 2021)\n\nFAR 52.204-25   Prohibition on Contracting for Certain\n                Telecommunications and Video Surveillance Services or\n                Equipment (NOV 2021)\n\nFAR 52.219-8    Utilization of Small Business Concerns (OCT 2022)\n\nFAR 52.222-21   Prohibition of Segregated Facilities (APR 2015)\n\nFAR 52.222-26   Equal Opportunity (SEP 2016)\n\nFAR 52.222-35   Equal Opportunity for Veterans (JUN 2020)\n\nFAR 52.222-36   Equal Opportunity for Workers with Disabilities\n                (JUN 2020)\n\nFAR 52.222-37   Employment Reports on Veterans (JUN 2020)\n\nFAR 52.222-50   Combating Trafficking in Persons (NOV 2021)\n\nFAR 52.223-6    Drug-Free Workplace (MAY 2001)\n\nFAR 52.225-13   Restrictions on Certain Foreign Purchases (FEB 2021)\n\nFAR 52.227-14   Rights in Data\u2014General (MAY 2014)\n\nFAR 52.244-6    Subcontracts for Commercial Products and Commercial\n                Services (SEP 2023)\n\nFAR 52.247-64   Preference for Privately Owned U.S.-Flag Commercial\n                Vessels (FEB 2006)\n"
+    },
+    {
+      "start_line": 624,
+      "end_line": 676,
+      "clause_number": "6.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "6.2 REQUIRED DFARS CLAUSES\n\nDFARS 252.203-7002   Requirement to Inform Employees of Whistleblower\n                     Rights (DEC 2022)\n\nDFARS 252.204-7012   Safeguarding Covered Defense Information and\n                     Cyber Incident Reporting (DEC 2019)\n\nDFARS 252.204-7015   Notice of Authorized Disclosure of Information\n                     for Litigation Support (MAY 2016)\n\nDFARS 252.204-7018   Prohibition on the Acquisition of Covered Defense\n                     Telecommunications Equipment or Services\n                     (JAN 2023)\n\nDFARS 252.211-7003   Item Unique Identification and Valuation\n                     (JAN 2023)\n\nDFARS 252.223-7008   Prohibition of Hexavalent Chromium (JUN 2013)\n\nDFARS 252.225-7001   Buy American and Balance of Payments Program\n                     (DEC 2022)\n\nDFARS 252.225-7002   Qualifying Country Sources as Subcontractors\n                     (DEC 2022)\n\nDFARS 252.225-7009   Restriction on Acquisition of Certain Articles\n                     Containing Specialty Metals (OCT 2014)\n\nDFARS 252.225-7012   Preference for Certain Domestic Commodities\n                     (DEC 2022)\n\nDFARS 252.225-7048   Export-Controlled Items (JUN 2013)\n\nDFARS 252.227-7013   Rights in Technical Data\u2014Noncommercial Items\n                     (FEB 2014)\n\nDFARS 252.227-7015   Technical Data\u2014Commercial Products and Commercial\n                     Services (FEB 2014)\n\nDFARS 252.227-7037   Validation of Restrictive Markings on Technical\n                     Data (SEP 2016)\n\nDFARS 252.244-7001   Contractor Purchasing System Administration\n                     (MAY 2014)\n\nDFARS 252.246-7007   Contractor Counterfeit Electronic Part Detection\n                     and Avoidance System (AUG 2016)\n\nDFARS 252.246-7008   Sources of Electronic Parts (MAY 2018)\n\nDFARS 252.247-7023   Transportation of Supplies by Sea (FEB 2019)\n"
+    },
+    {
+      "start_line": 677,
+      "end_line": 683,
+      "clause_number": "6.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "6.3 FLOW-DOWN TO LOWER-TIER SUBCONTRACTORS\n\nSupplier shall flow down all applicable FAR and DFARS clauses to its\nsubcontractors and suppliers to the extent required for the items or\nservices they provide. Supplier is responsible for ensuring compliance\nby its subcontractors and suppliers.\n"
+    },
+    {
+      "start_line": 685,
+      "end_line": 687,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 7: INTELLECTUAL PROPERTY\n================================================================================"
+    },
+    {
+      "start_line": 689,
+      "end_line": 696,
+      "clause_number": "7.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "7.1 BACKGROUND INTELLECTUAL PROPERTY\n\nEach party retains ownership of its Background Intellectual Property.\n\"Background IP\" means inventions, patents, copyrights, trade secrets,\nand other intellectual property owned or licensed by a party prior to\nthis Purchase Order or developed independently outside the scope of\nthis Purchase Order.\n"
+    },
+    {
+      "start_line": 697,
+      "end_line": 705,
+      "clause_number": "7.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "7.2 FOREGROUND INTELLECTUAL PROPERTY\n\nAny inventions, improvements, or technical data first conceived or\ndeveloped in the performance of this Purchase Order using Buyer's\nfunding shall be owned by Buyer. Supplier hereby assigns to Buyer all\nright, title, and interest in such Foreground Intellectual Property.\nSupplier shall promptly disclose any such inventions to Buyer and shall\nexecute any documents necessary to perfect Buyer's ownership.\n"
+    },
+    {
+      "start_line": 706,
+      "end_line": 712,
+      "clause_number": "7.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "7.3 LICENSE TO BUYER\n\nSupplier grants to Buyer a non-exclusive, royalty-free, worldwide,\nperpetual license to use, modify, and have modified Supplier's\nBackground IP to the extent incorporated in or necessary to use,\nmaintain, or modify the Goods delivered under this Purchase Order.\n"
+    },
+    {
+      "start_line": 713,
+      "end_line": 718,
+      "clause_number": "7.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "7.4 GOVERNMENT RIGHTS\n\nThe Government's rights in technical data and computer software\ndelivered under this Purchase Order are as set forth in DFARS\n252.227-7013 and DFARS 252.227-7014, as applicable.\n"
+    },
+    {
+      "start_line": 720,
+      "end_line": 722,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 8: WARRANTY AND LIABILITY\n================================================================================"
+    },
+    {
+      "start_line": 724,
+      "end_line": 742,
+      "clause_number": "8.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "8.1 WARRANTY\n\nSupplier warrants that all Goods delivered under this Purchase Order:\n\n    (a) Conform to all specifications, drawings, samples, and\n        descriptions applicable to this Purchase Order;\n    (b) Are free from defects in materials and workmanship;\n    (c) Are free from defects in design to the extent Supplier is\n        responsible for design;\n    (d) Are merchantable and fit for their intended purpose;\n    (e) Are manufactured using new materials only, unless otherwise\n        authorized in writing;\n    (f) Do not infringe any patent, trademark, copyright, or other\n        intellectual property right of any third party.\n\nThis warranty shall remain in effect for the later of: (i) thirty-six\n(36) months from Buyer's acceptance, or (ii) twenty-four (24) months\nfrom installation in the end item aircraft.\n"
+    },
+    {
+      "start_line": 743,
+      "end_line": 756,
+      "clause_number": "8.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "8.2 REPAIR AND REPLACEMENT\n\nIf any Goods fail to conform to the warranty during the warranty period,\nSupplier shall, at Buyer's option:\n\n    (a) Repair the nonconforming Goods;\n    (b) Replace the nonconforming Goods; or\n    (c) Refund the purchase price.\n\nSupplier shall bear all costs of repair or replacement, including\nshipping, removal, and reinstallation costs. Repaired or replaced Goods\nshall carry the balance of the original warranty or six (6) months,\nwhichever is longer.\n"
+    },
+    {
+      "start_line": 757,
+      "end_line": 769,
+      "clause_number": "8.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "8.3 INDEMNIFICATION\n\nSupplier shall indemnify, defend, and hold harmless Buyer, its\ncustomers, and the Government from and against all claims, damages,\nlosses, costs, and expenses (including reasonable attorney's fees)\narising from:\n\n    (a) Any breach of Supplier's warranties;\n    (b) Any defect in the Goods;\n    (c) Any negligent act or omission of Supplier;\n    (d) Any infringement of intellectual property rights;\n    (e) Any violation of applicable laws or regulations.\n"
+    },
+    {
+      "start_line": 770,
+      "end_line": 778,
+      "clause_number": "8.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "8.4 LIMITATION OF LIABILITY\n\nNEITHER PARTY SHALL BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,\nCONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATED TO THIS\nPURCHASE ORDER, REGARDLESS OF WHETHER SUCH DAMAGES ARE BASED ON\nCONTRACT, TORT, STRICT LIABILITY, OR ANY OTHER THEORY. THIS LIMITATION\nSHALL NOT APPLY TO SUPPLIER'S INDEMNIFICATION OBLIGATIONS, BREACHES OF\nCONFIDENTIALITY, WILLFUL MISCONDUCT, OR GROSS NEGLIGENCE.\n"
+    },
+    {
+      "start_line": 779,
+      "end_line": 793,
+      "clause_number": "8.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "8.5 INSURANCE\n\nSupplier shall maintain the following insurance coverage throughout the\nperformance of this Purchase Order:\n\n    (a) Commercial General Liability: $2,000,000 per occurrence,\n        $5,000,000 aggregate\n    (b) Products/Completed Operations: $2,000,000 per occurrence\n    (c) Professional Liability (if applicable): $1,000,000 per claim\n    (d) Workers' Compensation: As required by law\n\nSupplier shall provide certificates of insurance upon request and shall\nname Buyer as an additional insured on the Commercial General Liability\nand Products/Completed Operations policies.\n"
+    },
+    {
+      "start_line": 795,
+      "end_line": 797,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 9: COMPLIANCE AND ETHICS\n================================================================================"
+    },
+    {
+      "start_line": 799,
+      "end_line": 811,
+      "clause_number": "9.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "9.1 COMPLIANCE WITH LAWS\n\nSupplier shall comply with all applicable federal, state, and local laws\nand regulations in the performance of this Purchase Order, including but\nnot limited to:\n\n    (a) Anti-corruption laws (FCPA, UK Bribery Act)\n    (b) Export control laws (ITAR, EAR)\n    (c) Environmental laws\n    (d) Employment and labor laws\n    (e) Occupational health and safety laws\n    (f) Antitrust and competition laws\n"
+    },
+    {
+      "start_line": 812,
+      "end_line": 819,
+      "clause_number": "9.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "9.2 CODE OF CONDUCT\n\nSupplier shall conduct its business in accordance with the highest\nethical standards and in compliance with Buyer's Supplier Code of\nConduct, available at www.acmeaero.com/supplier-code. Supplier shall\nensure that its employees and subcontractors are aware of and comply\nwith applicable ethical requirements.\n"
+    },
+    {
+      "start_line": 820,
+      "end_line": 826,
+      "clause_number": "9.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "9.3 ANTI-KICKBACK\n\nSupplier certifies that no kickbacks have been paid or will be paid to\nany person in connection with this Purchase Order. Supplier shall\ncomply with the Anti-Kickback Act (41 U.S.C. Chapter 87) and FAR\n52.203-7.\n"
+    },
+    {
+      "start_line": 827,
+      "end_line": 833,
+      "clause_number": "9.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "9.4 ORGANIZATIONAL CONFLICT OF INTEREST\n\nSupplier shall disclose to Buyer any actual or potential organizational\nconflict of interest that may affect Supplier's ability to perform\nthis Purchase Order in an impartial manner. Supplier shall implement\nmitigation measures acceptable to Buyer for any identified conflicts.\n"
+    },
+    {
+      "start_line": 834,
+      "end_line": 841,
+      "clause_number": "9.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "9.5 REPORTING VIOLATIONS\n\nSupplier shall promptly report to Buyer any known or suspected\nviolations of law, regulation, or this Purchase Order. Reports may be\nmade to Buyer's Ethics Hotline at 1-800-555-ACME or\nethics@acmeaero.com. Retaliation against any person who reports a\nviolation in good faith is prohibited.\n"
+    },
+    {
+      "start_line": 843,
+      "end_line": 845,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "header",
+      "text": "================================================================================\n                    SECTION 10: MISCELLANEOUS\n================================================================================"
+    },
+    {
+      "start_line": 847,
+      "end_line": 855,
+      "clause_number": "10.1",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.1 ASSIGNMENT\n\nSupplier shall not assign this Purchase Order or any rights or\nobligations hereunder without the prior written consent of Buyer. Any\nattempted assignment without such consent shall be void. Buyer may\nassign this Purchase Order to any affiliate or to any successor in\nconnection with a merger, acquisition, or sale of substantially all\nof its assets.\n"
+    },
+    {
+      "start_line": 856,
+      "end_line": 866,
+      "clause_number": "10.2",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.2 SUBCONTRACTING\n\nSupplier may subcontract portions of the Work to qualified subcontractors\non Supplier's Approved Supplier List, provided that:\n\n    (a) Supplier remains fully responsible for all Work\n    (b) Supplier flows down all applicable requirements to subcontractors\n    (c) Supplier obtains Buyer's prior written approval for subcontracting\n        of Flight Critical items or special processes\n    (d) Supplier maintains records of all subcontracts\n"
+    },
+    {
+      "start_line": 867,
+      "end_line": 881,
+      "clause_number": "10.3",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.3 AUDIT RIGHTS\n\nBuyer and the Government shall have the right to examine and audit\nSupplier's books, records, and facilities relating to this Purchase\nOrder. Such audits may include:\n\n    (a) Cost or pricing data\n    (b) Quality records\n    (c) Counterfeit prevention records\n    (d) Export control compliance records\n    (e) Cybersecurity compliance records\n\nSupplier shall retain all records for a minimum of six (6) years from\nfinal payment or longer if required by law or regulation.\n"
+    },
+    {
+      "start_line": 882,
+      "end_line": 901,
+      "clause_number": "10.4",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.4 NOTICES\n\nAll notices under this Purchase Order shall be in writing and shall be\ndeemed delivered when: (a) delivered personally; (b) sent by confirmed\nfacsimile; (c) one (1) business day after deposit with a nationally\nrecognized overnight courier; or (d) three (3) business days after\nmailing by certified mail, return receipt requested.\n\nNotices to Buyer:\n    Acme Aerospace Corporation\n    Attn: Procurement Department\n    1200 Aviation Boulevard\n    Wichita, KS 67277\n\nNotices to Supplier:\n    Precision Wire Systems, Inc.\n    Attn: Contracts Manager\n    4500 Industrial Parkway\n    Phoenix, AZ 85034\n"
+    },
+    {
+      "start_line": 902,
+      "end_line": 917,
+      "clause_number": "10.5",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.5 DISPUTES\n\nAny dispute arising under or relating to this Purchase Order shall be\nresolved as follows:\n\n    (a) The parties shall first attempt to resolve the dispute through\n        good faith negotiations between their designated representatives.\n    (b) If not resolved within thirty (30) days, either party may\n        escalate the dispute to senior management of both parties.\n    (c) If not resolved within sixty (60) days, either party may pursue\n        remedies available at law or in equity.\n\nThis clause shall not limit Buyer's right to seek injunctive relief for\nbreaches of confidentiality, intellectual property, or export control\nprovisions.\n"
+    },
+    {
+      "start_line": 918,
+      "end_line": 924,
+      "clause_number": "10.6",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.6 GOVERNING LAW\n\nThis Purchase Order shall be governed by and construed in accordance\nwith the laws of the State of Kansas, without regard to its conflict\nof laws principles. The United Nations Convention on Contracts for the\nInternational Sale of Goods shall not apply.\n"
+    },
+    {
+      "start_line": 925,
+      "end_line": 932,
+      "clause_number": "10.7",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.7 ENTIRE AGREEMENT\n\nThis Purchase Order, including all documents incorporated by reference,\nconstitutes the entire agreement between the parties with respect to\nits subject matter and supersedes all prior negotiations, agreements,\nand understandings. This Purchase Order may only be modified by a\nwritten amendment signed by authorized representatives of both parties.\n"
+    },
+    {
+      "start_line": 933,
+      "end_line": 938,
+      "clause_number": "10.8",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.8 SEVERABILITY\n\nIf any provision of this Purchase Order is held to be invalid or\nunenforceable, the remaining provisions shall continue in full force\nand effect.\n"
+    },
+    {
+      "start_line": 939,
+      "end_line": 944,
+      "clause_number": "10.9",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.9 WAIVER\n\nThe failure of either party to enforce any provision of this Purchase\nOrder shall not constitute a waiver of that party's right to enforce\nthat provision or any other provision in the future.\n"
+    },
+    {
+      "start_line": 945,
+      "end_line": 951,
+      "clause_number": "10.10",
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "10.10 SURVIVAL\n\nThe following provisions shall survive completion or termination of\nthis Purchase Order: Warranty, Indemnification, Intellectual Property,\nConfidentiality, Export Control, Audit Rights, and any other provision\nthat by its nature should survive.\n"
+    },
+    {
+      "start_line": 953,
+      "end_line": 980,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "signature",
+      "text": "================================================================================\n                         SIGNATURE PAGE\n================================================================================\n\nThis Purchase Order is issued by Acme Aerospace Corporation and is\nbinding upon acceptance by Supplier as provided in Section 1.3.\n\n\nISSUED BY:\n\nAcme Aerospace Corporation\n\nBy:    _________________________________\nName:  Jennifer Morrison\nTitle: Senior Procurement Specialist\nDate:  January 15, 2025\n\n\nACCEPTED BY:\n\nPrecision Wire Systems, Inc.\n\nBy:    _________________________________\nName:  _________________________________\nTitle: _________________________________\nDate:  _________________________________\n\n"
+    },
+    {
+      "start_line": 981,
+      "end_line": 1013,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "================================================================================\n                    ATTACHMENT A: TECHNICAL DATA PACKAGE\n================================================================================\n\nThe following documents are incorporated by reference and form part of\nthis Purchase Order:\n\nDrawing Package:\n    - AWH-7842-001 Rev C    Main Fuel Transfer Wire Harness Assembly\n    - AWH-7842-002 Rev B    Auxiliary Power Distribution Harness\n    - AWH-7842-003 Rev A    Boom Operator Station Wiring Assembly\n    - AWH-7842-004 Rev B    Engine Nacelle Sensor Harness (Left)\n    - AWH-7842-005 Rev B    Engine Nacelle Sensor Harness (Right)\n    - CCA-9921-007 Rev D    Refueling Boom Control Cable Assembly\n\nSpecifications:\n    - ACME-SPEC-1001 Rev F  Wire Harness General Requirements\n    - ACME-SPEC-1002 Rev D  Harness Testing Requirements\n    - ACME-SPEC-1003 Rev C  Environmental Qualification Requirements\n\nProcess Specifications:\n    - ACME-PS-201 Rev B     Crimping Process Specification\n    - ACME-PS-202 Rev A     Soldering Process Specification\n    - ACME-PS-203 Rev C     Potting and Sealing Specification\n\nIndustry Standards (as referenced on drawings):\n    - IPC/WHMA-A-620D       Acceptability of Electronic Wire Harnesses\n    - SAE AS50881F          Wiring Aerospace Vehicle\n    - MIL-DTL-27500         Wire, Electrical, Fluoropolymer-Insulated\n    - MIL-DTL-38999         Connectors, Electrical, Circular\n    - NASA-STD-8739.4       Crimping, Interconnecting Cables\n\n"
+    },
+    {
+      "start_line": 1014,
+      "end_line": 1040,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "================================================================================\n                    ATTACHMENT B: QUALITY REQUIREMENTS MATRIX\n================================================================================\n\nThe following matrix identifies quality requirements by line item:\n\n+------+---------------+-------+-------+-------+--------+--------+----------+\n| Line | Part Number   | FAI   | Source| FAIR  | Lot    | ESD    | Shelf    |\n|      |               | Req'd | Insp  | Forms | Trace  | Ctrl   | Life     |\n+------+---------------+-------+-------+-------+--------+--------+----------+\n| 001  | AWH-7842-001  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |\n| 002  | AWH-7842-002  | No    | No    | N/A   | Yes    | Yes    | No       |\n| 003  | AWH-7842-003  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |\n| 004  | AWH-7842-004  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |\n| 005  | AWH-7842-005  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |\n| 006  | CCA-9921-007  | No    | No    | N/A   | Yes    | Yes    | No       |\n+------+---------------+-------+-------+-------+--------+--------+----------+\n\nLegend:\n    FAI Req'd   = First Article Inspection Required\n    Source Insp = Source Inspection Required\n    FAIR Forms  = Required AS9102 Forms (1, 2, and/or 3)\n    Lot Trace   = Full Lot Traceability Required\n    ESD Ctrl    = ESD-Sensitive Handling Required\n    Shelf Life  = Contains Shelf-Life Limited Materials\n\n"
+    },
+    {
+      "start_line": 1041,
+      "end_line": 1066,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "clause",
+      "text": "================================================================================\n                    ATTACHMENT C: DELIVERY SCHEDULE\n================================================================================\n\nDetailed delivery schedule by line item:\n\nLine 001 - AWH-7842-001 (24 units total):\n    Delivery 1:  12 units by March 15, 2025\n    Delivery 2:  12 units by April 30, 2025\n\nLine 002 - AWH-7842-002 (48 units total):\n    Delivery 1:  All 48 units by April 15, 2025\n\nLine 003 - AWH-7842-003 (12 units total):\n    Delivery 1:  All 12 units by May 1, 2025\n\nLine 004 - AWH-7842-004 (24 units total):\n    Delivery 1:  All 24 units by April 30, 2025\n\nLine 005 - AWH-7842-005 (24 units total):\n    Delivery 1:  All 24 units by April 30, 2025\n\nLine 006 - CCA-9921-007 (36 units total):\n    Delivery 1:  All 36 units by March 30, 2025\n\n"
+    },
+    {
+      "start_line": 1067,
+      "end_line": 1069,
+      "clause_number": null,
+      "clause_title": null,
+      "chunk_type": "boilerplate",
+      "text": "================================================================================\n                         END OF PURCHASE ORDER\n================================================================================"
+    }
+  ]
+}

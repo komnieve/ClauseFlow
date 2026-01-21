@@ -1,0 +1,1069 @@
+================================================================================
+                            PURCHASE ORDER
+================================================================================
+
+ACME AEROSPACE CORPORATION
+1200 Aviation Boulevard
+Wichita, KS 67277
+
+--------------------------------------------------------------------------------
+                         PURCHASE ORDER DETAILS
+--------------------------------------------------------------------------------
+
+PO Number:          AA-2025-00847
+PO Date:            January 15, 2025
+Revision:           0
+Contract Type:      Fixed Price
+Prime Contract:     FA8615-23-C-0042 (U.S. Air Force)
+
+SUPPLIER:
+  Precision Wire Systems, Inc.
+  4500 Industrial Parkway
+  Phoenix, AZ 85034
+  CAGE Code: 5K2M7
+  DUNS: 07-842-1956
+
+BUYER:
+  Jennifer Morrison
+  Senior Procurement Specialist
+  jennifer.morrison@acmeaero.com
+  (316) 555-2847
+
+PROGRAM:
+  KC-46A Tanker Aircraft
+  Aerial Refueling System
+
+--------------------------------------------------------------------------------
+                              LINE ITEMS
+--------------------------------------------------------------------------------
+
+Line 001:
+  Part Number:        AWH-7842-001
+  Description:        Main Fuel Transfer Wire Harness Assembly
+  Quantity:           24 EA
+  Unit Price:         $4,872.00
+  Extended Price:     $116,928.00
+  Delivery:           30 units by March 15, 2025
+                      Remaining by April 30, 2025
+  Quality Level:      Flight Critical
+
+Line 002:
+  Part Number:        AWH-7842-002
+  Description:        Auxiliary Power Distribution Harness
+  Quantity:           48 EA
+  Unit Price:         $2,156.00
+  Extended Price:     $103,488.00
+  Delivery:           All units by April 15, 2025
+  Quality Level:      Mission Essential
+
+Line 003:
+  Part Number:        AWH-7842-003
+  Description:        Boom Operator Station Wiring Assembly
+  Quantity:           12 EA
+  Unit Price:         $6,445.00
+  Extended Price:     $77,340.00
+  Delivery:           All units by May 1, 2025
+  Quality Level:      Flight Critical
+
+Line 004:
+  Part Number:        AWH-7842-004
+  Description:        Engine Nacelle Sensor Harness (Left)
+  Quantity:           24 EA
+  Unit Price:         $3,287.00
+  Extended Price:     $78,888.00
+  Delivery:           All units by April 30, 2025
+  Quality Level:      Flight Critical
+
+Line 005:
+  Part Number:        AWH-7842-005
+  Description:        Engine Nacelle Sensor Harness (Right)
+  Quantity:           24 EA
+  Unit Price:         $3,287.00
+  Extended Price:     $78,888.00
+  Delivery:           All units by April 30, 2025
+  Quality Level:      Flight Critical
+
+Line 006:
+  Part Number:        CCA-9921-007
+  Description:        Refueling Boom Control Cable Assembly
+  Quantity:           36 EA
+  Unit Price:         $1,842.00
+  Extended Price:     $66,312.00
+  Delivery:           All units by March 30, 2025
+  Quality Level:      Mission Essential
+
+--------------------------------------------------------------------------------
+                      TOTAL PO VALUE: $522,844.00
+--------------------------------------------------------------------------------
+
+
+================================================================================
+                    SECTION 1: GENERAL PROVISIONS
+================================================================================
+
+1.1 ORDER OF PRECEDENCE
+
+In the event of any inconsistency between the provisions of this Purchase
+Order, the inconsistency shall be resolved by giving precedence in the
+following order:
+
+    (a) The Schedule (Line Items and Delivery Requirements)
+    (b) Special Contract Requirements (Section 4)
+    (c) FAR/DFARS Clauses incorporated by reference
+    (d) General Provisions (this Section 1)
+    (e) Technical Data Package and Specifications
+    (f) Supplier's quotation dated November 12, 2024
+
+1.2 DEFINITIONS
+
+As used throughout this Purchase Order:
+
+    (a) "Buyer" means Acme Aerospace Corporation
+    (b) "Supplier" means Precision Wire Systems, Inc.
+    (c) "Government" means the United States Government
+    (d) "Prime Contract" means Contract FA8615-23-C-0042
+    (e) "Goods" means the items described in the Line Items section
+    (f) "Services" means any services to be performed under this Order
+    (g) "Contracting Officer" means the U.S. Government official with
+        authority to enter into, administer, and terminate the Prime Contract
+    (h) "Flight Critical" means items whose failure would result in loss of
+        aircraft or loss of life
+    (i) "Work" means all labor, materials, equipment, and services required
+        to fulfill this Purchase Order
+
+1.3 ACCEPTANCE OF ORDER
+
+This Purchase Order constitutes an offer by Buyer to Supplier. Supplier's
+acceptance of this offer is expressly limited to the terms and conditions
+contained herein. Commencement of performance or shipment of Goods shall
+constitute acceptance of all terms and conditions. Any additional or different
+terms proposed by Supplier are hereby rejected unless expressly agreed to in
+writing by Buyer's authorized procurement representative.
+
+1.4 CHANGES
+
+Buyer may at any time, by written notice, make changes within the general
+scope of this Purchase Order in any one or more of the following:
+
+    (a) Drawings, designs, or specifications
+    (b) Method of shipment or packing
+    (c) Place of delivery
+    (d) Delivery schedule
+    (e) Quantity (increases or decreases of up to 10%)
+
+If any such change causes an increase or decrease in the cost of, or the
+time required for, performance of any part of the Work, Buyer shall make
+an equitable adjustment in the Purchase Order price or delivery schedule,
+or both. Any claim by Supplier for adjustment under this clause must be
+asserted within thirty (30) days from the date of receipt of the written
+change notice. Failure to agree on any adjustment shall be a dispute under
+the Disputes clause. Nothing in this clause shall excuse Supplier from
+proceeding with the Purchase Order as changed.
+
+1.5 STOP WORK ORDER
+
+Buyer may, at any time, by written order to Supplier, require Supplier to
+stop all, or any part of, the Work called for by this Purchase Order for a
+period of ninety (90) days after the order is delivered to Supplier, and
+for any further period to which the parties may agree. Upon receipt of the
+Stop Work Order, Supplier shall immediately comply with its terms and take
+all reasonable steps to minimize the incurrence of costs allocable to the
+Work covered by the order during the period of work stoppage. Within the
+period specified, Buyer shall either:
+
+    (a) Cancel the Stop Work Order; or
+    (b) Terminate the Work covered by the order as provided in the
+        Termination clause.
+
+1.6 TERMINATION FOR CONVENIENCE
+
+Buyer may terminate this Purchase Order, in whole or in part, at any time
+by written notice to Supplier when it is in Buyer's best interest. Upon
+receipt of a termination notice, Supplier shall immediately stop Work as
+directed in the notice and notify its suppliers and subcontractors of the
+termination. Supplier shall be entitled to an equitable adjustment for Work
+performed prior to termination, including a reasonable profit, but in no
+event shall Supplier's total recovery exceed the Purchase Order price.
+
+1.7 TERMINATION FOR DEFAULT
+
+Buyer may, by written notice of default to Supplier, terminate this Purchase
+Order in whole or in part if Supplier:
+
+    (a) Fails to deliver the Goods within the time specified;
+    (b) Fails to make progress so as to endanger performance; or
+    (c) Fails to perform any other provision of this Purchase Order.
+
+Before terminating for default, Buyer shall provide Supplier written notice
+specifying the failure and allowing ten (10) days to cure such failure. If
+this Purchase Order is terminated for default, Buyer may require Supplier
+to transfer title and deliver to Buyer any completed Goods, work in process,
+and materials. Supplier shall be liable for any excess costs incurred by
+Buyer in procuring substitute Goods.
+
+
+================================================================================
+                    SECTION 2: QUALITY REQUIREMENTS
+================================================================================
+
+2.1 QUALITY MANAGEMENT SYSTEM
+
+Supplier shall maintain a Quality Management System certified to AS9100
+Rev D (or later revision) by an accredited registrar. Supplier shall
+provide evidence of current certification upon request. Supplier shall
+notify Buyer within five (5) business days of any suspension, withdrawal,
+or limitation of its AS9100 certification.
+
+2.2 FIRST ARTICLE INSPECTION
+
+First Article Inspection (FAI) in accordance with AS9102 Rev B is required
+for all Line Items designated as "Flight Critical" in this Purchase Order.
+First Article Inspection is required for:
+
+    - Line 001: AWH-7842-001
+    - Line 003: AWH-7842-003
+    - Line 004: AWH-7842-004
+    - Line 005: AWH-7842-005
+
+The First Article Inspection Report (FAIR) shall be submitted to Buyer
+for approval a minimum of fifteen (15) business days prior to the first
+production shipment. Production shipments shall not commence until Buyer
+has provided written approval of the FAIR. The FAIR shall include:
+
+    (a) Form 1 - Part Number Accountability
+    (b) Form 2 - Product Accountability (material, special processes,
+        functional testing)
+    (c) Form 3 - Characteristic Accountability (all drawing characteristics)
+    (d) Supporting objective evidence (inspection reports, test data,
+        material certifications)
+
+2.3 SOURCE INSPECTION
+
+Buyer and/or the U.S. Government reserve the right to perform source
+inspection at Supplier's facility. Supplier shall provide Buyer's quality
+representatives and Government inspectors access to its facility with
+forty-eight (48) hours advance notice. Source inspection does not relieve
+Supplier of its responsibility to provide conforming product.
+
+Source Inspection is mandatory for all Flight Critical items (Lines 001,
+003, 004, 005) prior to shipment. Supplier shall notify Buyer's Quality
+Assurance department a minimum of five (5) business days prior to the
+scheduled source inspection date.
+
+Contact for Source Inspection scheduling:
+    Robert Chen, Quality Manager
+    robert.chen@acmeaero.com
+    (316) 555-2851
+
+2.4 RECEIVING INSPECTION
+
+All Goods are subject to inspection and testing by Buyer within a
+reasonable time after receipt. Payment for Goods does not constitute
+acceptance. Buyer may reject any Goods that do not conform to the
+requirements of this Purchase Order. Rejected Goods may be returned to
+Supplier at Supplier's expense, or held for Supplier's disposition
+instructions. Supplier shall bear all costs associated with the
+inspection, return, replacement, or correction of nonconforming Goods.
+
+2.5 WIRE HARNESS SPECIFIC REQUIREMENTS
+
+All wire harness assemblies shall be manufactured in accordance with:
+
+    (a) IPC/WHMA-A-620 Class 3 (Space and Military/High Performance
+        Electronic Equipment)
+    (b) SAE AS50881 (Wiring Aerospace Vehicle)
+    (c) Drawing requirements and specifications referenced on the
+        Technical Data Package
+
+Supplier shall maintain personnel certified to IPC/WHMA-A-620 for all
+production and inspection operations. Evidence of current personnel
+certifications shall be maintained and provided upon request.
+
+2.6 SPECIAL PROCESS REQUIREMENTS
+
+The following special processes require approval by Buyer or the
+Government prior to use. Supplier shall not change approved special
+process sources without prior written authorization from Buyer.
+
+    (a) Crimping and Termination - Per NASA-STD-8739.4
+    (b) Soldering - Per IPC J-STD-001 Class 3 with Space Addendum
+    (c) Wire Marking - Per MIL-STD-202, Method 215
+    (d) Potting and Encapsulation - Per manufacturer specifications
+    (e) Environmental Sealing - Per AS81714 (connector) and
+        MS27488 (backshell)
+    (f) Shielding Termination - Per drawing requirements
+
+All special processes shall be performed by Nadcap-accredited processors
+or by Supplier if Supplier maintains internal Nadcap accreditation for
+the applicable process.
+
+2.7 NONCONFORMING MATERIAL
+
+Supplier shall not ship nonconforming material without prior written
+authorization from Buyer. Requests for deviation or waiver shall be
+submitted through Buyer's Supplier Quality Portal and shall include:
+
+    (a) Description of the nonconformance
+    (b) Root cause analysis
+    (c) Corrective action to prevent recurrence
+    (d) Proposed disposition (use-as-is, rework, repair, scrap)
+    (e) Technical justification for use-as-is or repair dispositions
+
+Supplier shall segregate and identify all nonconforming material pending
+disposition instructions. Nonconforming material shipped without
+authorization may be returned at Supplier's expense and may result in
+corrective action or removal from Buyer's Approved Supplier List.
+
+2.8 CORRECTIVE ACTION
+
+Supplier shall maintain a Corrective Action system conforming to AS9100
+requirements. Upon notification of a quality escape, Supplier shall:
+
+    (a) Respond with containment actions within twenty-four (24) hours
+    (b) Submit root cause analysis within ten (10) business days
+    (c) Submit corrective action plan within fifteen (15) business days
+    (d) Implement corrective actions per the approved plan
+    (e) Provide objective evidence of effectiveness
+
+Failure to respond to corrective action requests in a timely manner may
+result in assessment of liquidated damages, placement on Buyer's Supplier
+Watch List, or removal from the Approved Supplier List.
+
+
+================================================================================
+                    SECTION 3: MATERIAL AND TRACEABILITY
+================================================================================
+
+3.1 MATERIAL CERTIFICATION
+
+All materials used in the manufacture of Goods shall be traceable to the
+original material manufacturer. Supplier shall obtain and maintain
+Certificates of Conformance (C of C) or Certified Test Reports (CTR) for
+all materials.
+
+The following materials require full Certified Test Reports per the
+applicable material specification:
+
+    (a) Wire and cable per MIL-DTL-27500 or M22759
+    (b) Connectors per AS39029 series
+    (c) Contacts per MIL-DTL-39029
+    (d) Heat shrink tubing per MIL-DTL-23053
+    (e) Solder per J-STD-006
+
+Material certifications shall be retained for a minimum of ten (10) years
+from date of delivery and shall be provided to Buyer upon request.
+
+3.2 COUNTERFEIT PARTS PREVENTION
+
+Supplier shall maintain a Counterfeit Parts Prevention Program in
+accordance with AS6174 and AS6496. Supplier shall:
+
+    (a) Procure parts only from Original Component Manufacturers (OCM),
+        Original Equipment Manufacturers (OEM), or authorized distributors
+    (b) Maintain approved supplier controls including verification of
+        authorized distributor status
+    (c) Perform incoming inspection and testing appropriate to detect
+        counterfeit parts
+    (d) Maintain traceability of parts to their source
+    (e) Report suspected counterfeit parts to Buyer and GIDEP within
+        sixty (60) days of discovery
+
+Use of independent distributors or brokers requires prior written
+approval from Buyer and additional testing per AS6171.
+
+3.3 LOT TRACEABILITY
+
+Supplier shall maintain lot traceability for all materials used in Flight
+Critical assemblies. Each deliverable unit shall be traceable to:
+
+    (a) Raw material lot numbers and certifications
+    (b) Manufacturing date codes
+    (c) Personnel performing critical operations
+    (d) Inspection and test records
+    (e) Special process certifications
+
+Lot traceability records shall be retained for the life of the aircraft
+program plus three (3) years.
+
+3.4 SHELF LIFE AND AGE CONTROL
+
+Supplier shall implement controls to ensure that age-sensitive and
+shelf-life limited materials are used within their specified life limits.
+Materials shall be stored per manufacturer recommendations. The following
+items are subject to shelf life control:
+
+    (a) Solder paste and flux
+    (b) Adhesives and sealants
+    (c) Potting compounds
+    (d) Heat shrink materials with adhesive
+    (e) Wire insulation (per manufacturer)
+
+Shelf life documentation shall be maintained and provided with shipment
+for any materials incorporated with remaining shelf life requirements.
+
+3.5 ROHS AND REACH COMPLIANCE
+
+Unless otherwise specified on the drawing, all materials shall be
+compliant with:
+
+    (a) EU RoHS Directive 2011/65/EU and amendments
+    (b) EU REACH Regulation (EC) No. 1907/2006
+
+For military and aerospace applications where RoHS exemptions apply,
+Supplier shall document the applicable exemption and provide material
+declarations upon request.
+
+
+================================================================================
+            SECTION 4: SPECIAL CONTRACT REQUIREMENTS
+================================================================================
+
+4.1 CONTROLLED UNCLASSIFIED INFORMATION (CUI)
+
+This Purchase Order involves Controlled Unclassified Information as
+defined in 32 CFR Part 2002. Supplier shall:
+
+    (a) Handle, store, and transmit CUI in accordance with NIST SP 800-171
+    (b) Limit access to CUI to personnel with a need-to-know
+    (c) Not disclose CUI to any third party without written authorization
+    (d) Report any known or suspected CUI incidents to Buyer within
+        seventy-two (72) hours
+    (e) Return or destroy all CUI upon completion of the Purchase Order
+        or upon request
+
+CUI documents provided under this Purchase Order are marked "CUI" or
+"CONTROLLED" and include Technical Data Package drawings and specifications.
+
+4.2 EXPORT CONTROL
+
+The technical data and defense articles provided under this Purchase Order
+are controlled under the International Traffic in Arms Regulations (ITAR),
+22 CFR Parts 120-130, and/or the Export Administration Regulations (EAR),
+15 CFR Parts 730-774.
+
+Supplier shall:
+
+    (a) Not export, re-export, or transfer controlled items without proper
+        authorization from the U.S. Department of State or Commerce
+    (b) Ensure that all personnel with access to controlled items are
+        U.S. Persons as defined in 22 CFR 120.15
+    (c) Maintain export control procedures and training
+    (d) Include export control flow-down requirements in all subcontracts
+    (e) Notify Buyer immediately of any actual or potential export
+        control violations
+
+ECCN: 9A610.x - Military Aircraft Parts and Components
+USML Category: XI(a)(1) - Military Electronics
+
+4.3 CYBERSECURITY REQUIREMENTS
+
+Supplier shall implement cybersecurity controls in accordance with
+DFARS 252.204-7012, Safeguarding Covered Defense Information and Cyber
+Incident Reporting. Supplier shall:
+
+    (a) Implement security requirements in NIST SP 800-171 Rev 2
+    (b) Report cyber incidents to Buyer and DoD within 72 hours
+    (c) Preserve images of affected systems for 90 days
+    (d) Flow down these requirements to subcontractors
+
+Supplier's NIST SP 800-171 score shall be entered in the Supplier
+Performance Risk System (SPRS) and shall be made available to Buyer
+upon request.
+
+4.4 GOVERNMENT PROPERTY
+
+No Government property is provided under this Purchase Order. If
+Government property is provided in the future through modification,
+Supplier shall comply with FAR 52.245-1, Government Property.
+
+4.5 DISCLOSURE OF INFORMATION
+
+Supplier shall not release any information regarding this Purchase Order,
+the Prime Contract, or Buyer's business to any third party, including
+press releases, marketing materials, or social media, without prior
+written approval from Buyer. This restriction does not apply to routine
+business communications with Supplier's own suppliers and subcontractors
+to the extent necessary for performance.
+
+
+================================================================================
+                    SECTION 5: DELIVERY REQUIREMENTS
+================================================================================
+
+5.1 DELIVERY TERMS
+
+All deliveries shall be FOB Origin (Supplier's Dock), freight prepaid
+and charged back to Buyer. Title and risk of loss transfer to Buyer
+upon delivery to the carrier at Supplier's facility.
+
+Ship To Address:
+    Acme Aerospace Corporation
+    Receiving Dock 7
+    1200 Aviation Boulevard
+    Wichita, KS 67277
+    Attn: Receiving - PO# AA-2025-00847
+
+5.2 PACKAGING AND MARKING
+
+All Goods shall be packaged in accordance with ASTM D3951 (Standard
+Practice for Commercial Packaging) and MIL-STD-2073-1 (Standard Practice
+for Military Packaging) Level A. Wire harness assemblies shall be
+packaged to prevent damage from handling, shipping, and environmental
+exposure.
+
+Each package shall be marked with:
+
+    (a) Buyer's Purchase Order number
+    (b) Buyer's Part Number
+    (c) Supplier's Part Number (if different)
+    (d) Quantity
+    (e) Lot/Serial number
+    (f) Manufacturing date
+    (g) Country of Origin
+
+ESD-sensitive items shall be packaged in ESD-protective packaging per
+ANSI/ESD S20.20 and marked with appropriate ESD warning labels.
+
+5.3 SHIPPING DOCUMENTATION
+
+Each shipment shall include:
+
+    (a) Packing slip with Purchase Order number, line item, part number,
+        quantity, and lot/serial numbers
+    (b) Certificate of Conformance certifying Goods conform to all
+        Purchase Order requirements
+    (c) First Article Inspection Report (for initial shipments of FAI-
+        required items, if not previously submitted)
+    (d) Material certifications as specified in Section 3.1
+    (e) Test data as required by the Technical Data Package
+    (f) Country of Origin documentation
+
+5.4 DELIVERY SCHEDULE
+
+Time is of the essence. Supplier shall notify Buyer immediately upon
+becoming aware of any actual or potential delay in meeting the delivery
+schedule. Notification shall include:
+
+    (a) Cause of delay
+    (b) Affected line items and quantities
+    (c) Expected recovery date
+    (d) Corrective actions being taken
+
+Buyer reserves the right to assess liquidated damages of one percent
+(1%) of the value of delayed items per week, up to a maximum of ten
+percent (10%), for late deliveries not excused under the Excusable
+Delays clause.
+
+5.5 EXCUSABLE DELAYS
+
+Supplier shall not be liable for delays caused by acts of God, acts of
+the Government in its sovereign capacity, fires, floods, epidemics,
+quarantine restrictions, strikes, or freight embargoes, provided that
+Supplier notifies Buyer in writing within ten (10) days of the event
+and uses its best efforts to mitigate the delay.
+
+
+================================================================================
+                    SECTION 6: FAR/DFARS FLOW-DOWN CLAUSES
+================================================================================
+
+The following Federal Acquisition Regulation (FAR) and Defense Federal
+Acquisition Regulation Supplement (DFARS) clauses are incorporated by
+reference and apply to this Purchase Order to the extent required by the
+Prime Contract and applicable regulations. "Contractor" means Supplier,
+and "Contract" means this Purchase Order, except where context requires
+otherwise.
+
+6.1 REQUIRED FAR CLAUSES
+
+FAR 52.203-13   Contractor Code of Business Ethics and Conduct
+                (NOV 2021)
+
+FAR 52.203-17   Contractor Employee Whistleblower Rights and
+                Requirement to Inform Employees of Whistleblower
+                Rights (JUN 2020)
+
+FAR 52.204-21   Basic Safeguarding of Covered Contractor Information
+                Systems (NOV 2021)
+
+FAR 52.204-23   Prohibition on Contracting for Hardware, Software, and
+                Services Developed or Provided by Kaspersky Lab and
+                Other Covered Entities (NOV 2021)
+
+FAR 52.204-25   Prohibition on Contracting for Certain
+                Telecommunications and Video Surveillance Services or
+                Equipment (NOV 2021)
+
+FAR 52.219-8    Utilization of Small Business Concerns (OCT 2022)
+
+FAR 52.222-21   Prohibition of Segregated Facilities (APR 2015)
+
+FAR 52.222-26   Equal Opportunity (SEP 2016)
+
+FAR 52.222-35   Equal Opportunity for Veterans (JUN 2020)
+
+FAR 52.222-36   Equal Opportunity for Workers with Disabilities
+                (JUN 2020)
+
+FAR 52.222-37   Employment Reports on Veterans (JUN 2020)
+
+FAR 52.222-50   Combating Trafficking in Persons (NOV 2021)
+
+FAR 52.223-6    Drug-Free Workplace (MAY 2001)
+
+FAR 52.225-13   Restrictions on Certain Foreign Purchases (FEB 2021)
+
+FAR 52.227-14   Rights in Data—General (MAY 2014)
+
+FAR 52.244-6    Subcontracts for Commercial Products and Commercial
+                Services (SEP 2023)
+
+FAR 52.247-64   Preference for Privately Owned U.S.-Flag Commercial
+                Vessels (FEB 2006)
+
+6.2 REQUIRED DFARS CLAUSES
+
+DFARS 252.203-7002   Requirement to Inform Employees of Whistleblower
+                     Rights (DEC 2022)
+
+DFARS 252.204-7012   Safeguarding Covered Defense Information and
+                     Cyber Incident Reporting (DEC 2019)
+
+DFARS 252.204-7015   Notice of Authorized Disclosure of Information
+                     for Litigation Support (MAY 2016)
+
+DFARS 252.204-7018   Prohibition on the Acquisition of Covered Defense
+                     Telecommunications Equipment or Services
+                     (JAN 2023)
+
+DFARS 252.211-7003   Item Unique Identification and Valuation
+                     (JAN 2023)
+
+DFARS 252.223-7008   Prohibition of Hexavalent Chromium (JUN 2013)
+
+DFARS 252.225-7001   Buy American and Balance of Payments Program
+                     (DEC 2022)
+
+DFARS 252.225-7002   Qualifying Country Sources as Subcontractors
+                     (DEC 2022)
+
+DFARS 252.225-7009   Restriction on Acquisition of Certain Articles
+                     Containing Specialty Metals (OCT 2014)
+
+DFARS 252.225-7012   Preference for Certain Domestic Commodities
+                     (DEC 2022)
+
+DFARS 252.225-7048   Export-Controlled Items (JUN 2013)
+
+DFARS 252.227-7013   Rights in Technical Data—Noncommercial Items
+                     (FEB 2014)
+
+DFARS 252.227-7015   Technical Data—Commercial Products and Commercial
+                     Services (FEB 2014)
+
+DFARS 252.227-7037   Validation of Restrictive Markings on Technical
+                     Data (SEP 2016)
+
+DFARS 252.244-7001   Contractor Purchasing System Administration
+                     (MAY 2014)
+
+DFARS 252.246-7007   Contractor Counterfeit Electronic Part Detection
+                     and Avoidance System (AUG 2016)
+
+DFARS 252.246-7008   Sources of Electronic Parts (MAY 2018)
+
+DFARS 252.247-7023   Transportation of Supplies by Sea (FEB 2019)
+
+6.3 FLOW-DOWN TO LOWER-TIER SUBCONTRACTORS
+
+Supplier shall flow down all applicable FAR and DFARS clauses to its
+subcontractors and suppliers to the extent required for the items or
+services they provide. Supplier is responsible for ensuring compliance
+by its subcontractors and suppliers.
+
+
+================================================================================
+                    SECTION 7: INTELLECTUAL PROPERTY
+================================================================================
+
+7.1 BACKGROUND INTELLECTUAL PROPERTY
+
+Each party retains ownership of its Background Intellectual Property.
+"Background IP" means inventions, patents, copyrights, trade secrets,
+and other intellectual property owned or licensed by a party prior to
+this Purchase Order or developed independently outside the scope of
+this Purchase Order.
+
+7.2 FOREGROUND INTELLECTUAL PROPERTY
+
+Any inventions, improvements, or technical data first conceived or
+developed in the performance of this Purchase Order using Buyer's
+funding shall be owned by Buyer. Supplier hereby assigns to Buyer all
+right, title, and interest in such Foreground Intellectual Property.
+Supplier shall promptly disclose any such inventions to Buyer and shall
+execute any documents necessary to perfect Buyer's ownership.
+
+7.3 LICENSE TO BUYER
+
+Supplier grants to Buyer a non-exclusive, royalty-free, worldwide,
+perpetual license to use, modify, and have modified Supplier's
+Background IP to the extent incorporated in or necessary to use,
+maintain, or modify the Goods delivered under this Purchase Order.
+
+7.4 GOVERNMENT RIGHTS
+
+The Government's rights in technical data and computer software
+delivered under this Purchase Order are as set forth in DFARS
+252.227-7013 and DFARS 252.227-7014, as applicable.
+
+
+================================================================================
+                    SECTION 8: WARRANTY AND LIABILITY
+================================================================================
+
+8.1 WARRANTY
+
+Supplier warrants that all Goods delivered under this Purchase Order:
+
+    (a) Conform to all specifications, drawings, samples, and
+        descriptions applicable to this Purchase Order;
+    (b) Are free from defects in materials and workmanship;
+    (c) Are free from defects in design to the extent Supplier is
+        responsible for design;
+    (d) Are merchantable and fit for their intended purpose;
+    (e) Are manufactured using new materials only, unless otherwise
+        authorized in writing;
+    (f) Do not infringe any patent, trademark, copyright, or other
+        intellectual property right of any third party.
+
+This warranty shall remain in effect for the later of: (i) thirty-six
+(36) months from Buyer's acceptance, or (ii) twenty-four (24) months
+from installation in the end item aircraft.
+
+8.2 REPAIR AND REPLACEMENT
+
+If any Goods fail to conform to the warranty during the warranty period,
+Supplier shall, at Buyer's option:
+
+    (a) Repair the nonconforming Goods;
+    (b) Replace the nonconforming Goods; or
+    (c) Refund the purchase price.
+
+Supplier shall bear all costs of repair or replacement, including
+shipping, removal, and reinstallation costs. Repaired or replaced Goods
+shall carry the balance of the original warranty or six (6) months,
+whichever is longer.
+
+8.3 INDEMNIFICATION
+
+Supplier shall indemnify, defend, and hold harmless Buyer, its
+customers, and the Government from and against all claims, damages,
+losses, costs, and expenses (including reasonable attorney's fees)
+arising from:
+
+    (a) Any breach of Supplier's warranties;
+    (b) Any defect in the Goods;
+    (c) Any negligent act or omission of Supplier;
+    (d) Any infringement of intellectual property rights;
+    (e) Any violation of applicable laws or regulations.
+
+8.4 LIMITATION OF LIABILITY
+
+NEITHER PARTY SHALL BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATED TO THIS
+PURCHASE ORDER, REGARDLESS OF WHETHER SUCH DAMAGES ARE BASED ON
+CONTRACT, TORT, STRICT LIABILITY, OR ANY OTHER THEORY. THIS LIMITATION
+SHALL NOT APPLY TO SUPPLIER'S INDEMNIFICATION OBLIGATIONS, BREACHES OF
+CONFIDENTIALITY, WILLFUL MISCONDUCT, OR GROSS NEGLIGENCE.
+
+8.5 INSURANCE
+
+Supplier shall maintain the following insurance coverage throughout the
+performance of this Purchase Order:
+
+    (a) Commercial General Liability: $2,000,000 per occurrence,
+        $5,000,000 aggregate
+    (b) Products/Completed Operations: $2,000,000 per occurrence
+    (c) Professional Liability (if applicable): $1,000,000 per claim
+    (d) Workers' Compensation: As required by law
+
+Supplier shall provide certificates of insurance upon request and shall
+name Buyer as an additional insured on the Commercial General Liability
+and Products/Completed Operations policies.
+
+
+================================================================================
+                    SECTION 9: COMPLIANCE AND ETHICS
+================================================================================
+
+9.1 COMPLIANCE WITH LAWS
+
+Supplier shall comply with all applicable federal, state, and local laws
+and regulations in the performance of this Purchase Order, including but
+not limited to:
+
+    (a) Anti-corruption laws (FCPA, UK Bribery Act)
+    (b) Export control laws (ITAR, EAR)
+    (c) Environmental laws
+    (d) Employment and labor laws
+    (e) Occupational health and safety laws
+    (f) Antitrust and competition laws
+
+9.2 CODE OF CONDUCT
+
+Supplier shall conduct its business in accordance with the highest
+ethical standards and in compliance with Buyer's Supplier Code of
+Conduct, available at www.acmeaero.com/supplier-code. Supplier shall
+ensure that its employees and subcontractors are aware of and comply
+with applicable ethical requirements.
+
+9.3 ANTI-KICKBACK
+
+Supplier certifies that no kickbacks have been paid or will be paid to
+any person in connection with this Purchase Order. Supplier shall
+comply with the Anti-Kickback Act (41 U.S.C. Chapter 87) and FAR
+52.203-7.
+
+9.4 ORGANIZATIONAL CONFLICT OF INTEREST
+
+Supplier shall disclose to Buyer any actual or potential organizational
+conflict of interest that may affect Supplier's ability to perform
+this Purchase Order in an impartial manner. Supplier shall implement
+mitigation measures acceptable to Buyer for any identified conflicts.
+
+9.5 REPORTING VIOLATIONS
+
+Supplier shall promptly report to Buyer any known or suspected
+violations of law, regulation, or this Purchase Order. Reports may be
+made to Buyer's Ethics Hotline at 1-800-555-ACME or
+ethics@acmeaero.com. Retaliation against any person who reports a
+violation in good faith is prohibited.
+
+
+================================================================================
+                    SECTION 10: MISCELLANEOUS
+================================================================================
+
+10.1 ASSIGNMENT
+
+Supplier shall not assign this Purchase Order or any rights or
+obligations hereunder without the prior written consent of Buyer. Any
+attempted assignment without such consent shall be void. Buyer may
+assign this Purchase Order to any affiliate or to any successor in
+connection with a merger, acquisition, or sale of substantially all
+of its assets.
+
+10.2 SUBCONTRACTING
+
+Supplier may subcontract portions of the Work to qualified subcontractors
+on Supplier's Approved Supplier List, provided that:
+
+    (a) Supplier remains fully responsible for all Work
+    (b) Supplier flows down all applicable requirements to subcontractors
+    (c) Supplier obtains Buyer's prior written approval for subcontracting
+        of Flight Critical items or special processes
+    (d) Supplier maintains records of all subcontracts
+
+10.3 AUDIT RIGHTS
+
+Buyer and the Government shall have the right to examine and audit
+Supplier's books, records, and facilities relating to this Purchase
+Order. Such audits may include:
+
+    (a) Cost or pricing data
+    (b) Quality records
+    (c) Counterfeit prevention records
+    (d) Export control compliance records
+    (e) Cybersecurity compliance records
+
+Supplier shall retain all records for a minimum of six (6) years from
+final payment or longer if required by law or regulation.
+
+10.4 NOTICES
+
+All notices under this Purchase Order shall be in writing and shall be
+deemed delivered when: (a) delivered personally; (b) sent by confirmed
+facsimile; (c) one (1) business day after deposit with a nationally
+recognized overnight courier; or (d) three (3) business days after
+mailing by certified mail, return receipt requested.
+
+Notices to Buyer:
+    Acme Aerospace Corporation
+    Attn: Procurement Department
+    1200 Aviation Boulevard
+    Wichita, KS 67277
+
+Notices to Supplier:
+    Precision Wire Systems, Inc.
+    Attn: Contracts Manager
+    4500 Industrial Parkway
+    Phoenix, AZ 85034
+
+10.5 DISPUTES
+
+Any dispute arising under or relating to this Purchase Order shall be
+resolved as follows:
+
+    (a) The parties shall first attempt to resolve the dispute through
+        good faith negotiations between their designated representatives.
+    (b) If not resolved within thirty (30) days, either party may
+        escalate the dispute to senior management of both parties.
+    (c) If not resolved within sixty (60) days, either party may pursue
+        remedies available at law or in equity.
+
+This clause shall not limit Buyer's right to seek injunctive relief for
+breaches of confidentiality, intellectual property, or export control
+provisions.
+
+10.6 GOVERNING LAW
+
+This Purchase Order shall be governed by and construed in accordance
+with the laws of the State of Kansas, without regard to its conflict
+of laws principles. The United Nations Convention on Contracts for the
+International Sale of Goods shall not apply.
+
+10.7 ENTIRE AGREEMENT
+
+This Purchase Order, including all documents incorporated by reference,
+constitutes the entire agreement between the parties with respect to
+its subject matter and supersedes all prior negotiations, agreements,
+and understandings. This Purchase Order may only be modified by a
+written amendment signed by authorized representatives of both parties.
+
+10.8 SEVERABILITY
+
+If any provision of this Purchase Order is held to be invalid or
+unenforceable, the remaining provisions shall continue in full force
+and effect.
+
+10.9 WAIVER
+
+The failure of either party to enforce any provision of this Purchase
+Order shall not constitute a waiver of that party's right to enforce
+that provision or any other provision in the future.
+
+10.10 SURVIVAL
+
+The following provisions shall survive completion or termination of
+this Purchase Order: Warranty, Indemnification, Intellectual Property,
+Confidentiality, Export Control, Audit Rights, and any other provision
+that by its nature should survive.
+
+
+================================================================================
+                         SIGNATURE PAGE
+================================================================================
+
+This Purchase Order is issued by Acme Aerospace Corporation and is
+binding upon acceptance by Supplier as provided in Section 1.3.
+
+
+ISSUED BY:
+
+Acme Aerospace Corporation
+
+By:    _________________________________
+Name:  Jennifer Morrison
+Title: Senior Procurement Specialist
+Date:  January 15, 2025
+
+
+ACCEPTED BY:
+
+Precision Wire Systems, Inc.
+
+By:    _________________________________
+Name:  _________________________________
+Title: _________________________________
+Date:  _________________________________
+
+
+================================================================================
+                    ATTACHMENT A: TECHNICAL DATA PACKAGE
+================================================================================
+
+The following documents are incorporated by reference and form part of
+this Purchase Order:
+
+Drawing Package:
+    - AWH-7842-001 Rev C    Main Fuel Transfer Wire Harness Assembly
+    - AWH-7842-002 Rev B    Auxiliary Power Distribution Harness
+    - AWH-7842-003 Rev A    Boom Operator Station Wiring Assembly
+    - AWH-7842-004 Rev B    Engine Nacelle Sensor Harness (Left)
+    - AWH-7842-005 Rev B    Engine Nacelle Sensor Harness (Right)
+    - CCA-9921-007 Rev D    Refueling Boom Control Cable Assembly
+
+Specifications:
+    - ACME-SPEC-1001 Rev F  Wire Harness General Requirements
+    - ACME-SPEC-1002 Rev D  Harness Testing Requirements
+    - ACME-SPEC-1003 Rev C  Environmental Qualification Requirements
+
+Process Specifications:
+    - ACME-PS-201 Rev B     Crimping Process Specification
+    - ACME-PS-202 Rev A     Soldering Process Specification
+    - ACME-PS-203 Rev C     Potting and Sealing Specification
+
+Industry Standards (as referenced on drawings):
+    - IPC/WHMA-A-620D       Acceptability of Electronic Wire Harnesses
+    - SAE AS50881F          Wiring Aerospace Vehicle
+    - MIL-DTL-27500         Wire, Electrical, Fluoropolymer-Insulated
+    - MIL-DTL-38999         Connectors, Electrical, Circular
+    - NASA-STD-8739.4       Crimping, Interconnecting Cables
+
+
+================================================================================
+                    ATTACHMENT B: QUALITY REQUIREMENTS MATRIX
+================================================================================
+
+The following matrix identifies quality requirements by line item:
+
++------+---------------+-------+-------+-------+--------+--------+----------+
+| Line | Part Number   | FAI   | Source| FAIR  | Lot    | ESD    | Shelf    |
+|      |               | Req'd | Insp  | Forms | Trace  | Ctrl   | Life     |
++------+---------------+-------+-------+-------+--------+--------+----------+
+| 001  | AWH-7842-001  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |
+| 002  | AWH-7842-002  | No    | No    | N/A   | Yes    | Yes    | No       |
+| 003  | AWH-7842-003  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |
+| 004  | AWH-7842-004  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |
+| 005  | AWH-7842-005  | Yes   | Yes   | 1,2,3 | Yes    | Yes    | No       |
+| 006  | CCA-9921-007  | No    | No    | N/A   | Yes    | Yes    | No       |
++------+---------------+-------+-------+-------+--------+--------+----------+
+
+Legend:
+    FAI Req'd   = First Article Inspection Required
+    Source Insp = Source Inspection Required
+    FAIR Forms  = Required AS9102 Forms (1, 2, and/or 3)
+    Lot Trace   = Full Lot Traceability Required
+    ESD Ctrl    = ESD-Sensitive Handling Required
+    Shelf Life  = Contains Shelf-Life Limited Materials
+
+
+================================================================================
+                    ATTACHMENT C: DELIVERY SCHEDULE
+================================================================================
+
+Detailed delivery schedule by line item:
+
+Line 001 - AWH-7842-001 (24 units total):
+    Delivery 1:  12 units by March 15, 2025
+    Delivery 2:  12 units by April 30, 2025
+
+Line 002 - AWH-7842-002 (48 units total):
+    Delivery 1:  All 48 units by April 15, 2025
+
+Line 003 - AWH-7842-003 (12 units total):
+    Delivery 1:  All 12 units by May 1, 2025
+
+Line 004 - AWH-7842-004 (24 units total):
+    Delivery 1:  All 24 units by April 30, 2025
+
+Line 005 - AWH-7842-005 (24 units total):
+    Delivery 1:  All 24 units by April 30, 2025
+
+Line 006 - CCA-9921-007 (36 units total):
+    Delivery 1:  All 36 units by March 30, 2025
+
+
+================================================================================
+                         END OF PURCHASE ORDER
+================================================================================
