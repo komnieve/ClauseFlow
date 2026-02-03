@@ -2,10 +2,13 @@
 
 import sys
 import os
+import io
 from datetime import datetime
 from typing import Optional
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from pypdf import PdfReader
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
@@ -60,18 +63,34 @@ async def upload_document(
     """
     # Read file content
     content = await file.read()
+    filename = file.filename or "unnamed.txt"
 
-    # For now, assume text files. PDF support can be added later.
-    try:
-        text = content.decode("utf-8")
-    except UnicodeDecodeError:
-        raise HTTPException(status_code=400, detail="File must be UTF-8 encoded text")
+    # Handle PDF files
+    if filename.lower().endswith('.pdf'):
+        try:
+            pdf_reader = PdfReader(io.BytesIO(content))
+            text_parts = []
+            for page in pdf_reader.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text_parts.append(page_text)
+            text = '\n'.join(text_parts)
+            if not text.strip():
+                raise HTTPException(status_code=400, detail="Could not extract text from PDF")
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Failed to parse PDF: {str(e)}")
+    else:
+        # Assume text file
+        try:
+            text = content.decode("utf-8")
+        except UnicodeDecodeError:
+            raise HTTPException(status_code=400, detail="File must be UTF-8 encoded text or PDF")
 
     # Create document record
     doc = add_line_numbers(text)
 
     db_document = Document(
-        filename=file.filename or "unnamed.txt",
+        filename=filename,
         original_text=text,
         total_lines=doc.total_lines,
         status=DocumentStatus.PROCESSING

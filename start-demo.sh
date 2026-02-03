@@ -55,8 +55,12 @@ check_port $FRONTEND_PORT
 
 # Get server IP for network access
 SERVER_IP=$(hostname -I 2>/dev/null | awk '{print $1}')
+if [ -z "$SERVER_IP" ] || [[ "$SERVER_IP" == *"<"* ]]; then
+    # Try ipconfig getifaddr for macOS
+    SERVER_IP=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null)
+fi
 if [ -z "$SERVER_IP" ]; then
-    SERVER_IP="<your-server-ip>"
+    SERVER_IP="localhost"
 fi
 
 # Start backend

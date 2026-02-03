@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { updateClause, markClauseReviewed, flagClause } from '../api/client';
 
 /**
@@ -9,6 +9,21 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
   const [lineItems, setLineItems] = useState(clause.line_items || '');
   const [notes, setNotes] = useState(clause.notes || '');
   const [saving, setSaving] = useState(false);
+  const markReviewedRef = useRef(null);
+
+  // Handle Enter key to mark as reviewed
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Only trigger on Enter, not when typing in input/textarea
+      if (e.key === 'Enter' && !e.target.matches('input, textarea')) {
+        e.preventDefault();
+        markReviewedRef.current?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleScopeChange = async (newScope) => {
     setScope(newScope);
@@ -59,6 +74,9 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
     }
     setSaving(false);
   };
+
+  // Keep ref updated with latest handler
+  markReviewedRef.current = handleMarkReviewed;
 
   const handleFlag = async () => {
     setSaving(true);
