@@ -1,19 +1,75 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import DocumentUpload from './components/DocumentUpload';
-import ClauseCard from './components/ClauseCard';
-import ProgressBar from './components/ProgressBar';
+import DocumentOverview from './components/DocumentOverview';
+import ReviewView from './components/ReviewView';
+import ClauseListView from './components/ClauseListView';
 import { getDocuments, getDocument, exportDocument } from './api/client';
 
 function App() {
   const [documents, setDocuments] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [clauses, setClauses] = useState([]);
-  const [currentClauseIndex, setCurrentClauseIndex] = useState(0);
+  const [sections, setSections] = useState([]);
+  const [lineItems, setLineItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [view, setView] = useState('home'); // home, review, list
-  const [filter, setFilter] = useState('all'); // all, clause, unreviewed, flagged
+  const [view, setView] = useState('home'); // home, overview, review, list
+  const skipPushRef = useRef(false);
 
-  // Load documents on mount
+  // Push browser history when view changes
+  const navigate = useCallback((newView, docId = null) => {
+    if (!skipPushRef.current) {
+      history.pushState({ view: newView, docId }, '', `#${newView}${docId ? `/${docId}` : ''}`);
+    }
+    skipPushRef.current = false;
+  }, []);
+
+  // Store ref to selectedDocument for popstate handler (avoids stale closure)
+  const selectedDocRef = useRef(null);
+  selectedDocRef.current = selectedDocument;
+
+  // Listen for browser back/forward
+  useEffect(() => {
+    const handlePopState = async (e) => {
+      const state = e.state;
+      if (!state) {
+        setView('home');
+        setSelectedDocument(null);
+        setClauses([]);
+        setSections([]);
+        setLineItems([]);
+        return;
+      }
+      skipPushRef.current = true;
+      if (state.view === 'home') {
+        setView('home');
+        setSelectedDocument(null);
+        setClauses([]);
+        setSections([]);
+        setLineItems([]);
+      } else if (state.docId && (state.view === 'overview' || state.view === 'review' || state.view === 'list')) {
+        if (selectedDocRef.current?.id === state.docId) {
+          setView(state.view);
+        } else {
+          try {
+            const doc = await getDocument(state.docId);
+            setSelectedDocument(doc);
+            setClauses(doc.clauses || []);
+            setSections(doc.sections || []);
+            setLineItems(doc.line_items || []);
+            setView(state.view);
+          } catch (err) {
+            console.error('Failed to load document:', err);
+            setView('home');
+          }
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    history.replaceState({ view: 'home' }, '', '#home');
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   useEffect(() => {
     loadDocuments();
   }, []);
@@ -28,7 +84,6 @@ function App() {
   };
 
   const handleUploadComplete = async (result) => {
-    // Poll for processing completion
     const pollInterval = setInterval(async () => {
       const docs = await getDocuments();
       setDocuments(docs);
@@ -49,9 +104,11 @@ function App() {
     try {
       const doc = await getDocument(documentId);
       setSelectedDocument(doc);
-      setClauses(doc.clauses);
-      setCurrentClauseIndex(0);
-      setView('review');
+      setClauses(doc.clauses || []);
+      setSections(doc.sections || []);
+      setLineItems(doc.line_items || []);
+      setView('overview');
+      navigate('overview', doc.id);
     } catch (err) {
       console.error('Failed to load document:', err);
     }
@@ -59,26 +116,20 @@ function App() {
   };
 
   const handleClauseUpdate = (updatedClause) => {
-    setClauses(clauses.map(c => c.id === updatedClause.id ? updatedClause : c));
-
-    // Update document stats
-    if (selectedDocument) {
-      const reviewed = clauses.filter(c =>
-        c.id === updatedClause.id ? updatedClause.review_status === 'reviewed' : c.review_status === 'reviewed'
-      ).length;
-      const flagged = clauses.filter(c =>
-        c.id === updatedClause.id ? updatedClause.review_status === 'flagged' : c.review_status === 'flagged'
-      ).length;
-      setSelectedDocument({
-        ...selectedDocument,
-        reviewed_count: reviewed,
-        flagged_count: flagged,
-      });
-    }
+    setClauses(prev => prev.map(c => c.id === updatedClause.id ? updatedClause : c));
   };
 
   const handleExport = async (format) => {
     if (!selectedDocument) return;
+
+    // Gated export: confirm if not all addressed
+    const allAddressed = clauses.length > 0 && clauses.every(
+      c => c.review_status === 'reviewed' || c.review_status === 'flagged'
+    );
+    if (!allAddressed) {
+      const ok = confirm('Not all clauses have been reviewed or flagged. Export anyway?');
+      if (!ok) return;
+    }
 
     try {
       if (format === 'csv') {
@@ -102,22 +153,20 @@ function App() {
     }
   };
 
-  // Filter clauses based on current filter
-  const filteredClauses = clauses.filter(c => {
-    if (filter === 'all') return true;
-    if (filter === 'clause') return c.chunk_type === 'clause';
-    if (filter === 'unreviewed') return c.review_status === 'unreviewed';
-    if (filter === 'flagged') return c.review_status === 'flagged';
-    return true;
-  });
+  const handleSelectClauseFromList = (clause, index) => {
+    setView('review');
+    navigate('review', selectedDocument?.id);
+  };
 
-  const currentClause = filteredClauses[currentClauseIndex];
-
-  // Stats
-  const stats = {
-    reviewed: clauses.filter(c => c.review_status === 'reviewed').length,
-    flagged: clauses.filter(c => c.review_status === 'flagged').length,
-    total: clauses.length,
+  const getStatusDisplay = (status) => {
+    switch (status) {
+      case 'processing': return { text: 'Processing...', className: 'text-yellow-600' };
+      case 'segmenting': return { text: 'Segmenting...', className: 'text-yellow-600' };
+      case 'extracting': return { text: 'Extracting clauses...', className: 'text-yellow-600' };
+      case 'ready': return { text: 'Ready', className: 'text-green-600' };
+      case 'error': return { text: 'Error', className: 'text-red-600' };
+      default: return { text: status, className: 'text-gray-600' };
+    }
   };
 
   return (
@@ -127,28 +176,14 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1
             className="text-2xl font-bold text-gray-900 cursor-pointer"
-            onClick={() => { setView('home'); setSelectedDocument(null); }}
+            onClick={() => { setView('home'); setSelectedDocument(null); setClauses([]); setSections([]); setLineItems([]); navigate('home'); }}
           >
             ClauseFlow
           </h1>
 
-          {selectedDocument && (
+          {selectedDocument && view === 'review' && (
             <div className="flex items-center gap-4">
               <span className="text-gray-600">{selectedDocument.filename}</span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleExport('json')}
-                  className="px-3 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200"
-                >
-                  Export JSON
-                </button>
-                <button
-                  onClick={() => handleExport('csv')}
-                  className="px-3 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200"
-                >
-                  Export CSV
-                </button>
-              </div>
             </div>
           )}
         </div>
@@ -166,170 +201,71 @@ function App() {
               <div>
                 <h2 className="text-lg font-semibold mb-4">Recent Documents</h2>
                 <div className="grid gap-4">
-                  {documents.map(doc => (
-                    <div
-                      key={doc.id}
-                      className="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md cursor-pointer"
-                      onClick={() => doc.status === 'ready' && selectDocument(doc.id)}
-                    >
-                      <div>
-                        <div className="font-medium">{doc.filename}</div>
-                        <div className="text-sm text-gray-500">
-                          {doc.clause_count} clauses | {doc.reviewed_count} reviewed
+                  {documents.map(doc => {
+                    const status = getStatusDisplay(doc.status);
+                    const isClickable = doc.status === 'ready';
+                    return (
+                      <div
+                        key={doc.id}
+                        className={`bg-white rounded-lg shadow p-4 flex justify-between items-center ${isClickable ? 'hover:shadow-md cursor-pointer' : ''}`}
+                        onClick={() => isClickable && selectDocument(doc.id)}
+                      >
+                        <div>
+                          <div className="font-medium">{doc.filename}</div>
+                          <div className="text-sm text-gray-500">
+                            {doc.clause_count} clauses | {doc.reviewed_count} reviewed
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className={`text-sm ${status.className}`}>{status.text}</span>
+                          {isClickable && (
+                            <button className="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                              Review
+                            </button>
+                          )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        {doc.status === 'processing' && (
-                          <span className="text-yellow-600 text-sm">Processing...</span>
-                        )}
-                        {doc.status === 'ready' && (
-                          <span className="text-green-600 text-sm">Ready</span>
-                        )}
-                        {doc.status === 'error' && (
-                          <span className="text-red-600 text-sm">Error</span>
-                        )}
-                        {doc.status === 'ready' && (
-                          <button className="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
-                            Review
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
           </div>
         )}
 
+        {/* Overview View */}
+        {view === 'overview' && selectedDocument && (
+          <DocumentOverview
+            document={selectedDocument}
+            clauses={clauses}
+            sections={sections}
+            lineItems={lineItems}
+            onStartReview={() => { setView('review'); navigate('review', selectedDocument.id); }}
+            onBack={() => { setView('home'); setSelectedDocument(null); setClauses([]); setSections([]); setLineItems([]); navigate('home'); }}
+          />
+        )}
+
         {/* Review View */}
         {view === 'review' && selectedDocument && (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow p-4 sticky top-4">
-                <h3 className="font-semibold mb-4">Progress</h3>
-                <ProgressBar
-                  reviewed={stats.reviewed}
-                  flagged={stats.flagged}
-                  total={stats.total}
-                />
-
-                <div className="mt-6">
-                  <h3 className="font-semibold mb-2">Filter</h3>
-                  <div className="flex flex-col gap-2">
-                    {[
-                      { value: 'all', label: `All (${clauses.length})` },
-                      { value: 'clause', label: `Clauses (${clauses.filter(c => c.chunk_type === 'clause').length})` },
-                      { value: 'unreviewed', label: `Unreviewed (${clauses.filter(c => c.review_status === 'unreviewed').length})` },
-                      { value: 'flagged', label: `Flagged (${clauses.filter(c => c.review_status === 'flagged').length})` },
-                    ].map(option => (
-                      <button
-                        key={option.value}
-                        onClick={() => { setFilter(option.value); setCurrentClauseIndex(0); }}
-                        className={`text-left px-3 py-2 rounded text-sm ${
-                          filter === option.value
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'hover:bg-gray-100'
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <button
-                    onClick={() => setView('list')}
-                    className="w-full px-3 py-2 text-sm border rounded hover:bg-gray-50"
-                  >
-                    View as List
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Main content */}
-            <div className="lg:col-span-3">
-              {loading ? (
-                <div className="text-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-                </div>
-              ) : currentClause ? (
-                <ClauseCard
-                  key={currentClause.id}
-                  clause={currentClause}
-                  onUpdate={handleClauseUpdate}
-                  onNext={() => setCurrentClauseIndex(Math.min(currentClauseIndex + 1, filteredClauses.length - 1))}
-                  onPrev={() => setCurrentClauseIndex(Math.max(currentClauseIndex - 1, 0))}
-                  currentIndex={currentClauseIndex}
-                  totalCount={filteredClauses.length}
-                />
-              ) : (
-                <div className="text-center py-12 text-gray-500">
-                  No clauses match the current filter.
-                </div>
-              )}
-            </div>
-          </div>
+          <ReviewView
+            clauses={clauses}
+            sections={sections}
+            lineItems={lineItems}
+            loading={loading}
+            onClauseUpdate={handleClauseUpdate}
+            onViewList={() => { setView('list'); navigate('list', selectedDocument.id); }}
+            onExport={handleExport}
+          />
         )}
 
         {/* List View */}
         {view === 'list' && selectedDocument && (
-          <div>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">All Clauses</h2>
-              <button
-                onClick={() => setView('review')}
-                className="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
-              >
-                Back to Review
-              </button>
-            </div>
-
-            <div className="bg-white rounded-lg shadow overflow-hidden">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Lines</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Clause</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Type</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Scope</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {clauses.map((clause, index) => (
-                    <tr
-                      key={clause.id}
-                      className="hover:bg-gray-50 cursor-pointer"
-                      onClick={() => { setCurrentClauseIndex(index); setView('review'); setFilter('all'); }}
-                    >
-                      <td className="px-4 py-3 text-sm text-gray-500">
-                        {clause.start_line}-{clause.end_line}
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        {clause.clause_number || '-'}
-                        {clause.clause_title && ` - ${clause.clause_title}`}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">{clause.chunk_type}</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">{clause.scope || '-'}</td>
-                      <td className="px-4 py-3">
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          clause.review_status === 'reviewed' ? 'bg-green-100 text-green-800' :
-                          clause.review_status === 'flagged' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-600'
-                        }`}>
-                          {clause.review_status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ClauseListView
+            clauses={clauses}
+            sections={sections}
+            onSelectClause={handleSelectClauseFromList}
+            onBackToReview={() => { setView('review'); navigate('review', selectedDocument.id); }}
+          />
         )}
       </main>
     </div>

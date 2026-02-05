@@ -96,7 +96,7 @@ export default function DocumentUpload({ onUploadComplete }) {
             Drop a contract or PO here, or click to browse
           </p>
           <p className="text-sm text-gray-500">
-            Supports .txt files (PDF support coming soon)
+            Supports .txt and .pdf files
           </p>
         </div>
       )}

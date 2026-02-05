@@ -4,20 +4,24 @@ import { updateClause, markClauseReviewed, flagClause } from '../api/client';
 /**
  * Card for reviewing a single clause
  */
-export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIndex, totalCount }) {
+export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIndex, totalCount, sectionTitle, lineItems: docLineItems }) {
   const [scope, setScope] = useState(clause.scope || '');
   const [lineItems, setLineItems] = useState(clause.line_items || '');
   const [notes, setNotes] = useState(clause.notes || '');
   const [saving, setSaving] = useState(false);
   const markReviewedRef = useRef(null);
+  const flagRef = useRef(null);
 
-  // Handle Enter key to mark as reviewed
+  // Keyboard shortcuts: Enter = mark reviewed, F = flag
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Only trigger on Enter, not when typing in input/textarea
-      if (e.key === 'Enter' && !e.target.matches('input, textarea')) {
+      if (e.target.matches('input, textarea')) return;
+      if (e.key === 'Enter') {
         e.preventDefault();
         markReviewedRef.current?.();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        flagRef.current?.();
       }
     };
 
@@ -75,7 +79,7 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
     setSaving(false);
   };
 
-  // Keep ref updated with latest handler
+  // Keep refs updated with latest handlers
   markReviewedRef.current = handleMarkReviewed;
 
   const handleFlag = async () => {
@@ -89,6 +93,8 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
     }
     setSaving(false);
   };
+
+  flagRef.current = handleFlag;
 
   const chunkTypeColors = {
     clause: 'bg-blue-100 text-blue-800',
@@ -104,14 +110,30 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
     flagged: 'bg-yellow-100 text-yellow-800',
   };
 
+  const scopeTypeBadge = clause.scope_type === 'po_wide'
+    ? { label: 'PO-Wide', className: 'bg-indigo-100 text-indigo-800' }
+    : clause.scope_type === 'line_specific'
+    ? { label: 'Line-Specific', className: 'bg-teal-100 text-teal-800' }
+    : null;
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
+      {/* Section breadcrumb */}
+      {sectionTitle && (
+        <div className="text-xs text-gray-500 mb-2">{sectionTitle}</div>
+      )}
+
       {/* Header with navigation */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
           <span className={`px-2 py-1 rounded text-xs font-medium ${chunkTypeColors[clause.chunk_type]}`}>
             {clause.chunk_type}
           </span>
+          {scopeTypeBadge && (
+            <span className={`px-2 py-1 rounded text-xs font-medium ${scopeTypeBadge.className}`}>
+              {scopeTypeBadge.label}
+            </span>
+          )}
           <span className={`px-2 py-1 rounded text-xs font-medium ${statusColors[clause.review_status]}`}>
             {clause.review_status}
           </span>
@@ -147,6 +169,11 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
         </h2>
         <div className="text-sm text-gray-500">
           Lines {clause.start_line} - {clause.end_line}
+          {clause.scope_type === 'line_specific' && clause.applicable_lines && (
+            <span className="ml-2 text-teal-700">
+              (Applies to line items: {clause.applicable_lines})
+            </span>
+          )}
         </div>
       </div>
 
