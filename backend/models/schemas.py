@@ -5,8 +5,91 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from models.db_models import (
     DocumentStatus, ReviewStatus, ClauseScope, ChunkType,
-    SectionType, ScopeType
+    SectionType, ScopeType, ReferenceDocStatus, MatchStatus
 )
+
+
+# --- Customer Schemas (V3) ---
+
+class CustomerCreate(BaseModel):
+    """Schema for creating a customer."""
+    name: str
+
+
+class CustomerResponse(BaseModel):
+    """Schema for customer response."""
+    id: int
+    name: str
+    created_at: datetime
+    reference_doc_count: int = 0
+    document_count: int = 0
+
+    class Config:
+        from_attributes = True
+
+
+# --- Reference Document Schemas (V3) ---
+
+class ReferenceRequirementResponse(BaseModel):
+    """Schema for reference requirement response."""
+    id: int
+    reference_document_id: int
+    requirement_number: Optional[str] = None
+    title: Optional[str] = None
+    text: Optional[str] = None
+    start_line: Optional[int] = None
+    end_line: Optional[int] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ReferenceDocumentResponse(BaseModel):
+    """Schema for reference document response."""
+    id: int
+    customer_id: int
+    filename: str
+    total_lines: int
+    status: ReferenceDocStatus
+    error_message: Optional[str] = None
+    doc_identifier: Optional[str] = None
+    version: Optional[str] = None
+    title: Optional[str] = None
+    parent_id: Optional[int] = None
+    created_at: datetime
+    requirement_count: int = 0
+    children_count: int = 0
+
+    class Config:
+        from_attributes = True
+
+
+class ReferenceDocumentDetail(ReferenceDocumentResponse):
+    """Reference document with requirements list."""
+    requirements: list[ReferenceRequirementResponse] = []
+    children: list[ReferenceDocumentResponse] = []
+
+
+# --- Clause Reference Link Schemas (V3) ---
+
+class ClauseReferenceLinkResponse(BaseModel):
+    """Schema for clause reference link response."""
+    id: int
+    clause_id: int
+    reference_requirement_id: Optional[int] = None
+    reference_document_id: Optional[int] = None
+    detected_spec_identifier: Optional[str] = None
+    detected_version: Optional[str] = None
+    match_status: MatchStatus
+    # Nested info for display
+    requirement_text: Optional[str] = None
+    requirement_title: Optional[str] = None
+    requirement_number: Optional[str] = None
+    doc_title: Optional[str] = None
+
+    class Config:
+        from_attributes = True
 
 
 # --- Section Schemas (V2) ---
@@ -92,6 +175,8 @@ class ClauseResponse(ClauseBase):
     applicable_lines: Optional[str] = None
     erp_match_status: Optional[str] = None
     is_external_reference: Optional[str] = None
+    # V3 fields
+    reference_links: list[ClauseReferenceLinkResponse] = []
 
     class Config:
         from_attributes = True
@@ -121,6 +206,8 @@ class DocumentResponse(DocumentBase):
     clause_count: int = 0
     reviewed_count: int = 0
     flagged_count: int = 0
+    customer_id: Optional[int] = None
+    customer_name: Optional[str] = None
 
     class Config:
         from_attributes = True

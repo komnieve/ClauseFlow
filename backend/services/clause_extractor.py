@@ -33,7 +33,7 @@ class ClauseReferenceOutput(BaseModel):
     clause_title: str | None = Field(None, description="Title of the clause if present, or null")
     chunk_type: Literal["clause", "administrative", "boilerplate", "header", "signature"] = Field(
         ...,
-        description="Type of chunk: clause (numbered requirement), administrative (header info), boilerplate (dividers), header (section titles), signature (signature blocks)"
+        description="Type of chunk: clause (numbered requirement), administrative (header info), signature (signature blocks). Prefer 'clause' for most entries."
     )
 
 
@@ -57,13 +57,12 @@ CRITICAL RULES:
 CHUNK TYPES:
 - "clause" = A numbered contractual obligation or requirement (e.g., "1.1 ORDER OF PRECEDENCE", "2.3 SOURCE INSPECTION")
 - "administrative" = Header info, addresses, contacts, dates, line items, PO details at the start
-- "boilerplate" = Divider lines (====), decorative headers
-- "header" = Section headers like "SECTION 2: QUALITY REQUIREMENTS" (the header line itself, not the clauses within)
 - "signature" = Signature blocks, acceptance sections
 
 GUIDELINES:
 - Each numbered clause (1.1, 1.2, 2.1, etc.) should be its own entry
-- Section headers (SECTION 1: GENERAL PROVISIONS) are separate "header" entries
+- Include section header lines (like "SECTION 2: QUALITY REQUIREMENTS") as part of the first clause's line range in that section. Do NOT create separate entries for section headers.
+- Skip divider lines (====, ----) by absorbing them into adjacent clause ranges
 - The preamble/header (PO details, addresses, line items before Section 1) is "administrative"
 - Attachments at the end can be grouped as single entries
 - Make sure clause ranges don't overlap"""
@@ -311,13 +310,12 @@ CRITICAL RULES:
 CHUNK TYPES:
 - "clause" = A numbered contractual obligation or requirement (e.g., "1.1 ORDER OF PRECEDENCE", "2.3 SOURCE INSPECTION")
 - "administrative" = Header info, addresses, contacts, dates, line items, PO details
-- "boilerplate" = Divider lines (====), decorative headers
-- "header" = Section headers like "SECTION 2: QUALITY REQUIREMENTS" (the header line itself, not the clauses within)
 - "signature" = Signature blocks, acceptance sections
 
 GUIDELINES:
 - Each numbered clause (1.1, 1.2, 2.1, etc.) should be its own entry
-- Section headers (SECTION 1: GENERAL PROVISIONS) are separate "header" entries
+- Include section header lines (like "SECTION 2: QUALITY REQUIREMENTS") as part of the first clause's line range. Do NOT create separate entries for section headers.
+- Skip divider lines (====, ----) by absorbing them into adjacent clause ranges
 - Make sure clause ranges don't overlap
 - Every line in the provided text must belong to some clause entry"""
 

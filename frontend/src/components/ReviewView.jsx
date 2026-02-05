@@ -15,6 +15,7 @@ export default function ReviewView({
   onClauseUpdate,
   onViewList,
   onExport,
+  onNavigateToLibrary,
 }) {
   const hasV2 = sections.length > 0;
   const [activeTab, setActiveTab] = useState('po_wide');
@@ -141,6 +142,7 @@ export default function ReviewView({
               onPrev={() => setCurrentClauseIndex(Math.max(currentClauseIndex - 1, 0))}
               currentIndex={currentClauseIndex}
               totalCount={filteredClauses.length}
+              onNavigateToLibrary={onNavigateToLibrary}
             />
           ) : (
             <div className="text-center py-12 text-gray-500">
@@ -152,11 +154,18 @@ export default function ReviewView({
     );
   }
 
+  // Unresolved reference count
+  const unresolvedRefCount = clauses.reduce((acc, c) => {
+    const links = c.reference_links || [];
+    return acc + links.filter(l => l.match_status === 'unresolved').length;
+  }, 0);
+
   // V2 tabbed view
   return (
     <div>
-      {/* Tab bar */}
-      <div className="flex gap-1 mb-6 bg-white rounded-lg shadow p-1 max-w-md">
+      {/* Tab bar + unresolved refs indicator */}
+      <div className="flex items-center gap-4 mb-6">
+        <div className="flex gap-1 bg-white rounded-lg shadow p-1 max-w-md">
         <button
           onClick={() => handleTabChange('po_wide')}
           className={`flex-1 px-4 py-2 rounded text-sm font-medium transition-colors ${
@@ -177,6 +186,13 @@ export default function ReviewView({
         >
           Line-Specific ({lineSpecificCount})
         </button>
+        </div>
+        {unresolvedRefCount > 0 && (
+          <span className="flex items-center gap-1 text-sm text-red-600">
+            <span className="w-2 h-2 bg-red-500 rounded-full inline-block"></span>
+            {unresolvedRefCount} unresolved ref{unresolvedRefCount !== 1 ? 's' : ''}
+          </span>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -213,6 +229,7 @@ export default function ReviewView({
               totalCount={filteredClauses.length}
               sectionTitle={currentSectionTitle}
               lineItems={lineItems}
+              onNavigateToLibrary={onNavigateToLibrary}
             />
           ) : (
             <div className="text-center py-12 text-gray-500">

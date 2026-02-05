@@ -3,7 +3,9 @@ import DocumentUpload from './components/DocumentUpload';
 import DocumentOverview from './components/DocumentOverview';
 import ReviewView from './components/ReviewView';
 import ClauseListView from './components/ClauseListView';
-import { getDocuments, getDocument, exportDocument } from './api/client';
+import ReferenceLibrary from './components/ReferenceLibrary';
+import ReferenceDocDetail from './components/ReferenceDocDetail';
+import { getDocuments, getDocument, exportDocument, reprocessDocument, matchDocumentReferences } from './api/client';
 
 function App() {
   const [documents, setDocuments] = useState([]);
@@ -12,7 +14,8 @@ function App() {
   const [sections, setSections] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [view, setView] = useState('home'); // home, overview, review, list
+  const [view, setView] = useState('home'); // home, overview, review, list, library, ref-doc-detail
+  const [selectedRefDocId, setSelectedRefDocId] = useState(null);
   const skipPushRef = useRef(false);
 
   // Push browser history when view changes
@@ -40,8 +43,8 @@ function App() {
         return;
       }
       skipPushRef.current = true;
-      if (state.view === 'home') {
-        setView('home');
+      if (state.view === 'home' || state.view === 'library') {
+        setView(state.view);
         setSelectedDocument(null);
         setClauses([]);
         setSections([]);
@@ -153,9 +156,40 @@ function App() {
     }
   };
 
+  const handleReprocess = async () => {
+    if (!selectedDocument) return;
+    const ok = confirm('This will re-run extraction and reset all review progress. Continue?');
+    if (!ok) return;
+
+    try {
+      const result = await reprocessDocument(selectedDocument.id);
+      // Go back to home and start polling like a fresh upload
+      setView('home');
+      setSelectedDocument(null);
+      setClauses([]);
+      setSections([]);
+      setLineItems([]);
+      navigate('home');
+      handleUploadComplete(result);
+    } catch (err) {
+      alert('Re-extract failed: ' + err.message);
+    }
+  };
+
   const handleSelectClauseFromList = (clause, index) => {
     setView('review');
     navigate('review', selectedDocument?.id);
+  };
+
+  const handleNavigateToLibrary = () => {
+    setView('library');
+    navigate('library');
+  };
+
+  const handleViewRefDoc = (refDocId) => {
+    setSelectedRefDocId(refDocId);
+    setView('ref-doc-detail');
+    navigate('ref-doc-detail');
   };
 
   const getStatusDisplay = (status) => {
@@ -163,6 +197,7 @@ function App() {
       case 'processing': return { text: 'Processing...', className: 'text-yellow-600' };
       case 'segmenting': return { text: 'Segmenting...', className: 'text-yellow-600' };
       case 'extracting': return { text: 'Extracting clauses...', className: 'text-yellow-600' };
+      case 'matching': return { text: 'Matching references...', className: 'text-yellow-600' };
       case 'ready': return { text: 'Ready', className: 'text-green-600' };
       case 'error': return { text: 'Error', className: 'text-red-600' };
       default: return { text: status, className: 'text-gray-600' };
@@ -174,16 +209,37 @@ function App() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1
-            className="text-2xl font-bold text-gray-900 cursor-pointer"
-            onClick={() => { setView('home'); setSelectedDocument(null); setClauses([]); setSections([]); setLineItems([]); navigate('home'); }}
-          >
-            ClauseFlow
-          </h1>
+          <div className="flex items-center gap-6">
+            <h1
+              className="text-2xl font-bold text-gray-900 cursor-pointer"
+              onClick={() => { setView('home'); setSelectedDocument(null); setClauses([]); setSections([]); setLineItems([]); navigate('home'); }}
+            >
+              ClauseFlow
+            </h1>
+            <nav className="flex gap-4">
+              <button
+                onClick={() => { setView('home'); setSelectedDocument(null); setClauses([]); setSections([]); setLineItems([]); navigate('home'); }}
+                className={`text-sm font-medium ${view === 'home' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                Documents
+              </button>
+              <button
+                onClick={handleNavigateToLibrary}
+                className={`text-sm font-medium ${view === 'library' || view === 'ref-doc-detail' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                Reference Library
+              </button>
+            </nav>
+          </div>
 
           {selectedDocument && view === 'review' && (
             <div className="flex items-center gap-4">
               <span className="text-gray-600">{selectedDocument.filename}</span>
+              {selectedDocument.customer_name && (
+                <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded">
+                  {selectedDocument.customer_name}
+                </span>
+              )}
             </div>
           )}
         </div>
@@ -211,7 +267,14 @@ function App() {
                         onClick={() => isClickable && selectDocument(doc.id)}
                       >
                         <div>
-                          <div className="font-medium">{doc.filename}</div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{doc.filename}</span>
+                            {doc.customer_name && (
+                              <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-xs rounded">
+                                {doc.customer_name}
+                              </span>
+                            )}
+                          </div>
                           <div className="text-sm text-gray-500">
                             {doc.clause_count} clauses | {doc.reviewed_count} reviewed
                           </div>
@@ -241,6 +304,7 @@ function App() {
             sections={sections}
             lineItems={lineItems}
             onStartReview={() => { setView('review'); navigate('review', selectedDocument.id); }}
+            onReprocess={handleReprocess}
             onBack={() => { setView('home'); setSelectedDocument(null); setClauses([]); setSections([]); setLineItems([]); navigate('home'); }}
           />
         )}
@@ -255,6 +319,7 @@ function App() {
             onClauseUpdate={handleClauseUpdate}
             onViewList={() => { setView('list'); navigate('list', selectedDocument.id); }}
             onExport={handleExport}
+            onNavigateToLibrary={handleNavigateToLibrary}
           />
         )}
 
@@ -265,6 +330,22 @@ function App() {
             sections={sections}
             onSelectClause={handleSelectClauseFromList}
             onBackToReview={() => { setView('review'); navigate('review', selectedDocument.id); }}
+          />
+        )}
+
+        {/* Reference Library View */}
+        {view === 'library' && (
+          <ReferenceLibrary
+            onViewRefDoc={handleViewRefDoc}
+            onBack={() => { setView('home'); navigate('home'); }}
+          />
+        )}
+
+        {/* Reference Doc Detail View */}
+        {view === 'ref-doc-detail' && selectedRefDocId && (
+          <ReferenceDocDetail
+            refDocId={selectedRefDocId}
+            onBack={() => { setView('library'); navigate('library'); }}
           />
         )}
       </main>

@@ -10,18 +10,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from pypdf import PdfReader
 
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import get_db, init_db
 from models.db_models import (
     Document, Clause, Section as DBSection, LineItem as DBLineItem,
+    Customer, ClauseReferenceLink,
     DocumentStatus, ReviewStatus, ChunkType as DBChunkType,
     SectionType as DBSectionType, ScopeType as DBScopeType,
+    MatchStatus,
 )
 from models.schemas import (
-    ClauseUpdate, ClauseResponse,
+    ClauseUpdate, ClauseResponse, ClauseReferenceLinkResponse,
     DocumentResponse, DocumentWithClauses,
     UploadResponse, DocumentStats,
     SectionResponse, LineItemResponse,
@@ -30,6 +32,8 @@ from services.preprocessor import add_line_numbers, extract_lines
 from services.clause_extractor import extract_clauses_from_document, extract_clauses_from_section
 from services.segmenter import segment_document, validate_segmentation, extract_line_items_from_section
 from config import settings
+from routes.customers import router as customers_router
+from routes.reference_docs import router as reference_docs_router
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -48,6 +52,11 @@ app.add_middleware(
 )
 
 
+# Mount routers
+app.include_router(customers_router)
+app.include_router(reference_docs_router)
+
+
 @app.on_event("startup")
 def startup():
     """Initialize database on startup."""
@@ -60,6 +69,7 @@ def startup():
 async def upload_document(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
+    customer_id: Optional[int] = Form(None),
     db: Session = Depends(get_db)
 ):
     """
@@ -96,11 +106,18 @@ async def upload_document(
     # Create document record
     doc = add_line_numbers(text)
 
+    # Validate customer_id if provided
+    if customer_id is not None:
+        customer = db.query(Customer).filter(Customer.id == customer_id).first()
+        if not customer:
+            raise HTTPException(status_code=400, detail="Customer not found")
+
     db_document = Document(
         filename=filename,
         original_text=text,
         total_lines=doc.total_lines,
-        status=DocumentStatus.PROCESSING
+        status=DocumentStatus.PROCESSING,
+        customer_id=customer_id,
     )
     db.add(db_document)
     db.commit()
@@ -218,6 +235,27 @@ def process_document(document_id: int, text: str):
                 print(f"  Warning: Clause extraction failed for section '{sec.section_title}': {e}")
                 continue
 
+            # Post-process: filter out header/boilerplate noise and merge their
+            # line ranges into adjacent clauses
+            filtered = []
+            noise_types = {"header", "boilerplate"}
+            for ref in result.clauses:
+                if ref.chunk_type.value in noise_types:
+                    # Extend the next clause backward or previous clause forward
+                    if filtered:
+                        # Extend previous clause's end_line to cover this gap
+                        filtered[-1] = filtered[-1].model_copy(
+                            update={"end_line": max(filtered[-1].end_line, ref.end_line)}
+                        )
+                    # If no previous clause yet, the next clause will be extended
+                    # (handled below after loop)
+                else:
+                    # If there were noise items before the first real clause,
+                    # extend this clause backward
+                    if not filtered and ref.start_line > sec.start_line:
+                        ref = ref.model_copy(update={"start_line": sec.start_line})
+                    filtered.append(ref)
+
             # Determine scope from section type
             if sec.section_type == "terms_and_conditions":
                 scope_type = DBScopeType.PO_WIDE
@@ -227,7 +265,7 @@ def process_document(document_id: int, text: str):
                 scope_type = None
 
             # Save clause records
-            for ref in result.clauses:
+            for ref in filtered:
                 # Extract actual text using line references
                 try:
                     clause_text = extract_lines(doc, ref.start_line, ref.end_line)
@@ -255,7 +293,18 @@ def process_document(document_id: int, text: str):
                 )
                 db.add(db_clause)
 
-        # Step 7: Done
+        # Step 7: MATCHING — Pass 3 (reference matching, only if customer is set)
+        if document.customer_id:
+            try:
+                document.status = DocumentStatus.MATCHING
+                db.commit()
+                from services.reference_matcher import run_reference_matching
+                run_reference_matching(document_id, db)
+            except Exception as e:
+                # Non-fatal — document still goes to READY
+                print(f"  Warning: Reference matching failed for doc {document_id}: {e}")
+
+        # Step 8: Done
         document.status = DocumentStatus.READY
         db.commit()
 
@@ -270,9 +319,12 @@ def process_document(document_id: int, text: str):
 
 
 @app.get("/api/documents", response_model=list[DocumentResponse])
-def list_documents(db: Session = Depends(get_db)):
-    """List all documents."""
-    documents = db.query(Document).order_by(Document.created_at.desc()).all()
+def list_documents(customer_id: Optional[int] = None, db: Session = Depends(get_db)):
+    """List all documents, optionally filtered by customer."""
+    query = db.query(Document)
+    if customer_id is not None:
+        query = query.filter(Document.customer_id == customer_id)
+    documents = query.order_by(Document.created_at.desc()).all()
 
     result = []
     for doc in documents:
@@ -286,10 +338,34 @@ def list_documents(db: Session = Depends(get_db)):
             updated_at=doc.updated_at,
             clause_count=len(doc.clauses),
             reviewed_count=doc.reviewed_count,
-            flagged_count=doc.flagged_count
+            flagged_count=doc.flagged_count,
+            customer_id=doc.customer_id,
+            customer_name=doc.customer.name if doc.customer else None,
         ))
 
     return result
+
+
+def _build_clause_response(clause: Clause) -> ClauseResponse:
+    """Build a ClauseResponse with reference links."""
+    links = []
+    for link in clause.reference_links:
+        links.append(ClauseReferenceLinkResponse(
+            id=link.id,
+            clause_id=link.clause_id,
+            reference_requirement_id=link.reference_requirement_id,
+            reference_document_id=link.reference_document_id,
+            detected_spec_identifier=link.detected_spec_identifier,
+            detected_version=link.detected_version,
+            match_status=link.match_status,
+            requirement_text=link.reference_requirement.text if link.reference_requirement else None,
+            requirement_title=link.reference_requirement.title if link.reference_requirement else None,
+            requirement_number=link.reference_requirement.requirement_number if link.reference_requirement else None,
+            doc_title=link.reference_document.title if link.reference_document else None,
+        ))
+    resp = ClauseResponse.model_validate(clause)
+    resp.reference_links = links
+    return resp
 
 
 @app.get("/api/documents/{document_id}", response_model=DocumentWithClauses)
@@ -310,7 +386,9 @@ def get_document(document_id: int, db: Session = Depends(get_db)):
         clause_count=len(document.clauses),
         reviewed_count=document.reviewed_count,
         flagged_count=document.flagged_count,
-        clauses=[ClauseResponse.model_validate(c) for c in document.clauses],
+        customer_id=document.customer_id,
+        customer_name=document.customer.name if document.customer else None,
+        clauses=[_build_clause_response(c) for c in document.clauses],
         sections=[SectionResponse.model_validate(s) for s in document.sections],
         line_items=[LineItemResponse.model_validate(li) for li in document.line_items],
     )
@@ -375,6 +453,166 @@ def delete_document(document_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Document deleted"}
+
+
+@app.post("/api/documents/{document_id}/reprocess", response_model=UploadResponse)
+async def reprocess_document(
+    document_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
+    """
+    Re-run extraction on an existing document.
+
+    Deletes all existing clauses, sections, and line items, then re-processes
+    the document through the V2 two-pass pipeline.
+    """
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    if document.status not in (DocumentStatus.READY, DocumentStatus.ERROR):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Document must be in 'ready' or 'error' status to reprocess (current: {document.status.value})"
+        )
+
+    # Delete existing children (keep the document itself)
+    # Delete reference links first (FK constraint)
+    clause_ids = [c.id for c in document.clauses]
+    if clause_ids:
+        db.query(ClauseReferenceLink).filter(ClauseReferenceLink.clause_id.in_(clause_ids)).delete(synchronize_session=False)
+    db.query(Clause).filter(Clause.document_id == document_id).delete()
+    db.query(DBLineItem).filter(DBLineItem.document_id == document_id).delete()
+    db.query(DBSection).filter(DBSection.document_id == document_id).delete()
+
+    # Reset status
+    document.status = DocumentStatus.PROCESSING
+    document.error_message = None
+    db.commit()
+    db.refresh(document)
+
+    # Re-process in background
+    background_tasks.add_task(process_document, document_id, document.original_text)
+
+    return UploadResponse(
+        document_id=document.id,
+        filename=document.filename,
+        status=document.status,
+        message=f"Re-processing document with V2 two-pass extraction..."
+    )
+
+
+# --- Reference Matching Endpoint (V3) ---
+
+@app.post("/api/documents/{document_id}/match-references")
+async def match_document_references(
+    document_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
+    """Re-run reference matching for a document (e.g. after uploading new reference docs)."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+    if not document.customer_id:
+        raise HTTPException(status_code=400, detail="Document has no customer assigned — cannot match references")
+    if document.status not in (DocumentStatus.READY,):
+        raise HTTPException(status_code=400, detail=f"Document must be in 'ready' status (current: {document.status.value})")
+
+    # Delete existing reference links for this document's clauses
+    clause_ids = [c.id for c in document.clauses]
+    if clause_ids:
+        db.query(ClauseReferenceLink).filter(ClauseReferenceLink.clause_id.in_(clause_ids)).delete(synchronize_session=False)
+        db.commit()
+
+    background_tasks.add_task(_run_matching_background, document_id)
+
+    return {"message": "Reference matching started", "document_id": document_id}
+
+
+def _run_matching_background(document_id: int):
+    """Background task for reference matching."""
+    from database import SessionLocal
+    from services.reference_matcher import run_reference_matching
+
+    db = SessionLocal()
+    try:
+        document = db.query(Document).filter(Document.id == document_id).first()
+        if document:
+            document.status = DocumentStatus.MATCHING
+            db.commit()
+            try:
+                run_reference_matching(document_id, db)
+            except Exception as e:
+                print(f"  Warning: Reference matching failed: {e}")
+            document.status = DocumentStatus.READY
+            db.commit()
+    finally:
+        db.close()
+
+
+@app.get("/api/documents/{document_id}/references")
+def get_document_references(document_id: int, db: Session = Depends(get_db)):
+    """Get all reference links for a document."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    clause_ids = [c.id for c in document.clauses]
+    if not clause_ids:
+        return []
+
+    links = db.query(ClauseReferenceLink).filter(ClauseReferenceLink.clause_id.in_(clause_ids)).all()
+    return [
+        ClauseReferenceLinkResponse(
+            id=link.id,
+            clause_id=link.clause_id,
+            reference_requirement_id=link.reference_requirement_id,
+            reference_document_id=link.reference_document_id,
+            detected_spec_identifier=link.detected_spec_identifier,
+            detected_version=link.detected_version,
+            match_status=link.match_status,
+            requirement_text=link.reference_requirement.text if link.reference_requirement else None,
+            requirement_title=link.reference_requirement.title if link.reference_requirement else None,
+            requirement_number=link.reference_requirement.requirement_number if link.reference_requirement else None,
+            doc_title=link.reference_document.title if link.reference_document else None,
+        )
+        for link in links
+    ]
+
+
+@app.get("/api/documents/{document_id}/unresolved-references")
+def get_unresolved_references(document_id: int, db: Session = Depends(get_db)):
+    """Get unresolved reference links for a document."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    clause_ids = [c.id for c in document.clauses]
+    if not clause_ids:
+        return []
+
+    links = (
+        db.query(ClauseReferenceLink)
+        .filter(
+            ClauseReferenceLink.clause_id.in_(clause_ids),
+            ClauseReferenceLink.match_status == MatchStatus.UNRESOLVED,
+        )
+        .all()
+    )
+    return [
+        ClauseReferenceLinkResponse(
+            id=link.id,
+            clause_id=link.clause_id,
+            reference_requirement_id=link.reference_requirement_id,
+            reference_document_id=link.reference_document_id,
+            detected_spec_identifier=link.detected_spec_identifier,
+            detected_version=link.detected_version,
+            match_status=link.match_status,
+        )
+        for link in links
+    ]
 
 
 # --- Section Endpoints (V2) ---

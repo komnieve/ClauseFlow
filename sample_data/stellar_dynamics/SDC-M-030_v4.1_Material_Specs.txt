@@ -1,0 +1,173 @@
+================================================================================
+              STELLAR DYNAMICS CORPORATION
+              MATERIAL SPECIFICATION SDC-M-030
+================================================================================
+
+Document:       SDC-M-030
+Title:          Material and Process Requirements for Metallic Components
+Version:        v4.1
+Date:           June 18, 2024
+Classification: Company Proprietary
+Approved By:    Dr. James Whitfield, Director of Materials Engineering
+
+================================================================================
+                          REVISION HISTORY
+================================================================================
+
+v1.0    2017-01-20   Initial Release
+v2.0    2018-11-05   Added titanium alloy requirements
+v3.0    2020-06-14   Updated prohibited materials list per REACH update
+v4.0    2023-02-28   Added additive manufacturing provisions
+v4.1    2024-06-18   Revised heat treatment requirements for aluminum
+                     alloys, updated approved source list
+
+================================================================================
+                    1.0 APPROVED MATERIAL SOURCES
+================================================================================
+
+1.1 All metallic raw materials used in SDC hardware shall be procured
+from sources listed on the SDC Approved Material Supplier List (AMSL),
+maintained by SDC Materials Engineering.
+
+1.2 Approved sources include Original Material Manufacturers (OMM) and
+authorized distributors verified by SDC. Independent distributors or
+brokers are not approved sources unless specifically authorized in
+writing by SDC Materials Engineering.
+
+1.3 Material substitutions, including alternate alloy tempers or
+equivalent specifications, require prior written approval from SDC
+Engineering via a Material Substitution Request (MSR).
+
+1.4 The supplier shall flow down approved source requirements to all
+sub-tier suppliers performing material procurement for SDC hardware.
+
+================================================================================
+           2.0 MATERIAL CERTIFICATION AND TRACEABILITY
+================================================================================
+
+2.1 All metallic materials shall be accompanied by Certified Mill Test
+Reports (CMTR) conforming to the applicable material specification
+(e.g., AMS, ASTM, SAE). Each CMTR shall include as a minimum:
+    (a) Material specification and grade/alloy designation
+    (b) Heat or lot number
+    (c) Chemical composition (actual values)
+    (d) Mechanical properties (actual test values)
+    (e) Heat treatment condition or temper
+    (f) Dimensional verification results
+
+2.2 Material traceability shall be maintained from raw material receipt
+through finished part delivery. Each part or lot shall be traceable to
+the original material heat or lot number.
+
+2.3 Material identification markings (stamps, etch, vibro-peen) shall
+be maintained on all parts through final processing unless removal is
+required by the drawing. Marking methods shall not introduce stress
+concentrations or surface damage.
+
+2.4 Electronic material traceability records shall be maintained for a
+minimum of fifteen (15) years from the date of part delivery and shall
+be provided to SDC upon request.
+
+================================================================================
+                 3.0 HEAT TREATMENT REQUIREMENTS
+================================================================================
+
+3.1 All heat treatment operations shall be performed by processors
+accredited by Nadcap for the applicable heat treatment processes and
+material types.
+
+3.2 Heat treatment shall be performed per the applicable material
+specification or the process specification callout on the SDC drawing.
+Commonly referenced specifications include:
+    (a) AMS 2750 — Pyrometry (furnace classification and surveys)
+    (b) AMS 2770 — Heat Treatment of Aluminum Alloy Parts
+    (c) AMS 2774 — Heat Treatment of Nickel Alloy Parts
+    (d) AMS-H-6875 — Heat Treatment of Steel
+
+3.3 Furnace equipment used for heat treatment shall be surveyed per
+AMS 2750 at the required intervals. Current furnace survey records
+shall be available for review by SDC Quality Assurance.
+
+3.4 Heat treatment records shall include furnace identification,
+load identification, time-temperature charts, and quench data as
+applicable. These records shall be retained and traceable to the
+delivered parts.
+
+================================================================================
+                4.0 SURFACE FINISH REQUIREMENTS
+================================================================================
+
+4.1 Surface finishes and protective coatings shall be applied per the
+SDC drawing callout. All surface treatment processes shall be performed
+by Nadcap-accredited processors for the applicable process.
+
+4.2 Common surface finish specifications referenced on SDC drawings:
+    (a) AMS 2404 — Electroless Nickel Plating
+    (b) AMS 2405 — Chemical Film (Chromate Conversion Coating)
+    (c) MIL-A-8625 — Anodic Coating (Anodizing) of Aluminum
+    (d) AMS 2411 — Cadmium Plating (where permitted)
+    (e) ASTM B633 — Zinc Plating
+    (f) AMS 2430 — Shot Peening
+
+4.3 Surface roughness shall not exceed the values specified on the
+drawing. Where no surface roughness is specified, the default maximum
+shall be 125 microinches Ra for machined surfaces.
+
+4.4 Parts shall be free of burrs, sharp edges, tool marks, and other
+surface defects that could affect form, fit, or function. Edge break
+requirements shall be per the drawing or 0.005-0.015 inch if not
+specified.
+
+================================================================================
+                   5.0 PROHIBITED MATERIALS
+================================================================================
+
+5.1 The following materials and substances are prohibited from use in
+SDC flight hardware unless a specific waiver is granted by SDC
+Materials Engineering:
+    (a) Cadmium and cadmium compounds (except where specified on
+        legacy drawings with approved cadmium plating callouts)
+    (b) Hexavalent chromium compounds
+    (c) Mercury and mercury compounds
+    (d) Asbestos-containing materials
+    (e) Beryllium and beryllium-copper alloys (except approved
+        electrical contacts and springs)
+    (f) Lead and lead compounds (except as exempted under aerospace
+        RoHS provisions)
+    (g) Zinc-plated fasteners in contact with aluminum structure
+
+5.2 Material declarations shall be provided when requested by SDC
+Procurement, identifying any substances of concern per EU REACH
+Regulation (EC) No. 1907/2006 Candidate List.
+
+5.3 The supplier shall notify SDC immediately if any prohibited
+material is discovered in delivered or in-process hardware.
+
+================================================================================
+                    6.0 SHELF-LIFE CONTROLS
+================================================================================
+
+6.1 Materials with defined shelf-life limitations shall be stored,
+handled, and controlled per the manufacturer's requirements and the
+applicable material specification.
+
+6.2 The following material categories are subject to shelf-life
+control:
+    (a) Adhesives and sealants
+    (b) Primer and paint coatings
+    (c) Pre-impregnated composite materials (prepreg)
+    (d) Chemical processing solutions (etchants, plating baths)
+    (e) Faying surface sealants and shim materials
+    (f) Age-sensitive elastomeric seals and O-rings
+
+6.3 Materials shall be used before their expiration date. Extension
+of shelf life requires documented testing and approval per the
+applicable SDC shelf-life extension procedure.
+
+6.4 Storage conditions (temperature, humidity) shall be monitored and
+recorded for all shelf-life controlled materials. Records shall be
+available for review during SDC quality audits.
+
+================================================================================
+                  END OF SDC-M-030 V4.1
+================================================================================

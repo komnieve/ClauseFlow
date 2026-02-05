@@ -17,9 +17,25 @@ class DocumentStatus(str, enum.Enum):
     UPLOADING = "uploading"
     SEGMENTING = "segmenting"
     EXTRACTING = "extracting"
+    MATCHING = "matching"
     PROCESSING = "processing"
     READY = "ready"
     ERROR = "error"
+
+
+class ReferenceDocStatus(str, enum.Enum):
+    """Status of reference document processing."""
+    UPLOADING = "uploading"
+    PROCESSING = "processing"
+    READY = "ready"
+    ERROR = "error"
+
+
+class MatchStatus(str, enum.Enum):
+    """Status of a reference match."""
+    MATCHED = "matched"
+    UNRESOLVED = "unresolved"
+    PARTIAL = "partial"
 
 
 class ReviewStatus(str, enum.Enum):
@@ -62,6 +78,19 @@ class ScopeType(str, enum.Enum):
     LINE_SPECIFIC = "line_specific"
 
 
+class Customer(Base):
+    """A customer whose POs and reference docs are managed."""
+    __tablename__ = "customers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), nullable=False, unique=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Relationships
+    documents = relationship("Document", back_populates="customer")
+    reference_documents = relationship("ReferenceDocument", back_populates="customer", cascade="all, delete-orphan")
+
+
 class Document(Base):
     """A uploaded document (contract/PO)."""
     __tablename__ = "documents"
@@ -72,11 +101,13 @@ class Document(Base):
     total_lines = Column(Integer, nullable=False)
     status = Column(SQLEnum(DocumentStatus), default=DocumentStatus.UPLOADING)
     error_message = Column(Text, nullable=True)
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
+    customer = relationship("Customer", back_populates="documents")
     clauses = relationship("Clause", back_populates="document", cascade="all, delete-orphan")
     sections = relationship("Section", back_populates="document", cascade="all, delete-orphan")
     line_items = relationship("LineItem", back_populates="document", cascade="all, delete-orphan")
@@ -179,3 +210,70 @@ class Clause(Base):
     # Relationships
     document = relationship("Document", back_populates="clauses")
     section = relationship("Section", back_populates="clauses")
+    reference_links = relationship("ClauseReferenceLink", back_populates="clause", cascade="all, delete-orphan")
+
+
+class ReferenceDocument(Base):
+    """A reference spec/standard uploaded to a customer's library."""
+    __tablename__ = "reference_documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
+    filename = Column(String(255), nullable=False)
+    original_text = Column(Text, nullable=False)
+    total_lines = Column(Integer, nullable=False, default=0)
+    status = Column(SQLEnum(ReferenceDocStatus), default=ReferenceDocStatus.UPLOADING)
+    error_message = Column(Text, nullable=True)
+
+    doc_identifier = Column(String(255), nullable=True)  # e.g. "SPXQC-17"
+    version = Column(String(100), nullable=True)  # e.g. "v57.0"
+    title = Column(String(500), nullable=True)
+    parent_id = Column(Integer, ForeignKey("reference_documents.id"), nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Relationships
+    customer = relationship("Customer", back_populates="reference_documents")
+    requirements = relationship("ReferenceRequirement", back_populates="reference_document", cascade="all, delete-orphan")
+    children = relationship("ReferenceDocument", backref="parent", remote_side=[id])
+    clause_links = relationship("ClauseReferenceLink", back_populates="reference_document")
+
+
+class ReferenceRequirement(Base):
+    """A single requirement extracted from a reference document."""
+    __tablename__ = "reference_requirements"
+
+    id = Column(Integer, primary_key=True, index=True)
+    reference_document_id = Column(Integer, ForeignKey("reference_documents.id"), nullable=False)
+    requirement_number = Column(String(100), nullable=True)
+    title = Column(String(500), nullable=True)
+    text = Column(Text, nullable=True)
+    start_line = Column(Integer, nullable=True)
+    end_line = Column(Integer, nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Relationships
+    reference_document = relationship("ReferenceDocument", back_populates="requirements")
+    clause_links = relationship("ClauseReferenceLink", back_populates="reference_requirement")
+
+
+class ClauseReferenceLink(Base):
+    """Link between a clause and a reference document/requirement."""
+    __tablename__ = "clause_reference_links"
+
+    id = Column(Integer, primary_key=True, index=True)
+    clause_id = Column(Integer, ForeignKey("clauses.id"), nullable=False)
+    reference_requirement_id = Column(Integer, ForeignKey("reference_requirements.id"), nullable=True)
+    reference_document_id = Column(Integer, ForeignKey("reference_documents.id"), nullable=True)
+
+    detected_spec_identifier = Column(String(255), nullable=True)
+    detected_version = Column(String(100), nullable=True)
+    match_status = Column(SQLEnum(MatchStatus), default=MatchStatus.UNRESOLVED)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Relationships
+    clause = relationship("Clause", back_populates="reference_links")
+    reference_requirement = relationship("ReferenceRequirement", back_populates="clause_links")
+    reference_document = relationship("ReferenceDocument", back_populates="clause_links")

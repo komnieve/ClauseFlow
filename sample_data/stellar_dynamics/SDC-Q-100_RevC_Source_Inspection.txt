@@ -1,0 +1,182 @@
+================================================================================
+              STELLAR DYNAMICS CORPORATION
+              QUALITY SPECIFICATION SDC-Q-100
+================================================================================
+
+Document:       SDC-Q-100
+Title:          Source Inspection and Receiving Requirements
+Revision:       C
+Date:           September 12, 2024
+Classification: Company Proprietary
+Approved By:    Dr. Angela Reyes, VP Quality Assurance
+
+================================================================================
+                          REVISION HISTORY
+================================================================================
+
+Rev A   2019-03-15   Initial Release
+Rev B   2021-08-22   Updated sampling plans, added NDT hold points
+Rev C   2024-09-12   Added digital documentation requirements, revised
+                     acceptance criteria for Flight Critical assemblies
+
+================================================================================
+                       1.0 SCOPE AND PURPOSE
+================================================================================
+
+1.1 This specification establishes the requirements for source inspection
+and receiving inspection of materials, parts, components, and assemblies
+procured by Stellar Dynamics Corporation (SDC) from external suppliers.
+
+1.2 These requirements apply to all purchase orders issued by SDC that
+reference this specification, including subcontracted items and services
+performed at supplier facilities.
+
+1.3 The intent of this specification is to ensure that all delivered
+products conform to purchase order requirements prior to acceptance into
+SDC inventory and integration into flight hardware.
+
+================================================================================
+                      2.0 APPLICABILITY
+================================================================================
+
+2.1 This specification applies to all suppliers providing hardware,
+materials, or assemblies to SDC under any purchase order or subcontract.
+
+2.2 The level of source inspection required shall be determined by the
+criticality classification assigned to each line item:
+    (a) Flight Critical: Mandatory source inspection per Section 4.0
+    (b) Mission Essential: Source inspection at SDC discretion
+    (c) Standard: Receiving inspection only, per Section 5.0
+
+2.3 Government source inspection (GSI) may be imposed in addition to
+SDC source inspection when required by the prime contract or regulatory
+authority.
+
+================================================================================
+                 3.0 SOURCE INSPECTOR ACCESS
+================================================================================
+
+3.1 The supplier shall grant SDC quality representatives and authorized
+government inspectors unrestricted access to all facilities, processes,
+and records relevant to the purchase order.
+
+3.2 Access shall be provided with a minimum of forty-eight (48) hours
+advance notice, except in cases of urgent quality concerns where
+twenty-four (24) hour notice may be given.
+
+3.3 The supplier shall provide a dedicated workspace, lighting, and
+inspection equipment as reasonably necessary for the source inspector
+to perform required inspections and reviews.
+
+3.4 Source inspection by SDC does not relieve the supplier of the
+responsibility to perform its own quality inspections and deliver
+conforming product.
+
+================================================================================
+              4.0 DOCUMENTATION REQUIREMENTS
+================================================================================
+
+4.1 The supplier shall prepare and maintain a complete documentation
+package for each shipment, which shall include as applicable:
+    (a) Certificate of Conformance (CoC) signed by an authorized
+        quality representative
+    (b) First Article Inspection Reports per AS9102 (when required)
+    (c) Dimensional inspection reports with actual measured values
+    (d) Material certifications traceable to the original mill or
+        material manufacturer
+    (e) Special process certifications (heat treat, plating, NDT, etc.)
+    (f) Functional and environmental test data
+
+4.2 All documentation shall be submitted electronically via the SDC
+Supplier Quality Portal unless otherwise directed. Hard copies shall
+accompany the shipment when specified on the purchase order.
+
+4.3 Documentation shall be retained by the supplier for a minimum of
+fifteen (15) years from the date of final delivery.
+
+================================================================================
+                       5.0 HOLD POINTS
+================================================================================
+
+5.1 The following are mandatory hold points requiring SDC source
+inspector witness or approval before the supplier may proceed:
+    (a) First Article Inspection — prior to production release
+    (b) Final acceptance testing — prior to packaging for shipment
+    (c) Any nondestructive testing (NDT) specified on the drawing
+    (d) Special process verification (e.g., torque, bonding, potting)
+
+5.2 The supplier shall notify SDC Quality Assurance a minimum of five
+(5) business days prior to each hold point to allow scheduling of
+source inspection personnel.
+
+5.3 Work beyond a hold point without source inspector authorization
+shall be cause for rejection of the affected units.
+
+================================================================================
+                      6.0 SAMPLING PLANS
+================================================================================
+
+6.1 Unless otherwise specified on the purchase order or drawing,
+inspection sampling shall be performed in accordance with
+ANSI/ASQ Z1.4 (Inspection by Attributes) using the following:
+    (a) Flight Critical items: AQL 0.65, Inspection Level II
+    (b) Mission Essential items: AQL 1.0, Inspection Level II
+    (c) Standard items: AQL 2.5, Inspection Level I
+
+6.2 For characteristics designated as Critical or Major on the
+engineering drawing, 100% inspection is required regardless of the
+sampling plan.
+
+6.3 Variables data sampling, when applicable, shall be performed per
+ANSI/ASQ Z1.9 at the corresponding AQL levels.
+
+================================================================================
+                 7.0 NONCONFORMANCE REPORTING
+================================================================================
+
+7.1 Any nonconformance discovered during source or receiving inspection
+shall be documented on an SDC Supplier Nonconformance Report (SNCR).
+
+7.2 The supplier shall not ship nonconforming material without a
+written disposition from SDC. Acceptable dispositions include:
+    (a) Return to supplier for rework
+    (b) Return to supplier for replacement
+    (c) Use-as-is (requires SDC engineering approval and MRB action)
+    (d) Repair (requires SDC engineering approval of repair procedure)
+    (e) Scrap
+
+7.3 The supplier shall submit a root cause analysis and corrective
+action plan within ten (10) business days of nonconformance notification.
+
+7.4 Recurring nonconformances of the same type may result in escalated
+source inspection, placement on the SDC Supplier Watch List, or removal
+from the Approved Supplier List.
+
+================================================================================
+                 8.0 FINAL ACCEPTANCE CRITERIA
+================================================================================
+
+8.1 Final acceptance of delivered product requires all of the following:
+    (a) All purchase order requirements are met, including drawing
+        dimensions, material specifications, and performance criteria
+    (b) All required documentation is complete and accurate
+    (c) All hold point verifications are satisfactorily completed
+    (d) No open nonconformance reports exist against the shipment
+    (e) Packaging and preservation meet purchase order requirements
+
+8.2 For Flight Critical assemblies, final acceptance additionally
+requires:
+    (a) Successful completion of all functional tests per the
+        applicable test procedure
+    (b) Verification of serialization and traceability markings
+    (c) SDC source inspector sign-off on the acceptance documentation
+    (d) Completion of the SDC Acceptance Data Package checklist
+
+8.3 Acceptance of product by SDC receiving inspection does not waive
+any warranty or contractual rights. Latent defects discovered after
+acceptance shall be subject to the warranty provisions of the
+purchase order.
+
+================================================================================
+                     END OF SDC-Q-100 REV C
+================================================================================

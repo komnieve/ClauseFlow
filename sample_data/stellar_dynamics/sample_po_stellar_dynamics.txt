@@ -1,0 +1,446 @@
+================================================================================
+                            PURCHASE ORDER
+================================================================================
+
+STELLAR DYNAMICS CORPORATION
+8900 Constellation Drive
+Huntsville, AL 35802
+
+--------------------------------------------------------------------------------
+                         PURCHASE ORDER DETAILS
+--------------------------------------------------------------------------------
+
+PO Number:          SDC-PO-2025-01492
+PO Date:            January 28, 2025
+Revision:           0
+Contract Type:      Fixed Price
+Prime Contract:     N00019-24-C-0108 (U.S. Navy, PMA-275)
+
+SUPPLIER:
+  Apex Precision Manufacturing, Inc.
+  2200 Aerospace Court
+  Tucson, AZ 85706
+  CAGE Code: 3R8P2
+  DUNS: 12-567-8934
+
+BUYER:
+  David Chen
+  Procurement Manager, Avionics Division
+  david.chen@stellardynamics.com
+  (256) 555-7120
+
+PROGRAM:
+  P-8A Poseidon Maritime Patrol Aircraft
+  Mission Systems Upgrade - Block IV
+
+QUALITY CONTACT:
+  Maria Vasquez
+  Supplier Quality Engineer
+  maria.vasquez@stellardynamics.com
+  (256) 555-7145
+
+--------------------------------------------------------------------------------
+                              LINE ITEMS
+--------------------------------------------------------------------------------
+
+Line 001:
+  Part Number:        SDC-WH-4410-001 Rev B
+  Description:        Flight Management Computer Interface Harness Assembly
+  Quantity:           18 EA
+  Unit Price:         $7,245.00
+  Extended Price:     $130,410.00
+  Delivery:           8 units by April 15, 2025
+                      10 units by May 30, 2025
+  Quality Level:      Flight Critical
+  Applicable Specs:   SDC-Q-100 Rev C, SDC-Q-250 Rev A
+
+Line 002:
+  Part Number:        SDC-BR-2205-003 Rev A
+  Description:        Avionics Bay Equipment Mounting Bracket - Titanium
+  Quantity:           36 EA
+  Unit Price:         $1,890.00
+  Extended Price:     $68,040.00
+  Delivery:           All units by May 15, 2025
+  Quality Level:      Mission Essential
+  Applicable Specs:   SDC-Q-100 Rev C, SDC-M-030 v4.1
+
+Line 003:
+  Part Number:        SDC-CM-6600-012 Rev C
+  Description:        Avionics Rack Cable Management Clamp Set (Kit of 24)
+  Quantity:           12 Kits
+  Unit Price:         $485.00
+  Extended Price:     $5,820.00
+  Delivery:           All units by April 30, 2025
+  Quality Level:      Standard
+  Applicable Specs:   SDC-Q-100 Rev C
+
+--------------------------------------------------------------------------------
+                      TOTAL PO VALUE: $204,270.00
+--------------------------------------------------------------------------------
+
+
+================================================================================
+                    SECTION 1: GENERAL PROVISIONS
+================================================================================
+
+1.1 ORDER OF PRECEDENCE
+
+In the event of any inconsistency between the provisions of this Purchase
+Order, the inconsistency shall be resolved by giving precedence in the
+following order:
+
+    (a) The Schedule (Line Items and Delivery Requirements)
+    (b) Special Contract Requirements (this Purchase Order)
+    (c) Quality Requirements (Section 2)
+    (d) SDC Specifications referenced herein
+    (e) FAR/DFARS Clauses incorporated by reference
+    (f) General Provisions (this Section 1)
+    (g) Supplier's quotation dated December 5, 2024
+
+1.2 DEFINITIONS
+
+As used throughout this Purchase Order:
+
+    (a) "Buyer" or "SDC" means Stellar Dynamics Corporation
+    (b) "Supplier" means Apex Precision Manufacturing, Inc.
+    (c) "Government" means the United States Government
+    (d) "Prime Contract" means Contract N00019-24-C-0108
+    (e) "Goods" means the items described in the Line Items section
+    (f) "Flight Critical" means items whose failure could result in loss
+        of aircraft or endangerment of crew
+    (g) "Mission Essential" means items whose failure would degrade
+        mission capability but not endanger the aircraft or crew
+
+1.3 ACCEPTANCE OF ORDER
+
+This Purchase Order constitutes an offer by Buyer to Supplier. Supplier's
+acceptance is expressly limited to the terms and conditions contained
+herein. Commencement of performance or shipment of Goods shall constitute
+acceptance of all terms and conditions. Any additional or different terms
+proposed by Supplier are hereby rejected unless expressly agreed to in
+writing by Buyer's authorized procurement representative.
+
+1.4 CHANGES
+
+Buyer may at any time, by written notice, make changes within the general
+scope of this Purchase Order in any one or more of the following:
+
+    (a) Drawings, designs, or specifications
+    (b) Method of shipment or packing
+    (c) Place of delivery
+    (d) Delivery schedule
+    (e) Quantity (increases or decreases of up to 15%)
+
+If any such change causes an increase or decrease in the cost of, or the
+time required for, performance, Buyer shall make an equitable adjustment
+in the Purchase Order price or delivery schedule, or both. Any claim by
+Supplier for adjustment must be asserted within twenty (20) days from the
+date of receipt of the written change notice.
+
+1.5 TERMINATION FOR CONVENIENCE
+
+Buyer may terminate this Purchase Order, in whole or in part, at any time
+by written notice to Supplier when it is in Buyer's interest. Upon receipt
+of a termination notice, Supplier shall immediately stop Work as directed
+and notify its sub-tier suppliers of the termination. Supplier shall be
+entitled to an equitable adjustment for Work performed prior to termination,
+including a reasonable profit, but in no event shall Supplier's recovery
+exceed the Purchase Order price for terminated items.
+
+
+================================================================================
+                    SECTION 2: QUALITY REQUIREMENTS
+================================================================================
+
+2.1 QUALITY MANAGEMENT SYSTEM
+
+Supplier shall maintain a Quality Management System (QMS) certified to
+AS9100 Rev D (or later revision) by an accredited registrar recognized by
+the International Aerospace Quality Group (IAQG). Supplier shall provide
+evidence of current certification to SDC upon request and shall notify SDC
+within five (5) business days of any suspension, withdrawal, conditional
+status, or scope limitation of its AS9100 certification.
+
+Supplier's QMS shall address, at a minimum, the requirements of AS9100 Rev D
+clauses 4 through 10 as applicable to the scope of work performed under this
+Purchase Order.
+
+2.2 FIRST ARTICLE INSPECTION
+
+First Article Inspection (FAI) in accordance with AS9102 is required for
+Line 001 (Flight Critical) prior to commencement of production deliveries.
+Partial or delta FAI may be acceptable for Lines 002 and 003 where the
+Supplier can demonstrate prior FAI on identical or similar configurations.
+
+The First Article Inspection Report (FAIR) shall include:
+    (a) AS9102 Form 1 — Part Number Accountability
+    (b) AS9102 Form 2 — Product Accountability (material, special processes,
+        functional testing)
+    (c) AS9102 Form 3 — Characteristic Accountability (all drawing
+        dimensions and tolerances with actual measured values)
+    (d) Supporting objective evidence (CMM reports, test data, material
+        certs, NDT results)
+
+The FAIR shall be submitted to SDC Quality Assurance a minimum of fifteen
+(15) business days prior to the first production shipment. Production
+deliveries shall not commence until SDC has provided written approval.
+
+2.3 SOURCE INSPECTION REQUIREMENTS
+
+Source inspection by SDC quality representatives is required for Line 001
+(Flight Critical) prior to shipment, in accordance with SDC-Q-100 Rev C.
+SDC reserves the right to perform source inspection on Lines 002 and 003
+at its discretion.
+
+Source inspection shall include but not be limited to:
+    (a) Review of manufacturing records and traveler documentation
+    (b) Dimensional verification of critical characteristics
+    (c) Witness of functional testing per the applicable test procedure
+    (d) Review of material certifications and special process records
+    (e) Verification of configuration and serialization
+
+Supplier shall provide SDC Quality Assurance a minimum of five (5) business
+days advance notice prior to any source inspection hold point. Supplier
+shall not ship source-inspected items without SDC quality representative
+sign-off on the source inspection record.
+
+Contact for source inspection scheduling:
+    Maria Vasquez, Supplier Quality Engineer
+    maria.vasquez@stellardynamics.com
+    (256) 555-7145
+
+2.4 WIRE HARNESS REQUIREMENTS (LINE 001)
+
+The wire harness assembly on Line 001 shall be manufactured in accordance
+with SDC-Q-250 Rev A, Electrical Wiring and Harnessing Standards. In
+addition, the following requirements apply:
+
+    (a) All wiring shall conform to IPC/WHMA-A-620 Class 3
+    (b) Crimped terminations per NASA-STD-8739.4
+    (c) 100% continuity and hipot testing per SDC-Q-250 Rev A Section 4.0
+    (d) ESD protection per ANSI/ESD S20.20 throughout manufacturing,
+        test, storage, and shipping
+    (e) Wire marking per MIL-STD-202, Method 215
+
+All wire harness production and inspection personnel shall hold current
+IPC/WHMA-A-620 certification. Evidence of personnel certifications shall
+be maintained and provided upon request.
+
+2.5 NONCONFORMING MATERIAL CONTROL
+
+Supplier shall not ship any nonconforming material without prior written
+disposition from SDC. Deviation or waiver requests shall be submitted
+through the SDC Supplier Quality Portal and shall include:
+
+    (a) Detailed description of the nonconformance including affected
+        characteristics and actual versus required values
+    (b) Root cause analysis
+    (c) Corrective and preventive action plan
+    (d) Proposed disposition (use-as-is, rework, repair, or scrap)
+    (e) Engineering justification for use-as-is or repair dispositions
+    (f) Quantity and serial numbers of affected units
+
+Nonconforming material shipped without authorization may be returned at
+Supplier's expense and shall constitute grounds for corrective action
+against the Supplier.
+
+2.6 CORRECTIVE ACTION REQUIREMENTS
+
+Supplier shall maintain a corrective action system conforming to AS9100
+Rev D requirements. Upon notification by SDC of a quality escape or
+customer complaint, Supplier shall:
+
+    (a) Respond with containment actions within twenty-four (24) hours
+    (b) Perform suspect lot analysis and provide containment scope
+        within forty-eight (48) hours
+    (c) Submit root cause analysis within ten (10) business days using
+        structured problem-solving methodology (8D, A3, or equivalent)
+    (d) Submit corrective action plan with implementation timeline
+        within fifteen (15) business days
+    (e) Provide objective evidence of corrective action effectiveness
+        within sixty (60) days of implementation
+
+Failure to respond to corrective action requests in a timely manner may
+result in escalated supplier surveillance, restriction to the SDC
+Supplier Watch List, or removal from the Approved Supplier List.
+
+
+================================================================================
+              SECTION 3: MATERIAL AND TRACEABILITY
+================================================================================
+
+3.1 MATERIAL CERTIFICATION AND TRACEABILITY
+
+All materials used in the manufacture of Goods under this Purchase Order
+shall be traceable to the original material manufacturer. Supplier shall
+maintain material traceability in accordance with SDC-Q-100 Rev C
+Section 4.0 documentation requirements.
+
+For Line 002 (titanium mounting bracket), material procurement and
+processing shall additionally comply with SDC-M-030 v4.1, Material and
+Process Requirements for Metallic Components. Specifically:
+
+    (a) Titanium alloy (Ti-6Al-4V per AMS 4911) shall be procured from
+        sources listed on the SDC Approved Material Supplier List
+    (b) Certified Mill Test Reports (CMTR) per SDC-M-030 v4.1
+        Section 2.0 shall be provided for all metallic raw materials
+    (c) Heat treatment per AMS 2801 with Nadcap-accredited processor
+    (d) Material traceability from raw stock through finished part
+
+Material certifications shall be retained by the Supplier for a minimum
+of fifteen (15) years from the date of delivery.
+
+3.2 COUNTERFEIT PARTS PREVENTION
+
+Supplier shall maintain a Counterfeit Parts Prevention Program conforming
+to AS6174 and SAE AS6496 requirements. Supplier shall:
+
+    (a) Procure parts only from Original Component Manufacturers (OCM),
+        Original Equipment Manufacturers (OEM), or authorized distributors
+    (b) Maintain an internal approved supplier list with verification of
+        authorized distribution agreements
+    (c) Perform incoming inspection appropriate to detect counterfeit
+        parts per AS6171 methodology
+    (d) Maintain full traceability of electronic and electrical
+        components to their source
+    (e) Quarantine and report suspected counterfeit parts to SDC and
+        GIDEP within thirty (30) days of discovery
+
+3.3 SPECIAL PROCESS CONTROL
+
+All special processes performed on Goods under this Purchase Order shall
+be performed by Nadcap-accredited processors or by the Supplier if
+Supplier maintains current Nadcap accreditation for the applicable process.
+Special processes include but are not limited to:
+
+    (a) Heat treatment (all metallic alloys)
+    (b) Chemical processing (anodizing, plating, chemical conversion)
+    (c) Nondestructive testing (ultrasonic, radiographic, penetrant,
+        magnetic particle)
+    (d) Welding (electron beam, TIG, resistance)
+    (e) Shot peening
+    (f) Crimping and soldering (per MIL-STD-1520 requirements)
+
+Supplier shall maintain current Nadcap certificates for all special
+processes performed in-house and shall provide copies to SDC upon request.
+Changes to special process sources require prior written approval from SDC.
+
+3.4 PROHIBITED AND RESTRICTED MATERIALS
+
+Materials and substances prohibited or restricted by SDC-M-030 v4.1
+Section 5.0 shall not be used in any Goods delivered under this Purchase
+Order unless a specific waiver has been granted by SDC Materials
+Engineering. The Supplier shall provide material declarations upon request
+identifying any substances of concern per EU REACH Regulation and SDC
+prohibited materials list.
+
+
+================================================================================
+                SECTION 4: DELIVERY AND PACKAGING
+================================================================================
+
+4.1 DELIVERY SCHEDULE AND TERMS
+
+All deliveries shall be FOB Origin (Supplier's Dock), freight prepaid and
+charged back to Buyer. Title and risk of loss transfer to Buyer upon
+delivery to the carrier.
+
+Ship To Address:
+    Stellar Dynamics Corporation
+    Receiving Dock 3 — Avionics Integration Facility
+    8900 Constellation Drive
+    Huntsville, AL 35802
+    Attn: Receiving — PO# SDC-PO-2025-01492
+
+Time is of the essence for all deliveries under this Purchase Order.
+Supplier shall notify SDC Procurement immediately upon becoming aware of
+any actual or potential delay. Late delivery notification shall include
+the cause of delay, affected line items and quantities, revised delivery
+date, and recovery actions being taken.
+
+Buyer reserves the right to assess liquidated damages of one and one-half
+percent (1.5%) of the value of delayed items per week, up to a maximum of
+fifteen percent (15%), for late deliveries not excused under force majeure
+provisions.
+
+4.2 PACKAGING AND PRESERVATION
+
+All Goods shall be packaged to prevent damage from handling, transportation,
+and environmental exposure. Packaging requirements:
+
+    (a) Line 001 (wire harness): ESD-protective packaging per ANSI/ESD
+        S541, with anti-static cushioning and rigid outer container
+    (b) Line 002 (titanium bracket): Vapor corrosion inhibitor (VCI)
+        wrap with foam cushioning and rigid outer container
+    (c) Line 003 (cable clamps): Standard commercial packaging with
+        protective dividers to prevent part-on-part contact
+
+Each package shall be marked with:
+    (a) SDC Purchase Order number
+    (b) SDC Part Number and revision
+    (c) Quantity
+    (d) Serial number or lot number
+    (e) Manufacturing date
+    (f) Country of Origin
+    (g) ESD warning labels where applicable
+
+4.3 SHIPPING DOCUMENTATION
+
+Each shipment shall include the following documentation:
+
+    (a) Packing slip with Purchase Order number, line item, part number,
+        quantity, and serial/lot numbers
+    (b) Certificate of Conformance (CoC) signed by an authorized quality
+        representative certifying that all Goods conform to Purchase Order
+        requirements
+    (c) Material certifications as required by Section 3.1
+    (d) First Article Inspection Report (for initial shipments of FAI-
+        required items, if not previously submitted)
+    (e) Test data and inspection reports as required by the applicable
+        drawings and specifications
+    (f) Special process certifications (heat treat, NDT, plating, etc.)
+    (g) Country of Origin declaration
+
+Documentation shall be submitted electronically via the SDC Supplier
+Quality Portal concurrent with shipment. Hard copies shall be included
+in the shipping container.
+
+
+================================================================================
+                         SIGNATURE PAGE
+================================================================================
+
+This Purchase Order is issued by Stellar Dynamics Corporation and is
+binding upon acceptance by Supplier as provided in Section 1.3.
+
+
+ISSUED BY:
+
+Stellar Dynamics Corporation
+
+By:    _________________________________
+Name:  David Chen
+Title: Procurement Manager, Avionics Division
+Date:  January 28, 2025
+
+Approved By:
+
+By:    _________________________________
+Name:  Rachel Okonkwo
+Title: Director of Procurement
+Date:  January 28, 2025
+
+
+ACCEPTED BY:
+
+Apex Precision Manufacturing, Inc.
+
+By:    _________________________________
+Name:  _________________________________
+Title: _________________________________
+Date:  _________________________________
+
+
+================================================================================
+                         END OF PURCHASE ORDER
+================================================================================

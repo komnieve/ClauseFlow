@@ -3,12 +3,14 @@ import { updateClause, markClauseReviewed, flagClause } from '../api/client';
 
 /**
  * Card for reviewing a single clause
+ * V3: Shows referenced specs with match status badges
  */
-export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIndex, totalCount, sectionTitle, lineItems: docLineItems }) {
+export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIndex, totalCount, sectionTitle, lineItems: docLineItems, onNavigateToLibrary }) {
   const [scope, setScope] = useState(clause.scope || '');
   const [lineItems, setLineItems] = useState(clause.line_items || '');
   const [notes, setNotes] = useState(clause.notes || '');
   const [saving, setSaving] = useState(false);
+  const [expandedRefs, setExpandedRefs] = useState(new Set());
   const markReviewedRef = useRef(null);
   const flagRef = useRef(null);
 
@@ -96,6 +98,15 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
 
   flagRef.current = handleFlag;
 
+  const toggleRefExpand = (linkId) => {
+    setExpandedRefs(prev => {
+      const next = new Set(prev);
+      if (next.has(linkId)) next.delete(linkId);
+      else next.add(linkId);
+      return next;
+    });
+  };
+
   const chunkTypeColors = {
     clause: 'bg-blue-100 text-blue-800',
     header: 'bg-purple-100 text-purple-800',
@@ -110,11 +121,19 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
     flagged: 'bg-yellow-100 text-yellow-800',
   };
 
+  const matchStatusColors = {
+    matched: 'bg-green-100 text-green-800',
+    partial: 'bg-yellow-100 text-yellow-800',
+    unresolved: 'bg-red-100 text-red-800',
+  };
+
   const scopeTypeBadge = clause.scope_type === 'po_wide'
     ? { label: 'PO-Wide', className: 'bg-indigo-100 text-indigo-800' }
     : clause.scope_type === 'line_specific'
     ? { label: 'Line-Specific', className: 'bg-teal-100 text-teal-800' }
     : null;
+
+  const refLinks = clause.reference_links || [];
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
@@ -145,7 +164,7 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
             disabled={currentIndex === 0}
             className="px-3 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-50"
           >
-            ← Prev
+            Prev
           </button>
           <span className="text-sm text-gray-600">
             {currentIndex + 1} of {totalCount}
@@ -155,7 +174,7 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
             disabled={currentIndex === totalCount - 1}
             className="px-3 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-50"
           >
-            Next →
+            Next
           </button>
         </div>
       </div>
@@ -181,6 +200,61 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
       <div className="bg-gray-50 rounded p-4 mb-6 max-h-64 overflow-y-auto">
         <pre className="whitespace-pre-wrap text-sm font-mono">{clause.text}</pre>
       </div>
+
+      {/* Referenced Specs (V3) */}
+      {refLinks.length > 0 && (
+        <div className="mb-6 border rounded-lg p-4 bg-gray-50">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Referenced Specs</h3>
+          <div className="space-y-2">
+            {refLinks.map(link => (
+              <div key={link.id} className="bg-white rounded border p-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-sm font-medium">
+                      {link.detected_spec_identifier}
+                    </span>
+                    {link.detected_version && (
+                      <span className="text-xs text-gray-500">{link.detected_version}</span>
+                    )}
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${matchStatusColors[link.match_status]}`}>
+                      {link.match_status}
+                    </span>
+                  </div>
+                  {link.match_status === 'matched' && link.requirement_text && (
+                    <button
+                      onClick={() => toggleRefExpand(link.id)}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                    >
+                      {expandedRefs.has(link.id) ? 'Hide' : 'Show'} requirement
+                    </button>
+                  )}
+                  {link.match_status === 'unresolved' && onNavigateToLibrary && (
+                    <button
+                      onClick={() => onNavigateToLibrary()}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                    >
+                      Upload to Library
+                    </button>
+                  )}
+                </div>
+                {link.doc_title && (
+                  <div className="text-xs text-gray-500 mt-1">{link.doc_title}</div>
+                )}
+                {link.requirement_number && (
+                  <div className="text-xs text-gray-500 mt-0.5">
+                    Req {link.requirement_number}: {link.requirement_title || ''}
+                  </div>
+                )}
+                {expandedRefs.has(link.id) && link.requirement_text && (
+                  <div className="mt-2 bg-gray-50 rounded p-2 max-h-32 overflow-y-auto">
+                    <pre className="whitespace-pre-wrap text-xs font-mono text-gray-700">{link.requirement_text}</pre>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Scope selection - only for actual clauses */}
       {clause.chunk_type === 'clause' && (
@@ -251,7 +325,7 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
           onClick={handleMarkReviewed}
           className="px-6 py-2 text-sm bg-green-600 text-white rounded hover:bg-green-700 font-medium"
         >
-          Mark as Reviewed →
+          Mark as Reviewed
         </button>
       </div>
     </div>

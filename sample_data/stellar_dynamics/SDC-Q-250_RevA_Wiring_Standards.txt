@@ -1,0 +1,172 @@
+================================================================================
+              STELLAR DYNAMICS CORPORATION
+              QUALITY SPECIFICATION SDC-Q-250
+================================================================================
+
+Document:       SDC-Q-250
+Title:          Electrical Wiring and Harnessing Standards
+Revision:       A
+Date:           March 5, 2024
+Classification: Company Proprietary
+Approved By:    Mark Tanaka, Chief Electrical Engineer
+
+================================================================================
+                          REVISION HISTORY
+================================================================================
+
+Rev A   2024-03-05   Initial Release — derived from legacy WHS-400 series
+                     and updated for current platform requirements
+
+================================================================================
+                       1.0 WIRE TYPES AND GAUGES
+================================================================================
+
+1.1 All wiring used in SDC flight hardware shall be selected from the
+SDC Approved Wire List maintained in the SDC Materials Database.
+
+1.2 The following wire types are approved for use:
+    (a) M22759/32 — Tin-coated copper, extruded ETFE insulation
+    (b) M22759/34 — Nickel-coated copper, extruded ETFE insulation
+    (c) M22759/43 — Tin-coated copper, crosslinked ETFE insulation
+    (d) M22759/44 — Nickel-coated copper, crosslinked ETFE insulation
+
+1.3 Wire gauge selection shall be per the applicable SDC wiring diagram.
+Minimum gauge for power circuits shall be 22 AWG. Minimum gauge for
+signal circuits shall be 26 AWG unless otherwise specified.
+
+1.4 Wire derating shall comply with SAE AS50881 for the applicable
+installation environment (ambient temperature, altitude, bundle size).
+
+================================================================================
+                 2.0 CONNECTOR TERMINATION CRITERIA
+================================================================================
+
+2.1 All crimped terminations shall be performed using calibrated tools
+listed on the contact manufacturer's qualified tool list.
+
+2.2 Crimp quality shall meet the requirements of SAE AS7928 (formerly
+MIL-STD-1722) for the applicable contact type and wire size combination.
+
+2.3 Pull test requirements:
+    (a) Destructive pull testing shall be performed on the first and
+        last termination of each wire gauge per work shift
+    (b) Minimum pull test values per NASA-STD-8739.4, Table 1
+    (c) Any pull test failure requires 100% re-inspection of all
+        terminations made since the last successful test
+
+2.4 Solder terminations, where permitted by drawing, shall meet
+IPC J-STD-001 Class 3 with Space Addendum requirements.
+
+2.5 Contact insertion into connector shells shall be verified by a
+retention test (tug test) of minimum 1 lb force applied axially.
+
+================================================================================
+                 3.0 HARNESS ROUTING REQUIREMENTS
+================================================================================
+
+3.1 Wire harness routing shall conform to the harness drawing and
+routing diagram. Deviations from the specified routing require SDC
+engineering approval via an Engineering Change Request.
+
+3.2 Minimum bend radius shall be six (6) times the outer diameter of
+the harness bundle, or as specified on the drawing, whichever is
+greater.
+
+3.3 Harness supports and clamps shall be installed at intervals not
+exceeding twenty-four (24) inches, or per the installation drawing.
+
+3.4 Harnesses shall be protected from chafing at all points of contact
+with structure using approved sleeving, grommets, or edge protection.
+
+3.5 Separation requirements between wire categories:
+    (a) Minimum 2 inches between power and signal wiring
+    (b) Minimum 4 inches between high-voltage (>50V) and low-level
+        signal wiring
+    (c) Shielded cables shall be used where separation cannot be
+        maintained
+
+================================================================================
+             4.0 CONTINUITY AND HIPOT TESTING
+================================================================================
+
+4.1 Every completed wire harness shall undergo 100% continuity testing
+to verify correct point-to-point wiring per the harness schematic.
+
+4.2 Insulation resistance testing (hipot) shall be performed on all
+completed harnesses:
+    (a) Test voltage: 500 VDC minimum (or as specified on the drawing)
+    (b) Minimum insulation resistance: 100 megohms at 500 VDC
+    (c) Dwell time: minimum 60 seconds
+    (d) Test between each conductor and all other conductors tied
+        together, and between each conductor and the shield/structure
+
+4.3 Test equipment shall be calibrated and traceable to NIST standards.
+Calibration records shall be available for review during source
+inspection.
+
+4.4 All test results shall be recorded and included in the deliverable
+data package. Failures shall be documented and dispositioned per the
+applicable nonconformance process.
+
+================================================================================
+                   5.0 LABELING AND MARKING
+================================================================================
+
+5.1 Each wire shall be marked with its wire identification number at
+intervals not exceeding twelve (12) inches and within three (3) inches
+of each termination point.
+
+5.2 Wire marking methods shall be per MIL-STD-202, Method 215, using
+heat-shrink markers, laser marking, or hot stamp as specified on the
+drawing.
+
+5.3 Harness assemblies shall carry a permanent identification tag
+affixed near the main breakout point, containing:
+    (a) SDC part number and revision
+    (b) Supplier part number (if different)
+    (c) Serial number or lot number
+    (d) Date of manufacture
+    (e) Supplier CAGE code
+
+================================================================================
+                 6.0 WORKMANSHIP STANDARDS
+================================================================================
+
+6.1 All wire harness manufacturing and inspection personnel shall hold
+current IPC/WHMA-A-620 certification for the applicable class of
+product (Class 3 minimum for SDC flight hardware).
+
+6.2 Workmanship shall meet or exceed IPC/WHMA-A-620 Class 3 criteria
+for all visible and measurable characteristics.
+
+6.3 Foreign Object Debris (FOD) prevention measures shall be maintained
+throughout all manufacturing operations. FOD inspection shall be
+performed and documented prior to harness closeout or packaging.
+
+6.4 Cleanliness requirements per the applicable drawing or SDC
+specification shall be verified prior to packaging.
+
+================================================================================
+                    7.0 ESD PROTECTION
+================================================================================
+
+7.1 All wire harness manufacturing, inspection, testing, storage, and
+shipping operations shall comply with ANSI/ESD S20.20 requirements.
+
+7.2 ESD-sensitive components and assemblies shall be identified with
+appropriate ESD warning labels per ESD ADV11.2.
+
+7.3 The supplier shall maintain a documented ESD control program
+including:
+    (a) ESD Protected Area (EPA) with verified grounding
+    (b) Personnel grounding via wrist straps or heel grounders
+    (c) Ionization equipment where required
+    (d) Periodic compliance verification audits (minimum quarterly)
+    (e) Personnel training and certification records
+
+7.4 Shipping containers for ESD-sensitive harnesses shall provide
+static-shielding protection per ANSI/ESD S541.
+
+================================================================================
+                  END OF SDC-Q-250 REV A
+================================================================================

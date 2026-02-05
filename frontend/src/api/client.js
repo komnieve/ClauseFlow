@@ -4,9 +4,12 @@
 
 const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:9847') + '/api';
 
-export async function uploadDocument(file) {
+export async function uploadDocument(file, customerId = null) {
   const formData = new FormData();
   formData.append('file', file);
+  if (customerId) {
+    formData.append('customer_id', customerId);
+  }
 
   const response = await fetch(`${API_BASE}/documents/upload`, {
     method: 'POST',
@@ -20,8 +23,10 @@ export async function uploadDocument(file) {
   return response.json();
 }
 
-export async function getDocuments() {
-  const response = await fetch(`${API_BASE}/documents`);
+export async function getDocuments(customerId = null) {
+  const params = new URLSearchParams();
+  if (customerId) params.append('customer_id', customerId);
+  const response = await fetch(`${API_BASE}/documents?${params}`);
   if (!response.ok) {
     throw new Error('Failed to fetch documents');
   }
@@ -112,6 +117,19 @@ export async function exportDocument(documentId, format = 'json') {
   return response.json();
 }
 
+export async function reprocessDocument(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/reprocess`, {
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to reprocess document');
+  }
+
+  return response.json();
+}
+
 // --- V2: Section and Line Item endpoints ---
 
 export async function getSections(documentId) {
@@ -126,6 +144,115 @@ export async function getLineItems(documentId) {
   const response = await fetch(`${API_BASE}/documents/${documentId}/line-items`);
   if (!response.ok) {
     throw new Error('Failed to fetch line items');
+  }
+  return response.json();
+}
+
+// --- V3: Customer endpoints ---
+
+export async function getCustomers() {
+  const response = await fetch(`${API_BASE}/customers`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch customers');
+  }
+  return response.json();
+}
+
+export async function createCustomer(name) {
+  const response = await fetch(`${API_BASE}/customers`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to create customer');
+  }
+  return response.json();
+}
+
+export async function deleteCustomer(customerId) {
+  const response = await fetch(`${API_BASE}/customers/${customerId}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete customer');
+  }
+  return response.json();
+}
+
+// --- V3: Reference document endpoints ---
+
+export async function getCustomerReferenceDocs(customerId) {
+  const response = await fetch(`${API_BASE}/customers/${customerId}/reference-docs`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch reference docs');
+  }
+  return response.json();
+}
+
+export async function uploadReferenceDoc(customerId, file, docIdentifier = null, version = null) {
+  const formData = new FormData();
+  formData.append('file', file);
+  if (docIdentifier) formData.append('doc_identifier', docIdentifier);
+  if (version) formData.append('version', version);
+
+  const response = await fetch(`${API_BASE}/customers/${customerId}/reference-docs/upload`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to upload reference doc');
+  }
+
+  return response.json();
+}
+
+export async function getReferenceDoc(refDocId) {
+  const response = await fetch(`${API_BASE}/reference-docs/${refDocId}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch reference doc');
+  }
+  return response.json();
+}
+
+export async function deleteReferenceDoc(refDocId) {
+  const response = await fetch(`${API_BASE}/reference-docs/${refDocId}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete reference doc');
+  }
+  return response.json();
+}
+
+// --- V3: Reference matching endpoints ---
+
+export async function matchDocumentReferences(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/match-references`, {
+    method: 'POST',
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to match references');
+  }
+  return response.json();
+}
+
+export async function getDocumentReferences(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/references`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch references');
+  }
+  return response.json();
+}
+
+export async function getUnresolvedReferences(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/unresolved-references`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch unresolved references');
   }
   return response.json();
 }
