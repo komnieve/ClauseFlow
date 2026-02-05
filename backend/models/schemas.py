@@ -3,7 +3,50 @@
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
-from models.db_models import DocumentStatus, ReviewStatus, ClauseScope, ChunkType
+from models.db_models import (
+    DocumentStatus, ReviewStatus, ClauseScope, ChunkType,
+    SectionType, ScopeType
+)
+
+
+# --- Section Schemas (V2) ---
+
+class SectionResponse(BaseModel):
+    """Schema for section response."""
+    id: int
+    document_id: int
+    start_line: int
+    end_line: int
+    section_type: SectionType
+    section_title: Optional[str] = None
+    section_number: Optional[str] = None
+    line_item_number: Optional[int] = None
+    order_index: int
+    text: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# --- Line Item Schemas (V2) ---
+
+class LineItemResponse(BaseModel):
+    """Schema for line item response."""
+    id: int
+    document_id: int
+    section_id: Optional[int] = None
+    line_number: Optional[int] = None
+    part_number: Optional[str] = None
+    description: Optional[str] = None
+    quantity: Optional[str] = None
+    quality_level: Optional[str] = None
+    start_line: Optional[int] = None
+    end_line: Optional[int] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 # --- Clause Schemas ---
@@ -29,6 +72,8 @@ class ClauseUpdate(BaseModel):
     line_items: Optional[str] = None
     notes: Optional[str] = None
     review_status: Optional[ReviewStatus] = None
+    scope_type: Optional[ScopeType] = None
+    applicable_lines: Optional[str] = None
 
 
 class ClauseResponse(ClauseBase):
@@ -41,6 +86,12 @@ class ClauseResponse(ClauseBase):
     review_status: ReviewStatus
     created_at: datetime
     reviewed_at: Optional[datetime] = None
+    # V2 fields
+    section_id: Optional[int] = None
+    scope_type: Optional[ScopeType] = None
+    applicable_lines: Optional[str] = None
+    erp_match_status: Optional[str] = None
+    is_external_reference: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -76,8 +127,10 @@ class DocumentResponse(DocumentBase):
 
 
 class DocumentWithClauses(DocumentResponse):
-    """Document with all its clauses."""
+    """Document with all its clauses, sections, and line items."""
     clauses: list[ClauseResponse] = []
+    sections: list[SectionResponse] = []
+    line_items: list[LineItemResponse] = []
 
 
 # --- Upload Response ---
@@ -100,3 +153,4 @@ class DocumentStats(BaseModel):
     unreviewed: int
     by_type: dict[str, int]
     by_scope: dict[str, int]
+    by_scope_type: dict[str, int] = {}

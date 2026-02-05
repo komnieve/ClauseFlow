@@ -48,6 +48,8 @@ export async function getClauses(documentId, filters = {}) {
   const params = new URLSearchParams();
   if (filters.chunk_type) params.append('chunk_type', filters.chunk_type);
   if (filters.review_status) params.append('review_status', filters.review_status);
+  if (filters.scope_type) params.append('scope_type', filters.scope_type);
+  if (filters.section_id) params.append('section_id', filters.section_id);
 
   const url = `${API_BASE}/documents/${documentId}/clauses?${params}`;
   const response = await fetch(url);
@@ -107,5 +109,23 @@ export async function exportDocument(documentId, format = 'json') {
     return response.blob();
   }
 
+  return response.json();
+}
+
+// --- V2: Section and Line Item endpoints ---
+
+export async function getSections(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/sections`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch sections');
+  }
+  return response.json();
+}
+
+export async function getLineItems(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/line-items`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch line items');
+  }
   return response.json();
 }

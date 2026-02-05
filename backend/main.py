@@ -1,4 +1,4 @@
-"""ClauseFlow API - Contract clause extraction and review."""
+"""ClauseFlow API - Contract clause extraction and review (V2 two-pass pipeline)."""
 
 import sys
 import os
@@ -15,21 +15,27 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import get_db, init_db
-from models.db_models import Document, Clause, DocumentStatus, ReviewStatus, ChunkType as DBChunkType
+from models.db_models import (
+    Document, Clause, Section as DBSection, LineItem as DBLineItem,
+    DocumentStatus, ReviewStatus, ChunkType as DBChunkType,
+    SectionType as DBSectionType, ScopeType as DBScopeType,
+)
 from models.schemas import (
     ClauseUpdate, ClauseResponse,
     DocumentResponse, DocumentWithClauses,
-    UploadResponse, DocumentStats
+    UploadResponse, DocumentStats,
+    SectionResponse, LineItemResponse,
 )
-from services.preprocessor import add_line_numbers
-from services.clause_extractor import extract_clauses_from_document
+from services.preprocessor import add_line_numbers, extract_lines
+from services.clause_extractor import extract_clauses_from_document, extract_clauses_from_section
+from services.segmenter import segment_document, validate_segmentation, extract_line_items_from_section
 from config import settings
 
 # Initialize FastAPI app
 app = FastAPI(
     title="ClauseFlow API",
     description="Contract clause extraction and review system",
-    version="0.1.0"
+    version="0.2.0"
 )
 
 # CORS middleware
@@ -60,6 +66,7 @@ async def upload_document(
     Upload a document (PDF or text) for clause extraction.
 
     Processing happens in the background - poll GET /api/documents/{id} for status.
+    V2: Uses two-pass extraction (segmentation → per-section clause extraction).
     """
     # Read file content
     content = await file.read()
@@ -106,12 +113,18 @@ async def upload_document(
         document_id=db_document.id,
         filename=db_document.filename,
         status=db_document.status,
-        message=f"Document uploaded. Processing {doc.total_lines} lines..."
+        message=f"Document uploaded. Processing {doc.total_lines} lines with V2 two-pass extraction..."
     )
 
 
 def process_document(document_id: int, text: str):
-    """Background task to extract clauses from a document."""
+    """
+    V2 two-pass background task to extract clauses from a document.
+
+    Pass 1: Segment document into sections (header, T&C, attachments, etc.)
+    Pass 2: Extract clauses from each T&C/line-item section with scope context.
+    Also extracts line item metadata from the header section.
+    """
     from database import SessionLocal
 
     db = SessionLocal()
@@ -120,35 +133,129 @@ def process_document(document_id: int, text: str):
         if not document:
             return
 
-        # Add line numbers and extract clauses
+        # Step 1: Add line numbers
         doc = add_line_numbers(text)
 
+        # Step 2: SEGMENTING — Pass 1
+        document.status = DocumentStatus.SEGMENTING
+        db.commit()
+
         try:
-            result = extract_clauses_from_document(doc)
+            seg_result = segment_document(doc)
         except Exception as e:
             document.status = DocumentStatus.ERROR
-            document.error_message = str(e)
+            document.error_message = f"Segmentation failed: {str(e)}"
             db.commit()
             return
 
-        # Save clauses to database
-        for ref in result.clauses:
-            # Extract the actual text using line references
-            lines = doc.original_lines[ref.start_line - 1:ref.end_line]
-            clause_text = '\n'.join(lines)
+        # Step 3: Validate segmentation
+        sections, seg_warnings = validate_segmentation(seg_result.sections, doc.total_lines)
+        if seg_warnings:
+            print(f"  Segmentation warnings for doc {document_id}: {seg_warnings}")
 
-            db_clause = Clause(
+        # Step 4: Save Section records
+        db_sections = {}  # Map order_index to DB section for later reference
+        for idx, sec in enumerate(sections):
+            section_text = extract_lines(doc, sec.start_line, sec.end_line)
+            db_section = DBSection(
                 document_id=document_id,
-                start_line=ref.start_line,
-                end_line=ref.end_line,
-                clause_number=ref.clause_number,
-                clause_title=ref.clause_title,
-                chunk_type=DBChunkType(ref.chunk_type.value),
-                text=clause_text,
-                review_status=ReviewStatus.UNREVIEWED
+                start_line=sec.start_line,
+                end_line=sec.end_line,
+                section_type=DBSectionType(sec.section_type),
+                section_title=sec.section_title,
+                section_number=sec.section_number,
+                line_item_number=sec.line_item_number,
+                order_index=idx,
+                text=section_text,
             )
-            db.add(db_clause)
+            db.add(db_section)
+            db.flush()  # Get the ID
+            db_sections[idx] = db_section
 
+        db.commit()
+
+        # Step 5: Extract line items from header sections
+        for idx, sec in enumerate(sections):
+            if sec.section_type == "header":
+                try:
+                    line_items = extract_line_items_from_section(doc, sec)
+                    for item in line_items:
+                        db_line_item = DBLineItem(
+                            document_id=document_id,
+                            section_id=db_sections[idx].id,
+                            line_number=item.line_number,
+                            part_number=item.part_number,
+                            description=item.description,
+                            quantity=item.quantity,
+                            quality_level=item.quality_level,
+                            start_line=item.start_line,
+                            end_line=item.end_line,
+                        )
+                        db.add(db_line_item)
+                except Exception as e:
+                    print(f"  Warning: Line item extraction failed for section {idx}: {e}")
+
+        db.commit()
+
+        # Step 6: EXTRACTING — Pass 2
+        document.status = DocumentStatus.EXTRACTING
+        db.commit()
+
+        for idx, sec in enumerate(sections):
+            # Only extract clauses from T&C and line_item sections
+            if sec.section_type not in ("terms_and_conditions", "line_item"):
+                continue
+
+            try:
+                result = extract_clauses_from_section(
+                    doc,
+                    section_start_line=sec.start_line,
+                    section_end_line=sec.end_line,
+                    section_type=sec.section_type,
+                    section_title=sec.section_title,
+                )
+            except Exception as e:
+                print(f"  Warning: Clause extraction failed for section '{sec.section_title}': {e}")
+                continue
+
+            # Determine scope from section type
+            if sec.section_type == "terms_and_conditions":
+                scope_type = DBScopeType.PO_WIDE
+            elif sec.section_type == "line_item":
+                scope_type = DBScopeType.LINE_SPECIFIC
+            else:
+                scope_type = None
+
+            # Save clause records
+            for ref in result.clauses:
+                # Extract actual text using line references
+                try:
+                    clause_text = extract_lines(doc, ref.start_line, ref.end_line)
+                except ValueError:
+                    # Skip clauses with invalid line references
+                    print(f"  Warning: Invalid line range {ref.start_line}-{ref.end_line} for clause {ref.clause_number}")
+                    continue
+
+                db_clause = Clause(
+                    document_id=document_id,
+                    start_line=ref.start_line,
+                    end_line=ref.end_line,
+                    clause_number=ref.clause_number,
+                    clause_title=ref.clause_title,
+                    chunk_type=DBChunkType(ref.chunk_type.value),
+                    text=clause_text,
+                    review_status=ReviewStatus.UNREVIEWED,
+                    section_id=db_sections[idx].id,
+                    scope_type=scope_type,
+                    applicable_lines=(
+                        f"[{sec.line_item_number}]"
+                        if sec.section_type == "line_item" and sec.line_item_number
+                        else None
+                    ),
+                )
+                db.add(db_clause)
+
+        # Step 7: Done
         document.status = DocumentStatus.READY
         db.commit()
 
@@ -187,7 +294,7 @@ def list_documents(db: Session = Depends(get_db)):
 
 @app.get("/api/documents/{document_id}", response_model=DocumentWithClauses)
 def get_document(document_id: int, db: Session = Depends(get_db)):
-    """Get a document with all its clauses."""
+    """Get a document with all its clauses, sections, and line items."""
     document = db.query(Document).filter(Document.id == document_id).first()
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -203,7 +310,9 @@ def get_document(document_id: int, db: Session = Depends(get_db)):
         clause_count=len(document.clauses),
         reviewed_count=document.reviewed_count,
         flagged_count=document.flagged_count,
-        clauses=[ClauseResponse.model_validate(c) for c in document.clauses]
+        clauses=[ClauseResponse.model_validate(c) for c in document.clauses],
+        sections=[SectionResponse.model_validate(s) for s in document.sections],
+        line_items=[LineItemResponse.model_validate(li) for li in document.line_items],
     )
 
 
@@ -216,6 +325,7 @@ def get_document_stats(document_id: int, db: Session = Depends(get_db)):
 
     by_type = {}
     by_scope = {}
+    by_scope_type = {}
     reviewed = 0
     flagged = 0
     unreviewed = 0
@@ -225,10 +335,15 @@ def get_document_stats(document_id: int, db: Session = Depends(get_db)):
         type_key = clause.chunk_type.value
         by_type[type_key] = by_type.get(type_key, 0) + 1
 
-        # Count by scope
+        # Count by scope (V1)
         if clause.scope:
             scope_key = clause.scope.value
             by_scope[scope_key] = by_scope.get(scope_key, 0) + 1
+
+        # Count by scope_type (V2)
+        if clause.scope_type:
+            scope_type_key = clause.scope_type.value
+            by_scope_type[scope_type_key] = by_scope_type.get(scope_type_key, 0) + 1
 
         # Count by review status
         if clause.review_status == ReviewStatus.REVIEWED:
@@ -244,13 +359,14 @@ def get_document_stats(document_id: int, db: Session = Depends(get_db)):
         flagged=flagged,
         unreviewed=unreviewed,
         by_type=by_type,
-        by_scope=by_scope
+        by_scope=by_scope,
+        by_scope_type=by_scope_type,
     )
 
 
 @app.delete("/api/documents/{document_id}")
 def delete_document(document_id: int, db: Session = Depends(get_db)):
-    """Delete a document and all its clauses."""
+    """Delete a document and all its clauses, sections, and line items."""
     document = db.query(Document).filter(Document.id == document_id).first()
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -261,6 +377,42 @@ def delete_document(document_id: int, db: Session = Depends(get_db)):
     return {"message": "Document deleted"}
 
 
+# --- Section Endpoints (V2) ---
+
+@app.get("/api/documents/{document_id}/sections", response_model=list[SectionResponse])
+def list_sections(document_id: int, db: Session = Depends(get_db)):
+    """List sections for a document (V2 segmentation results)."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    sections = (
+        db.query(DBSection)
+        .filter(DBSection.document_id == document_id)
+        .order_by(DBSection.order_index)
+        .all()
+    )
+    return [SectionResponse.model_validate(s) for s in sections]
+
+
+# --- Line Item Endpoints (V2) ---
+
+@app.get("/api/documents/{document_id}/line-items", response_model=list[LineItemResponse])
+def list_line_items(document_id: int, db: Session = Depends(get_db)):
+    """List line items for a document (extracted from header section)."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    items = (
+        db.query(DBLineItem)
+        .filter(DBLineItem.document_id == document_id)
+        .order_by(DBLineItem.line_number)
+        .all()
+    )
+    return [LineItemResponse.model_validate(li) for li in items]
+
+
 # --- Clause Endpoints ---
 
 @app.get("/api/documents/{document_id}/clauses", response_model=list[ClauseResponse])
@@ -268,6 +420,8 @@ def list_clauses(
     document_id: int,
     chunk_type: Optional[str] = None,
     review_status: Optional[str] = None,
+    scope_type: Optional[str] = None,
+    section_id: Optional[int] = None,
     db: Session = Depends(get_db)
 ):
     """List clauses for a document with optional filtering."""
@@ -277,6 +431,10 @@ def list_clauses(
         query = query.filter(Clause.chunk_type == chunk_type)
     if review_status:
         query = query.filter(Clause.review_status == review_status)
+    if scope_type:
+        query = query.filter(Clause.scope_type == scope_type)
+    if section_id is not None:
+        query = query.filter(Clause.section_id == section_id)
 
     clauses = query.order_by(Clause.start_line).all()
     return [ClauseResponse.model_validate(c) for c in clauses]
@@ -294,12 +452,12 @@ def get_clause(clause_id: int, db: Session = Depends(get_db)):
 
 @app.patch("/api/clauses/{clause_id}", response_model=ClauseResponse)
 def update_clause(clause_id: int, update: ClauseUpdate, db: Session = Depends(get_db)):
-    """Update a clause (scope, notes, review status)."""
+    """Update a clause (scope, notes, review status, V2 fields)."""
     clause = db.query(Clause).filter(Clause.id == clause_id).first()
     if not clause:
         raise HTTPException(status_code=404, detail="Clause not found")
 
-    # Update fields if provided
+    # Update V1 fields if provided
     if update.scope is not None:
         clause.scope = update.scope
     if update.line_items is not None:
@@ -310,6 +468,12 @@ def update_clause(clause_id: int, update: ClauseUpdate, db: Session = Depends(ge
         clause.review_status = update.review_status
         if update.review_status == ReviewStatus.REVIEWED:
             clause.reviewed_at = datetime.utcnow()
+
+    # Update V2 fields if provided
+    if update.scope_type is not None:
+        clause.scope_type = update.scope_type
+    if update.applicable_lines is not None:
+        clause.applicable_lines = update.applicable_lines
 
     db.commit()
     db.refresh(clause)
@@ -350,7 +514,7 @@ def flag_clause(clause_id: int, db: Session = Depends(get_db)):
 
 @app.get("/api/documents/{document_id}/export")
 def export_document(document_id: int, format: str = "json", db: Session = Depends(get_db)):
-    """Export document clauses as JSON or CSV."""
+    """Export document clauses, sections, and line items as JSON or CSV."""
     document = db.query(Document).filter(Document.id == document_id).first()
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -365,10 +529,36 @@ def export_document(document_id: int, format: str = "json", db: Session = Depend
             "clause_title": clause.clause_title,
             "chunk_type": clause.chunk_type.value,
             "scope": clause.scope.value if clause.scope else None,
+            "scope_type": clause.scope_type.value if clause.scope_type else None,
+            "section_id": clause.section_id,
+            "applicable_lines": clause.applicable_lines,
             "line_items": clause.line_items,
             "notes": clause.notes,
             "review_status": clause.review_status.value,
             "text": clause.text
+        })
+
+    sections_data = []
+    for section in document.sections:
+        sections_data.append({
+            "id": section.id,
+            "start_line": section.start_line,
+            "end_line": section.end_line,
+            "section_type": section.section_type.value,
+            "section_title": section.section_title,
+            "section_number": section.section_number,
+            "order_index": section.order_index,
+        })
+
+    line_items_data = []
+    for item in document.line_items:
+        line_items_data.append({
+            "id": item.id,
+            "line_number": item.line_number,
+            "part_number": item.part_number,
+            "description": item.description,
+            "quantity": item.quantity,
+            "quality_level": item.quality_level,
         })
 
     if format == "json":
@@ -379,17 +569,21 @@ def export_document(document_id: int, format: str = "json", db: Session = Depend
                 "total_lines": document.total_lines,
                 "exported_at": datetime.utcnow().isoformat()
             },
-            "clauses": clauses_data
+            "sections": sections_data,
+            "line_items": line_items_data,
+            "clauses": clauses_data,
         }
     elif format == "csv":
         import csv
         import io
+
         from fastapi.responses import StreamingResponse
 
         output = io.StringIO()
         writer = csv.DictWriter(output, fieldnames=[
             "id", "start_line", "end_line", "clause_number", "clause_title",
-            "chunk_type", "scope", "line_items", "notes", "review_status", "text"
+            "chunk_type", "scope", "scope_type", "section_id", "applicable_lines",
+            "line_items", "notes", "review_status", "text"
         ])
         writer.writeheader()
         writer.writerows(clauses_data)

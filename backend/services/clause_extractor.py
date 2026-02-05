@@ -269,3 +269,107 @@ def extract_clause_texts(
         extracted.append(ExtractedClause(reference=ref, text=text))
 
     return extracted
+
+
+# --- V2: Section-aware extraction ---
+
+def _slice_numbered_text(doc: NumberedDocument, start_line: int, end_line: int) -> str:
+    """
+    Extract a slice of the numbered text for a section's line range.
+
+    Preserves original line numbers so the LLM output doesn't need offset adjustment.
+
+    Args:
+        doc: The numbered document
+        start_line: First line (1-indexed, inclusive)
+        end_line: Last line (1-indexed, inclusive)
+
+    Returns:
+        The numbered text slice with original line numbers preserved
+    """
+    numbered_lines = doc.numbered_text.split('\n')
+    # numbered_lines is 0-indexed, line numbers are 1-indexed
+    return '\n'.join(numbered_lines[start_line - 1:end_line])
+
+
+SECTION_EXTRACTION_PROMPT = """You are analyzing a specific section of a contract/purchase order document to identify discrete clauses.
+
+The text below is from a {section_type} section{title_info}.
+{scope_instruction}
+
+The document has been pre-processed with line numbers in the format [NNN] at the start of each line.
+The line numbers are from the ORIGINAL document — use them exactly as shown.
+
+Your task is to identify where clauses BEGIN and END by their line numbers.
+
+CRITICAL RULES:
+1. DO NOT reproduce any text from the document
+2. ONLY return line number references
+3. A clause includes its header/title line AND all body text until the next clause begins
+4. Include subsections with their parent (e.g., if 1.1 has paragraphs (a), (b), (c), include them all in 1.1)
+
+CHUNK TYPES:
+- "clause" = A numbered contractual obligation or requirement (e.g., "1.1 ORDER OF PRECEDENCE", "2.3 SOURCE INSPECTION")
+- "administrative" = Header info, addresses, contacts, dates, line items, PO details
+- "boilerplate" = Divider lines (====), decorative headers
+- "header" = Section headers like "SECTION 2: QUALITY REQUIREMENTS" (the header line itself, not the clauses within)
+- "signature" = Signature blocks, acceptance sections
+
+GUIDELINES:
+- Each numbered clause (1.1, 1.2, 2.1, etc.) should be its own entry
+- Section headers (SECTION 1: GENERAL PROVISIONS) are separate "header" entries
+- Make sure clause ranges don't overlap
+- Every line in the provided text must belong to some clause entry"""
+
+
+def extract_clauses_from_section(
+    doc: NumberedDocument,
+    section_start_line: int,
+    section_end_line: int,
+    section_type: str,
+    section_title: str | None = None,
+    model: str | None = None
+) -> ExtractionResult:
+    """
+    V2 Pass 2: Extract clauses from a single document section.
+
+    Uses the section's line range to slice the document, preserving original
+    line numbers so no offset adjustment is needed.
+
+    Args:
+        doc: The full numbered document
+        section_start_line: First line of the section (1-indexed)
+        section_end_line: Last line of the section (1-indexed)
+        section_type: Type of section (e.g., "terms_and_conditions")
+        section_title: Title of the section if available
+        model: Model to use (defaults to settings.openai_model)
+
+    Returns:
+        ExtractionResult with clause references (using original document line numbers)
+    """
+    client = OpenAI(api_key=settings.openai_api_key)
+    model = model or settings.openai_model
+
+    # Slice the numbered text for this section
+    section_text = _slice_numbered_text(doc, section_start_line, section_end_line)
+
+    # Build context-aware prompt
+    title_info = f" titled '{section_title}'" if section_title else ""
+
+    if section_type == "terms_and_conditions":
+        scope_instruction = "All clauses in this section apply PO-wide (to the entire purchase order)."
+    elif section_type == "line_item":
+        scope_instruction = "All clauses in this section apply to a specific line item."
+    else:
+        scope_instruction = ""
+
+    prompt = SECTION_EXTRACTION_PROMPT.format(
+        section_type=section_type,
+        title_info=title_info,
+        scope_instruction=scope_instruction,
+    )
+
+    # Use existing _extract_chunk — line numbers are already correct
+    clauses = _extract_chunk(client, model, f"{prompt}\n\nSection text:\n---\n{section_text}\n---")
+
+    return ExtractionResult(clauses=clauses)
