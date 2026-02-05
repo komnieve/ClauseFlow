@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getDocumentRawUrl } from '../api/client';
 
 /**
  * Document overview page — shows PO metadata, line items, sections summary,
@@ -82,7 +83,13 @@ export default function DocumentOverview({ document, clauses, sections, lineItem
       {/* Document metadata */}
       <div className="bg-white rounded-lg shadow p-6 mb-6">
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-2xl font-bold">{document.filename}</h2>
+          <a
+            href={getDocumentRawUrl(document.id)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-2xl font-bold text-blue-700 hover:underline"
+            title="View original document"
+          >{document.filename}</a>
           {document.customer_name && (
             <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded">
               {document.customer_name}

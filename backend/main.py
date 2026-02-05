@@ -836,6 +836,21 @@ def export_document(document_id: int, format: str = "json", db: Session = Depend
         raise HTTPException(status_code=400, detail="Format must be 'json' or 'csv'")
 
 
+# --- Raw Text Endpoint ---
+
+@app.get("/api/documents/{document_id}/raw")
+def get_document_raw(document_id: int, db: Session = Depends(get_db)):
+    """Return the original uploaded text as a plain text response."""
+    from fastapi.responses import PlainTextResponse
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+    return PlainTextResponse(
+        content=document.original_text,
+        headers={"Content-Disposition": f'inline; filename="{document.filename}"'},
+    )
+
+
 # --- Health Check ---
 
 @app.get("/health")

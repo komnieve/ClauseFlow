@@ -41,6 +41,10 @@ export async function getDocument(id) {
   return response.json();
 }
 
+export function getDocumentRawUrl(id) {
+  return `${API_BASE}/documents/${id}/raw`;
+}
+
 export async function getDocumentStats(id) {
   const response = await fetch(`${API_BASE}/documents/${id}/stats`);
   if (!response.ok) {

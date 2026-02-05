@@ -5,7 +5,7 @@ import ReviewView from './components/ReviewView';
 import ClauseListView from './components/ClauseListView';
 import ReferenceLibrary from './components/ReferenceLibrary';
 import ReferenceDocDetail from './components/ReferenceDocDetail';
-import { getDocuments, getDocument, exportDocument, reprocessDocument, matchDocumentReferences } from './api/client';
+import { getDocuments, getDocument, exportDocument, reprocessDocument, matchDocumentReferences, getDocumentRawUrl } from './api/client';
 
 function App() {
   const [documents, setDocuments] = useState([]);
@@ -234,7 +234,13 @@ function App() {
 
           {selectedDocument && view === 'review' && (
             <div className="flex items-center gap-4">
-              <span className="text-gray-600">{selectedDocument.filename}</span>
+              <a
+                href={getDocumentRawUrl(selectedDocument.id)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-blue-600 hover:underline"
+                title="View original document"
+              >{selectedDocument.filename}</a>
               {selectedDocument.customer_name && (
                 <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded">
                   {selectedDocument.customer_name}
@@ -268,7 +274,14 @@ function App() {
                       >
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-medium">{doc.filename}</span>
+                            <a
+                              href={getDocumentRawUrl(doc.id)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-medium text-blue-700 hover:underline"
+                              title="View original document"
+                              onClick={(e) => e.stopPropagation()}
+                            >{doc.filename}</a>
                             {doc.customer_name && (
                               <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-xs rounded">
                                 {doc.customer_name}
