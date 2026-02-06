@@ -121,6 +121,17 @@ export async function exportDocument(documentId, format = 'json') {
   return response.json();
 }
 
+export async function deleteDocument(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to delete document');
+  }
+  return response.json();
+}
+
 export async function reprocessDocument(documentId) {
   const response = await fetch(`${API_BASE}/documents/${documentId}/reprocess`, {
     method: 'POST',

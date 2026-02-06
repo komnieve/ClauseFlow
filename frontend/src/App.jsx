@@ -5,7 +5,7 @@ import ReviewView from './components/ReviewView';
 import ClauseListView from './components/ClauseListView';
 import ReferenceLibrary from './components/ReferenceLibrary';
 import ReferenceDocDetail from './components/ReferenceDocDetail';
-import { getDocuments, getDocument, exportDocument, reprocessDocument, matchDocumentReferences, getDocumentRawUrl } from './api/client';
+import { getDocuments, getDocument, exportDocument, reprocessDocument, matchDocumentReferences, getDocumentRawUrl, deleteDocument } from './api/client';
 
 function App() {
   const [documents, setDocuments] = useState([]);
@@ -181,6 +181,24 @@ function App() {
     navigate('review', selectedDocument?.id);
   };
 
+  const handleDeleteDocument = async (docId, e) => {
+    e.stopPropagation();
+    if (!confirm('Delete this document and all its clauses?')) return;
+    try {
+      await deleteDocument(docId);
+      setDocuments(prev => prev.filter(d => d.id !== docId));
+      if (selectedDocument?.id === docId) {
+        setSelectedDocument(null);
+        setClauses([]);
+        setSections([]);
+        setLineItems([]);
+        setView('home');
+      }
+    } catch (err) {
+      alert('Delete failed: ' + err.message);
+    }
+  };
+
   const handleNavigateToLibrary = () => {
     setView('library');
     navigate('library');
@@ -299,6 +317,13 @@ function App() {
                               Review
                             </button>
                           )}
+                          <button
+                            onClick={(e) => handleDeleteDocument(doc.id, e)}
+                            className="px-3 py-2 text-red-500 text-sm hover:text-red-700"
+                            title="Delete document"
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     );
