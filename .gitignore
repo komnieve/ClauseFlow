@@ -50,5 +50,8 @@ htmlcov/
 # Claude Code
 .claude/
 
+# Screenshots
+*.png
+
 # Demo scripts
 .demo-pids
