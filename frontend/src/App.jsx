@@ -5,6 +5,7 @@ import ReviewView from './components/ReviewView';
 import ClauseListView from './components/ClauseListView';
 import ReferenceLibrary from './components/ReferenceLibrary';
 import ReferenceDocDetail from './components/ReferenceDocDetail';
+import FinalOutputView from './components/FinalOutputView';
 import { getDocuments, getDocument, exportDocument, reprocessDocument, matchDocumentReferences, getDocumentRawUrl, deleteDocument } from './api/client';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
   const [sections, setSections] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [view, setView] = useState('home'); // home, overview, review, list, library, ref-doc-detail
+  const [view, setView] = useState('home'); // home, overview, review, list, library, ref-doc-detail, final-output
   const [selectedRefDocId, setSelectedRefDocId] = useState(null);
   const skipPushRef = useRef(false);
 
@@ -49,7 +50,7 @@ function App() {
         setClauses([]);
         setSections([]);
         setLineItems([]);
-      } else if (state.docId && (state.view === 'overview' || state.view === 'review' || state.view === 'list')) {
+      } else if (state.docId && (state.view === 'overview' || state.view === 'review' || state.view === 'list' || state.view === 'final-output')) {
         if (selectedDocRef.current?.id === state.docId) {
           setView(state.view);
         } else {
@@ -127,7 +128,7 @@ function App() {
 
     // Gated export: confirm if not all addressed
     const allAddressed = clauses.length > 0 && clauses.every(
-      c => c.review_status === 'reviewed' || c.review_status === 'flagged'
+      c => c.review_status === 'reviewed' || c.review_status === 'flagged' || c.review_status === 'skipped'
     );
     if (!allAddressed) {
       const ok = confirm('Not all clauses have been reviewed or flagged. Export anyway?');
@@ -250,7 +251,7 @@ function App() {
             </nav>
           </div>
 
-          {selectedDocument && view === 'review' && (
+          {selectedDocument && (view === 'review' || view === 'final-output') && (
             <div className="flex items-center gap-4">
               <a
                 href={getDocumentRawUrl(selectedDocument.id)}
@@ -358,6 +359,8 @@ function App() {
             onViewList={() => { setView('list'); navigate('list', selectedDocument.id); }}
             onExport={handleExport}
             onNavigateToLibrary={handleNavigateToLibrary}
+            documentId={selectedDocument.id}
+            onViewFinalOutput={() => { setView('final-output'); navigate('final-output', selectedDocument.id); }}
           />
         )}
 
@@ -368,6 +371,15 @@ function App() {
             sections={sections}
             onSelectClause={handleSelectClauseFromList}
             onBackToReview={() => { setView('review'); navigate('review', selectedDocument.id); }}
+          />
+        )}
+
+        {/* Final Output View */}
+        {view === 'final-output' && selectedDocument && (
+          <FinalOutputView
+            documentId={selectedDocument.id}
+            documentName={selectedDocument.filename}
+            onBack={() => { setView('review'); navigate('review', selectedDocument.id); }}
           />
         )}
 

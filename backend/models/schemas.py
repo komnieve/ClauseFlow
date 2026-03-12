@@ -5,7 +5,8 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from models.db_models import (
     DocumentStatus, ReviewStatus, ClauseScope, ChunkType,
-    SectionType, ScopeType, ReferenceDocStatus, MatchStatus
+    SectionType, ScopeType, ReferenceDocStatus, MatchStatus,
+    ERPMatchStatus,
 )
 
 
@@ -173,8 +174,15 @@ class ClauseResponse(ClauseBase):
     section_id: Optional[int] = None
     scope_type: Optional[ScopeType] = None
     applicable_lines: Optional[str] = None
-    erp_match_status: Optional[str] = None
-    is_external_reference: Optional[str] = None
+    # ERP verification fields
+    erp_match_status: Optional[ERPMatchStatus] = None
+    erp_clause_id: Optional[str] = None
+    erp_revision: Optional[str] = None
+    erp_date: Optional[str] = None
+    mismatch_details: Optional[str] = None
+    erp_snapshot_text: Optional[str] = None
+    is_external_reference: bool = False
+    source_reference: Optional[str] = None
     # V3 fields
     reference_links: list[ClauseReferenceLinkResponse] = []
 
@@ -241,3 +249,49 @@ class DocumentStats(BaseModel):
     by_type: dict[str, int]
     by_scope: dict[str, int]
     by_scope_type: dict[str, int] = {}
+
+
+class ReviewSummary(BaseModel):
+    """Review summary for attention dashboard and export gating."""
+    total_clauses: int
+    po_wide_count: int
+    line_specific_count: int
+    # ERP verification counts
+    matched: int
+    mismatched: int
+    not_found: int
+    external_pending: int
+    # Review status counts
+    unreviewed: int
+    reviewed: int
+    flagged: int
+    skipped: int
+    # Export readiness
+    export_ready: bool
+    blockers: list[str]
+
+
+class FinalOutputClause(BaseModel):
+    """Clause in the final output view."""
+    id: int
+    clause_number: Optional[str] = None
+    clause_title: Optional[str] = None
+    text: str
+    erp_match_status: Optional[ERPMatchStatus] = None
+    erp_clause_id: Optional[str] = None
+    erp_revision: Optional[str] = None
+    erp_date: Optional[str] = None
+    mismatch_details: Optional[str] = None
+    is_external_reference: bool = False
+    source_reference: Optional[str] = None
+    applicable_lines: Optional[str] = None
+    review_status: ReviewStatus
+    notes: Optional[str] = None
+
+
+class FinalOutput(BaseModel):
+    """Final grouped output for ERP entry."""
+    po_wide_clauses: list[FinalOutputClause]
+    line_specific_by_clause: list[FinalOutputClause]
+    line_specific_by_line: dict[str, list[FinalOutputClause]]
+    verification_summary: dict[str, int]

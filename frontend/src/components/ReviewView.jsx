@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import SectionNav from './SectionNav';
 import ClauseCard from './ClauseCard';
 import ProgressBar from './ProgressBar';
+import AttentionDashboard from './AttentionDashboard';
 
 /**
  * Tabbed review layout — PO-Wide / Line-Specific tabs, section nav, clause card
@@ -16,6 +17,8 @@ export default function ReviewView({
   onViewList,
   onExport,
   onNavigateToLibrary,
+  documentId,
+  onViewFinalOutput,
 }) {
   const hasV2 = sections.length > 0;
   const [activeTab, setActiveTab] = useState('po_wide');
@@ -76,7 +79,7 @@ export default function ReviewView({
 
   // Stats for all clauses (for export gating)
   const allAddressed = clauses.length > 0 && clauses.every(
-    c => c.review_status === 'reviewed' || c.review_status === 'flagged'
+    c => c.review_status === 'reviewed' || c.review_status === 'flagged' || c.review_status === 'skipped'
   );
 
   // Section title for current clause
@@ -163,6 +166,11 @@ export default function ReviewView({
   // V2 tabbed view
   return (
     <div>
+      {/* Attention Dashboard */}
+      {documentId && (
+        <AttentionDashboard documentId={documentId} clauses={clauses} />
+      )}
+
       {/* Tab bar + unresolved refs indicator */}
       <div className="flex items-center gap-4 mb-6">
         <div className="flex gap-1 bg-white rounded-lg shadow p-1 max-w-md">
@@ -209,6 +217,7 @@ export default function ReviewView({
             onViewList={onViewList}
             onExport={onExport}
             allAddressed={allAddressed}
+            onViewFinalOutput={onViewFinalOutput}
           />
         </div>
 

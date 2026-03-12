@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { updateClause, markClauseReviewed, flagClause } from '../api/client';
+import { updateClause, markClauseReviewed, flagClause, skipClause } from '../api/client';
+import ERPStatusBadge from './ERPStatusBadge';
+import ERPDiffPanel from './ERPDiffPanel';
 
 /**
  * Card for reviewing a single clause
@@ -14,7 +16,7 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
   const markReviewedRef = useRef(null);
   const flagRef = useRef(null);
 
-  // Keyboard shortcuts: Enter = mark reviewed, F = flag
+  // Keyboard shortcuts: Enter = mark reviewed, F = flag, S = skip, arrows = navigate
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.target.matches('input, textarea')) return;
@@ -24,6 +26,15 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
       } else if (e.key === 'f' || e.key === 'F') {
         e.preventDefault();
         flagRef.current?.();
+      } else if (e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        skipRef.current?.();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        onPrev();
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        onNext();
       }
     };
 
@@ -98,6 +109,21 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
 
   flagRef.current = handleFlag;
 
+  const handleSkip = async () => {
+    setSaving(true);
+    try {
+      const updated = await skipClause(clause.id);
+      onUpdate(updated);
+      onNext();
+    } catch (err) {
+      console.error('Failed to skip:', err);
+    }
+    setSaving(false);
+  };
+
+  const skipRef = useRef(null);
+  skipRef.current = handleSkip;
+
   const toggleRefExpand = (linkId) => {
     setExpandedRefs(prev => {
       const next = new Set(prev);
@@ -119,6 +145,7 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
     unreviewed: 'bg-gray-100 text-gray-600',
     reviewed: 'bg-green-100 text-green-800',
     flagged: 'bg-yellow-100 text-yellow-800',
+    skipped: 'bg-gray-100 text-gray-500',
   };
 
   const matchStatusColors = {
@@ -195,6 +222,21 @@ export default function ClauseCard({ clause, onUpdate, onNext, onPrev, currentIn
           )}
         </div>
       </div>
+
+      {/* ERP Status Badge */}
+      {clause.erp_match_status && (
+        <div className="mb-4">
+          <ERPStatusBadge
+            status={clause.erp_match_status}
+            revision={clause.erp_revision}
+            date={clause.erp_date}
+            mismatchDetails={clause.mismatch_details}
+          />
+        </div>
+      )}
+
+      {/* ERP Diff Panel (mismatches only) */}
+      <ERPDiffPanel clause={clause} />
 
       {/* Clause text */}
       <div className="bg-gray-50 rounded p-4 mb-6 max-h-64 overflow-y-auto">

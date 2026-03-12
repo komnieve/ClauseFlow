@@ -271,3 +271,37 @@ export async function getUnresolvedReferences(documentId) {
   }
   return response.json();
 }
+
+// --- Review Summary & Final Output ---
+
+export async function getReviewSummary(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/review-summary`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch review summary');
+  }
+  return response.json();
+}
+
+export async function getFinalOutput(documentId) {
+  const response = await fetch(`${API_BASE}/documents/${documentId}/final-output`);
+  if (response.status === 409) {
+    const err = await response.json();
+    throw new Error(err.detail || 'Export blocked');
+  }
+  if (!response.ok) {
+    throw new Error('Failed to fetch final output');
+  }
+  return response.json();
+}
+
+export async function skipClause(clauseId) {
+  const response = await fetch(`${API_BASE}/clauses/${clauseId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ review_status: 'skipped' }),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to skip clause');
+  }
+  return response.json();
+}

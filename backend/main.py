@@ -20,13 +20,14 @@ from models.db_models import (
     Customer, ClauseReferenceLink,
     DocumentStatus, ReviewStatus, ChunkType as DBChunkType,
     SectionType as DBSectionType, ScopeType as DBScopeType,
-    MatchStatus,
+    MatchStatus, ERPMatchStatus,
 )
 from models.schemas import (
     ClauseUpdate, ClauseResponse, ClauseReferenceLinkResponse,
     DocumentResponse, DocumentWithClauses,
     UploadResponse, DocumentStats,
     SectionResponse, LineItemResponse,
+    ReviewSummary, FinalOutput, FinalOutputClause,
 )
 from services.preprocessor import add_line_numbers, extract_lines
 from services.clause_extractor import extract_clauses_from_document, extract_clauses_from_section
@@ -292,6 +293,42 @@ def process_document(document_id: int, text: str):
                     ),
                 )
                 db.add(db_clause)
+
+        # Step 6b: ERP VERIFICATION — verify each clause against ERP library
+        try:
+            from services.erp_adapter import verify_clause as erp_verify
+            for clause in db.query(Clause).filter(Clause.document_id == document_id).all():
+                # Extract revision info from clause text if possible
+                import re
+                po_revision = None
+                po_date = None
+                # Try to find revision in clause number or text (e.g., "NOV 2021", "Rev C")
+                rev_match = re.search(r'\(([A-Z]{3}\s+\d{4})\)', clause.text or "")
+                if rev_match:
+                    po_revision = rev_match.group(1)
+                rev_match2 = re.search(r'Rev\s*([A-Z0-9.]+)', clause.text or "", re.IGNORECASE)
+                if rev_match2 and not po_revision:
+                    po_revision = f"Rev {rev_match2.group(1)}"
+
+                result = erp_verify(
+                    clause_code=clause.clause_number,
+                    clause_title=clause.clause_title,
+                    clause_text=clause.text or "",
+                    po_revision=po_revision,
+                    po_date=po_date,
+                )
+                clause.erp_match_status = ERPMatchStatus(result.status)
+                clause.mismatch_details = result.mismatch_details
+                if result.erp_clause:
+                    clause.erp_clause_id = result.erp_clause.clause_code
+                    clause.erp_revision = result.erp_clause.revision
+                    clause.erp_date = result.erp_clause.effective_date
+                    clause.erp_snapshot_text = result.erp_clause.text
+                clause.is_external_reference = (result.status == "external_pending")
+            db.commit()
+            print(f"  ERP verification complete for doc {document_id}")
+        except Exception as e:
+            print(f"  Warning: ERP verification failed for doc {document_id}: {e}")
 
         # Step 7: MATCHING — Pass 3 (reference matching, only if customer is set)
         if document.customer_id:
@@ -851,6 +888,167 @@ def get_document_raw(document_id: int, db: Session = Depends(get_db)):
     )
 
 
+# --- Review Summary Endpoint ---
+
+@app.get("/api/documents/{document_id}/review-summary", response_model=ReviewSummary)
+def get_review_summary(document_id: int, db: Session = Depends(get_db)):
+    """Get review summary for attention dashboard and export gating."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    clauses = document.clauses
+    total = len(clauses)
+
+    # Scope counts
+    po_wide = sum(1 for c in clauses if c.scope_type == DBScopeType.PO_WIDE)
+    line_specific = sum(1 for c in clauses if c.scope_type == DBScopeType.LINE_SPECIFIC)
+
+    # ERP verification counts
+    matched = sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.MATCHED)
+    mismatched = sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.MISMATCHED)
+    not_found = sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.NOT_FOUND)
+    external_pending = sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.EXTERNAL_PENDING)
+
+    # Review status counts
+    unreviewed = sum(1 for c in clauses if c.review_status == ReviewStatus.UNREVIEWED)
+    reviewed = sum(1 for c in clauses if c.review_status == ReviewStatus.REVIEWED)
+    flagged = sum(1 for c in clauses if c.review_status == ReviewStatus.FLAGGED)
+    skipped = sum(1 for c in clauses if c.review_status == ReviewStatus.SKIPPED)
+
+    # Export readiness
+    blockers = []
+    if unreviewed > 0:
+        blockers.append(f"{unreviewed} clause{'s' if unreviewed != 1 else ''} still unreviewed")
+    if mismatched > 0:
+        unflagged_mismatches = sum(
+            1 for c in clauses
+            if c.erp_match_status == ERPMatchStatus.MISMATCHED
+            and c.review_status not in (ReviewStatus.FLAGGED, ReviewStatus.REVIEWED)
+        )
+        if unflagged_mismatches > 0:
+            blockers.append(f"{unflagged_mismatches} mismatch{'es' if unflagged_mismatches != 1 else ''} not yet addressed")
+
+    return ReviewSummary(
+        total_clauses=total,
+        po_wide_count=po_wide,
+        line_specific_count=line_specific,
+        matched=matched,
+        mismatched=mismatched,
+        not_found=not_found,
+        external_pending=external_pending,
+        unreviewed=unreviewed,
+        reviewed=reviewed,
+        flagged=flagged,
+        skipped=skipped,
+        export_ready=len(blockers) == 0,
+        blockers=blockers,
+    )
+
+
+# --- Final Output Endpoint ---
+
+@app.get("/api/documents/{document_id}/final-output", response_model=FinalOutput)
+def get_final_output(document_id: int, db: Session = Depends(get_db)):
+    """Get final grouped output for ERP entry. Returns 409 if not all clauses addressed."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    clauses = document.clauses
+    unreviewed = sum(1 for c in clauses if c.review_status == ReviewStatus.UNREVIEWED)
+    if unreviewed > 0:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Export blocked: {unreviewed} clause{'s' if unreviewed != 1 else ''} still unreviewed"
+        )
+
+    def _to_output(c: Clause) -> FinalOutputClause:
+        return FinalOutputClause(
+            id=c.id,
+            clause_number=c.clause_number,
+            clause_title=c.clause_title,
+            text=c.text,
+            erp_match_status=c.erp_match_status,
+            erp_clause_id=c.erp_clause_id,
+            erp_revision=c.erp_revision,
+            erp_date=c.erp_date,
+            mismatch_details=c.mismatch_details,
+            is_external_reference=c.is_external_reference,
+            source_reference=c.source_reference,
+            applicable_lines=c.applicable_lines,
+            review_status=c.review_status,
+            notes=c.notes,
+        )
+
+    # PO-wide clauses
+    po_wide = [_to_output(c) for c in clauses if c.scope_type == DBScopeType.PO_WIDE]
+
+    # Line-specific grouped by clause
+    line_specific = [_to_output(c) for c in clauses if c.scope_type == DBScopeType.LINE_SPECIFIC]
+
+    # Line-specific grouped by line
+    import json as json_lib
+    by_line: dict[str, list[FinalOutputClause]] = {}
+    for c in clauses:
+        if c.scope_type != DBScopeType.LINE_SPECIFIC:
+            continue
+        output = _to_output(c)
+        # Parse applicable_lines — could be "[1,3,5]" or "[1]" or just a number
+        lines_str = c.applicable_lines or "[]"
+        try:
+            lines = json_lib.loads(lines_str) if lines_str.startswith("[") else [int(lines_str)]
+        except (json_lib.JSONDecodeError, ValueError):
+            lines = []
+        if not lines:
+            by_line.setdefault("unassigned", []).append(output)
+        else:
+            for line_num in lines:
+                key = f"Line {line_num}"
+                by_line.setdefault(key, []).append(output)
+
+    # Verification summary
+    verification_summary = {
+        "total": len(clauses),
+        "po_wide": len(po_wide),
+        "line_specific": len(line_specific),
+        "matched": sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.MATCHED),
+        "mismatched": sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.MISMATCHED),
+        "not_found": sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.NOT_FOUND),
+        "external_pending": sum(1 for c in clauses if c.erp_match_status == ERPMatchStatus.EXTERNAL_PENDING),
+    }
+
+    return FinalOutput(
+        po_wide_clauses=po_wide,
+        line_specific_by_clause=line_specific,
+        line_specific_by_line=by_line,
+        verification_summary=verification_summary,
+    )
+
+
+# --- Export Endpoint (with gating) ---
+
+# Override the existing export to add gating
+_original_export = export_document
+
+
+@app.get("/api/documents/{document_id}/export-gated")
+def export_document_gated(document_id: int, format: str = "json", db: Session = Depends(get_db)):
+    """Export document — returns 409 if any clauses are still unreviewed."""
+    document = db.query(Document).filter(Document.id == document_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    unreviewed = sum(1 for c in document.clauses if c.review_status == ReviewStatus.UNREVIEWED)
+    if unreviewed > 0:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Export blocked: {unreviewed} clause{'s' if unreviewed != 1 else ''} still unreviewed"
+        )
+
+    return export_document(document_id, format, db)
+
+
 # --- Health Check ---
 
 @app.get("/health")
@@ -861,4 +1059,4 @@ def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=9847)

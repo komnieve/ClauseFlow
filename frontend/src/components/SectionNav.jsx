@@ -14,6 +14,7 @@ export default function SectionNav({
   onViewList,
   onExport,
   allAddressed,
+  onViewFinalOutput,
 }) {
   // Compute counts for the active tab
   const tabClauses = clauses.filter(c => {
@@ -119,6 +120,20 @@ export default function SectionNav({
         >
           View as List
         </button>
+        {onViewFinalOutput && (
+          <button
+            onClick={onViewFinalOutput}
+            disabled={!allAddressed}
+            className={`w-full px-3 py-2 text-sm rounded font-medium ${
+              allAddressed
+                ? 'bg-green-600 text-white hover:bg-green-700'
+                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            }`}
+            title={!allAddressed ? 'Address all clauses to view final output' : 'View grouped output for ERP entry'}
+          >
+            Final Output
+          </button>
+        )}
         <button
           onClick={() => onExport('json')}
           disabled={!allAddressed}

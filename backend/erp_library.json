@@ -1,0 +1,350 @@
+{
+  "_comment": "Mock ERP clause library for ClauseFlow demo. Maps clause codes to their ERP records.",
+  "clauses": [
+    {
+      "clause_code": "FAR 52.203-13",
+      "title": "Contractor Code of Business Ethics and Conduct",
+      "revision": "NOV 2021",
+      "effective_date": "2021-11-01",
+      "text": "This clause establishes requirements for contractor codes of business ethics and conduct, internal control systems, and disclosure of violations.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.203-17",
+      "title": "Contractor Employee Whistleblower Rights",
+      "revision": "JUN 2020",
+      "effective_date": "2020-06-01",
+      "text": "Requires the contractor to inform employees of whistleblower rights and protections under 41 U.S.C. 4712.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.204-21",
+      "title": "Basic Safeguarding of Covered Contractor Information Systems",
+      "revision": "NOV 2021",
+      "effective_date": "2021-11-01",
+      "text": "Requires basic safeguarding of contractor information systems that process, store, or transmit Federal contract information.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.204-23",
+      "title": "Prohibition on Contracting for Hardware, Software, and Services Developed or Provided by Kaspersky Lab",
+      "revision": "NOV 2021",
+      "effective_date": "2021-11-01",
+      "text": "Prohibits contractors from using Kaspersky Lab products or services.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.204-25",
+      "title": "Prohibition on Contracting for Certain Telecommunications and Video Surveillance Services or Equipment",
+      "revision": "NOV 2021",
+      "effective_date": "2021-11-01",
+      "text": "Prohibits the use of covered telecommunications equipment or services.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.219-8",
+      "title": "Utilization of Small Business Concerns",
+      "revision": "OCT 2022",
+      "effective_date": "2022-10-01",
+      "text": "Requires maximum practicable utilization of small business concerns.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.222-21",
+      "title": "Prohibition of Segregated Facilities",
+      "revision": "APR 2015",
+      "effective_date": "2015-04-01",
+      "text": "Prohibits maintaining segregated facilities.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.222-26",
+      "title": "Equal Opportunity",
+      "revision": "SEP 2016",
+      "effective_date": "2016-09-01",
+      "text": "Implements Executive Order 11246, Equal Employment Opportunity.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.222-35",
+      "title": "Equal Opportunity for Veterans",
+      "revision": "JUN 2020",
+      "effective_date": "2020-06-01",
+      "text": "Implements requirements for equal opportunity for veterans.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.222-36",
+      "title": "Equal Opportunity for Workers with Disabilities",
+      "revision": "JUN 2020",
+      "effective_date": "2020-06-01",
+      "text": "Implements requirements for equal opportunity for workers with disabilities.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.222-37",
+      "title": "Employment Reports on Veterans",
+      "revision": "JUN 2020",
+      "effective_date": "2020-06-01",
+      "text": "Requires filing of VETS-4212 reports.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.222-50",
+      "title": "Combating Trafficking in Persons",
+      "revision": "NOV 2021",
+      "effective_date": "2021-11-01",
+      "text": "Prohibits trafficking in persons and sets compliance requirements.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.223-6",
+      "title": "Drug-Free Workplace",
+      "revision": "MAY 2001",
+      "effective_date": "2001-05-01",
+      "text": "Requires maintenance of a drug-free workplace.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.225-13",
+      "title": "Restrictions on Certain Foreign Purchases",
+      "revision": "FEB 2021",
+      "effective_date": "2021-02-01",
+      "text": "Restricts acquisition of supplies or services from certain foreign countries.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.227-14",
+      "title": "Rights in Data—General",
+      "revision": "MAY 2014",
+      "effective_date": "2014-05-01",
+      "text": "Defines rights in technical data and computer software developed under Government contracts.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.244-6",
+      "title": "Subcontracts for Commercial Products and Commercial Services",
+      "revision": "SEP 2023",
+      "effective_date": "2023-09-01",
+      "text": "Requires flow-down of applicable clauses to subcontracts for commercial products.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "FAR 52.247-64",
+      "title": "Preference for Privately Owned U.S.-Flag Commercial Vessels",
+      "revision": "FEB 2006",
+      "effective_date": "2006-02-01",
+      "text": "Requires preference for U.S.-flag commercial vessels in ocean transport.",
+      "source_document": "FAR"
+    },
+    {
+      "clause_code": "DFARS 252.203-7002",
+      "title": "Requirement to Inform Employees of Whistleblower Rights",
+      "revision": "DEC 2022",
+      "effective_date": "2022-12-01",
+      "text": "Requires the contractor to inform employees of whistleblower rights per 10 U.S.C. 4701.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.204-7012",
+      "title": "Safeguarding Covered Defense Information and Cyber Incident Reporting",
+      "revision": "DEC 2019",
+      "effective_date": "2019-12-01",
+      "text": "Requires implementation of NIST SP 800-171 for safeguarding covered defense information and reporting cyber incidents within 72 hours.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.204-7015",
+      "title": "Notice of Authorized Disclosure of Information for Litigation Support",
+      "revision": "MAY 2016",
+      "effective_date": "2016-05-01",
+      "text": "Provides notice that contractor information may be disclosed for litigation support.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.204-7018",
+      "title": "Prohibition on the Acquisition of Covered Defense Telecommunications Equipment or Services",
+      "revision": "JAN 2023",
+      "effective_date": "2023-01-01",
+      "text": "Prohibits acquisition of covered defense telecommunications equipment or services from specified entities.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.211-7003",
+      "title": "Item Unique Identification and Valuation",
+      "revision": "JAN 2023",
+      "effective_date": "2023-01-01",
+      "text": "Requires unique item identification (IUID) marking for specified items.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.223-7008",
+      "title": "Prohibition of Hexavalent Chromium",
+      "revision": "JUN 2013",
+      "effective_date": "2013-06-01",
+      "text": "Prohibits use of hexavalent chromium unless approved.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.225-7001",
+      "title": "Buy American and Balance of Payments Program",
+      "revision": "DEC 2022",
+      "effective_date": "2022-12-01",
+      "text": "Implements Buy American Act requirements and balance of payments program.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.225-7002",
+      "title": "Qualifying Country Sources as Subcontractors",
+      "revision": "DEC 2022",
+      "effective_date": "2022-12-01",
+      "text": "Allows qualifying country sources as subcontractors under Buy American provisions.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.225-7009",
+      "title": "Restriction on Acquisition of Certain Articles Containing Specialty Metals",
+      "revision": "OCT 2014",
+      "effective_date": "2014-10-01",
+      "text": "Restricts acquisition of articles containing specialty metals not melted/produced in the U.S. or qualifying countries.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.225-7012",
+      "title": "Preference for Certain Domestic Commodities",
+      "revision": "FEB 2013",
+      "effective_date": "2013-02-01",
+      "text": "Requires preference for certain domestic commodities including specialty metals.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.225-7048",
+      "title": "Export-Controlled Items",
+      "revision": "JUN 2013",
+      "effective_date": "2013-06-01",
+      "text": "Requires compliance with export control laws for items subject to ITAR or EAR.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.227-7013",
+      "title": "Rights in Technical Data—Noncommercial Items",
+      "revision": "FEB 2014",
+      "effective_date": "2014-02-01",
+      "text": "Defines Government rights in technical data for noncommercial items.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.227-7015",
+      "title": "Technical Data—Commercial Products and Commercial Services",
+      "revision": "FEB 2014",
+      "effective_date": "2014-02-01",
+      "text": "Defines Government rights in technical data for commercial products and services.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.227-7037",
+      "title": "Validation of Restrictive Markings on Technical Data",
+      "revision": "SEP 2016",
+      "effective_date": "2016-09-01",
+      "text": "Provides procedures for Government validation of restrictive markings on technical data.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.244-7001",
+      "title": "Contractor Purchasing System Administration",
+      "revision": "MAY 2014",
+      "effective_date": "2014-05-01",
+      "text": "Requires approved purchasing system for subcontract placement.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.246-7007",
+      "title": "Contractor Counterfeit Electronic Part Detection and Avoidance System",
+      "revision": "AUG 2016",
+      "effective_date": "2016-08-01",
+      "text": "Requires a counterfeit electronic part detection and avoidance system.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.246-7008",
+      "title": "Sources of Electronic Parts",
+      "revision": "MAY 2018",
+      "effective_date": "2018-05-01",
+      "text": "Requires procurement of electronic parts from authorized sources.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "DFARS 252.247-7023",
+      "title": "Transportation of Supplies by Sea",
+      "revision": "FEB 2019",
+      "effective_date": "2019-02-01",
+      "text": "Requires use of U.S.-flag vessels for ocean transportation.",
+      "source_document": "DFARS"
+    },
+    {
+      "_comment": "Intentional mismatch for demo — ERP has DEC 2022 but Acme PO references DEC 2022 correctly. Stellar PO will show a mismatch.",
+      "clause_code": "DFARS 252.225-7012",
+      "title": "Preference for Certain Domestic Commodities",
+      "revision": "DEC 2022",
+      "effective_date": "2022-12-01",
+      "text": "Requires preference for certain domestic commodities including hand or measuring tools, stainless steel flatware, and specialty metals.",
+      "source_document": "DFARS"
+    },
+    {
+      "clause_code": "AS9100",
+      "title": "Quality Management Systems - Requirements for Aviation, Space and Defense Organizations",
+      "revision": "Rev D",
+      "effective_date": "2016-09-01",
+      "text": "Quality management system standard for aviation, space, and defense organizations. Includes requirements for product safety, configuration management, and risk management.",
+      "source_document": "SAE International"
+    },
+    {
+      "clause_code": "AS9102",
+      "title": "Aerospace First Article Inspection Requirement",
+      "revision": "Rev B",
+      "effective_date": "2014-01-01",
+      "text": "Standardizes first article inspection requirements including Forms 1, 2, and 3.",
+      "source_document": "SAE International"
+    },
+    {
+      "clause_code": "IPC/WHMA-A-620",
+      "title": "Acceptability of Electronic Wire Harnesses and Cable Assemblies",
+      "revision": "Rev D",
+      "effective_date": "2022-06-01",
+      "text": "Prescribes requirements and acceptance criteria for cable, wire, and harness assemblies.",
+      "source_document": "IPC/WHMA"
+    },
+    {
+      "clause_code": "NASA-STD-8739.4",
+      "title": "Crimping, Interconnecting Cables, Harnesses, and Wiring",
+      "revision": "Rev A",
+      "effective_date": "2019-04-01",
+      "text": "Requirements for crimping of electrical connections in cables, harnesses, and wiring.",
+      "source_document": "NASA"
+    },
+    {
+      "clause_code": "SDC-Q-100",
+      "title": "Quality Assurance Requirements for Suppliers",
+      "revision": "Rev C",
+      "effective_date": "2024-03-01",
+      "text": "Stellar Dynamics Corporation quality assurance requirements for supplier quality management, documentation, inspection, and record retention.",
+      "source_document": "Stellar Dynamics Corporation"
+    },
+    {
+      "clause_code": "SDC-Q-250",
+      "title": "Electrical Wiring and Harnessing Standards",
+      "revision": "Rev A",
+      "effective_date": "2023-09-01",
+      "text": "Stellar Dynamics Corporation requirements for electrical wiring and harness manufacturing including testing, ESD protection, and wire marking.",
+      "source_document": "Stellar Dynamics Corporation"
+    },
+    {
+      "clause_code": "SDC-M-030",
+      "title": "Material and Process Requirements for Metallic Components",
+      "revision": "v4.1",
+      "effective_date": "2024-06-15",
+      "text": "Requirements for material procurement, certification, heat treatment, special processing, and prohibited materials for metallic aerospace components.",
+      "source_document": "Stellar Dynamics Corporation"
+    }
+  ]
+}

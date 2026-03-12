@@ -1,7 +1,7 @@
 """SQLAlchemy database models."""
 
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Enum as SQLEnum
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 import enum
 
@@ -43,6 +43,15 @@ class ReviewStatus(str, enum.Enum):
     UNREVIEWED = "unreviewed"
     REVIEWED = "reviewed"
     FLAGGED = "flagged"
+    SKIPPED = "skipped"
+
+
+class ERPMatchStatus(str, enum.Enum):
+    """ERP verification status of a clause."""
+    MATCHED = "matched"
+    MISMATCHED = "mismatched"
+    NOT_FOUND = "not_found"
+    EXTERNAL_PENDING = "external_pending"
 
 
 class ClauseScope(str, enum.Enum):
@@ -194,13 +203,15 @@ class Clause(Base):
     scope_type = Column(SQLEnum(ScopeType), nullable=True)  # System-assigned from section
     applicable_lines = Column(String(500), nullable=True)  # JSON array like "[1,3,5]"
 
-    # ERP fields (all nullable, for future use)
-    erp_match_status = Column(String(50), nullable=True)
+    # ERP verification fields
+    erp_match_status = Column(SQLEnum(ERPMatchStatus), nullable=True)
     erp_clause_id = Column(String(100), nullable=True)
     erp_revision = Column(String(50), nullable=True)
     erp_date = Column(String(50), nullable=True)
     mismatch_details = Column(Text, nullable=True)
-    is_external_reference = Column(String(10), nullable=True)  # "true"/"false"
+    erp_snapshot_text = Column(Text, nullable=True)  # ERP clause text for diff view
+    is_external_reference = Column(Boolean, default=False, nullable=False)
+    source_reference = Column(String(1000), nullable=True)  # "Document 13F", URL, etc.
     external_url = Column(String(1000), nullable=True)
 
     # Timestamps
